@@ -272,26 +272,6 @@ h1 em{font-style:normal;color:var(--streak);}
 <!-- FIREWORKS -->
 <canvas id="fireworks-canvas"></canvas>
 
-<!-- MUSIC PLAYER -->
-<div id="music-player">
-  <div class="mp-art" id="mp-art"><span class="emoji-render">🎵</span></div>
-  <div class="mp-info">
-    <div class="mp-title">That Should Be Me</div>
-    <div class="mp-artist">Justin Bieber</div>
-  </div>
-  <div class="mp-wave" id="mp-wave">
-    <div class="mp-bar"></div><div class="mp-bar"></div>
-    <div class="mp-bar"></div><div class="mp-bar"></div>
-    <div class="mp-bar"></div>
-  </div>
-  <div class="mp-controls">
-    <button class="mp-btn play-btn" id="mp-play-btn" onclick="toggleMusic()" title="Play/Pause">
-      <span id="mp-play-icon">▶</span>
-    </button>
-    <input class="mp-vol" type="range" min="0" max="1" step="0.05" value="0.5" id="mp-vol" oninput="setVol(this.value)" title="Volume">
-  </div>
-</div>
-
 <!-- REWARD TOAST -->
 <div id="reward-toast">
   <span class="rt-emoji" id="rt-emoji">⭐</span>
@@ -1318,7 +1298,37 @@ window.updateProgress = function(total) {
   }
 };
 
-// Patch ci click to add reward sound
+// ── MINI FIREWORK burst on each tick ──
+// Shoots from the position of the checkbox that was just ticked
+function burstAt(el) {
+  // Get bounding rect of the clicked element
+  const rect = el.getBoundingClientRect();
+  const x = rect.left + rect.width / 2;
+  const y = rect.top + rect.height / 2;
+
+  const colors = ['#ff5a1f','#f0a340','#3ec98a','#4f8ef7','#ffd700','#ff6eb4','#fff','#e05555'];
+  const count = 48; // smaller burst per tick (save big burst for all-done)
+
+  for (let i = 0; i < count; i++) {
+    const angle = (Math.PI * 2 / count) * i + (Math.random() - 0.5) * 0.3;
+    const speed = 1.5 + Math.random() * 4.5;
+    particles.push({
+      x, y,
+      vx: Math.cos(angle) * speed,
+      vy: Math.sin(angle) * speed - 1.5, // slight upward bias
+      alpha: 1,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      size: 2 + Math.random() * 2.5,
+      decay: 0.018 + Math.random() * 0.012,
+      trail: [],
+    });
+  }
+
+  // kick off animation loop if not already running
+  if (!fwAnimId) animateFireworks();
+}
+
+// Patch ci click to add fireworks + sound + reward on every tick
 function patchChecklistClicks() {
   document.querySelectorAll('.ci').forEach(ci => {
     const orig = ci.onclick;
@@ -1326,22 +1336,25 @@ function patchChecklistClicks() {
       const wasDone = ci.classList.contains('done');
       if (orig) orig.call(this, e);
       const nowDone = ci.classList.contains('done');
+
       if (!wasDone && nowDone) {
-        // task just checked — reward!
+        // ── 1. FIREWORKS from the checkbox ──
+        burstAt(ci.querySelector('.cibox') || ci);
+
+        // ── 2. REWARD TOAST ──
+        showReward();
+
+        // ── 3. SOUND + music duck ──
         const vol = parseFloat(document.getElementById('mp-vol').value);
         if (musicPlaying) {
-          // fade music down
           clearInterval(fadeInterval);
           let v = audio.volume;
           const down = setInterval(() => {
-            v = Math.max(0.05, v - 0.06);
+            v = Math.max(0.05, v - 0.07);
             audio.volume = v;
             if (v <= 0.05) clearInterval(down);
           }, 30);
-          // play sound
           setTimeout(() => playApplause(), 50);
-          showReward();
-          // fade music back up after 1.5s
           setTimeout(() => {
             clearInterval(down);
             let vv = audio.volume;
@@ -1353,7 +1366,6 @@ function patchChecklistClicks() {
           }, 1600);
         } else {
           playApplause();
-          showReward();
         }
       }
     };
