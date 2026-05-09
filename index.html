@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IELTS Prep — August 8</title>
+<title>Ascent 91</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Montserrat:wght@400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg:#060606;--bg2:#0c0c0c;--surface:#101010;--surface2:#161616;
@@ -20,7 +20,7 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scrollbar-width:none;scroll-behavior:auto;}
 html::-webkit-scrollbar{display:none;}
-body{background:var(--bg);color:var(--ink);font-family:var(--font-ui);font-size:15px;font-weight:300;line-height:1.65;overflow-x:hidden;cursor:none;}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-ui);font-size:15px;font-weight:300;line-height:1.65;overflow-x:hidden;cursor:none;user-select:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;}
 
 #ember-cursor{position:fixed;top:0;left:0;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(200,97,42,0.2) 0%,rgba(200,97,42,0.05) 45%,transparent 72%);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);mix-blend-mode:screen;transition:opacity 0.5s;}
 #cursor-dot{position:fixed;top:0;left:0;width:5px;height:5px;border-radius:50%;background:var(--ember-bright);pointer-events:none;z-index:10000;transform:translate(-50%,-50%);box-shadow:0 0 12px 4px rgba(224,112,48,0.55);}
@@ -41,7 +41,7 @@ nav{position:relative;z-index:10;padding:22px 40px;display:flex;align-items:cent
 .nav-links a:hover{color:var(--ink);}
 
 .hero-content{position:relative;z-index:5;flex:1;display:flex;flex-direction:column;justify-content:center;padding:40px 40px 0;}
-.hero-eyebrow{font-family:var(--font-mono);font-size:10px;letter-spacing:0.32em;text-transform:uppercase;color:var(--ember-bright);margin-bottom:22px;display:flex;align-items:center;gap:12px;}
+.hero-eyebrow{font-family:'Montserrat',sans-serif;font-weight:400;font-size:13px;letter-spacing:0.02em;text-transform:none;color:var(--ember-bright);margin-bottom:22px;display:flex;align-items:center;gap:12px;}
 .hero-eyebrow::before{content:'';width:26px;height:1px;background:var(--ember);}
 .hero-title{font-family:var(--font-display);font-size:clamp(72px,12vw,148px);font-weight:300;line-height:0.9;letter-spacing:-0.025em;}
 .hero-title .ghost{color:transparent;-webkit-text-stroke:1px rgba(242,237,231,0.28);}
@@ -228,7 +228,7 @@ nav{position:relative;z-index:10;padding:22px 40px;display:flex;align-items:cent
   <canvas id="fire-canvas"></canvas>
 
   <nav>
-    <div class="nav-logo">IELTS <em>Prep</em></div>
+    <div class="nav-logo">Ascent <em>91</em></div>
     <ul class="nav-links">
       <li><a href="#" onclick="navScrollTo('phase-section');return false;">Phase</a></li>
       <li><a href="#" onclick="navScrollTo('today-section');return false;">Today</a></li>
@@ -239,13 +239,13 @@ nav{position:relative;z-index:10;padding:22px 40px;display:flex;align-items:cent
   </nav>
 
   <div class="hero-content">
-    <div class="hero-eyebrow anim">IELTS Prep · Deep Work + Daily Core</div>
+    <div class="hero-eyebrow anim">"Discipline is the bridge between goals and accomplishment." — Jim Rohn</div>
     <h1 class="hero-title anim">
       Study.<br>
       Practice.<br>
       <em>Ace it.</em>
     </h1>
-    <p class="hero-sub anim">Anti-burnout architecture. Morning deep work. Afternoon rest. Evening wind-down. Built around your real life.</p>
+    <p class="hero-sub anim">"You are never too old to set another goal or dream a new dream." — C.S. Lewis</p>
   </div>
 
   <div class="streak-hero">
@@ -392,21 +392,21 @@ nav{position:relative;z-index:10;padding:22px 40px;display:flex;align-items:cent
 (function(){
   if('ontouchstart' in window)return;
   let cur=0,tgt=0,raf=null;
-  const ease=0.082;
+  const ease=0.12;
   document.documentElement.style.overflow='hidden';
   document.body.style.overflow='hidden';
+  document.documentElement.style.willChange='scroll-position';
   function maxS(){return Math.max(0,document.body.scrollHeight-window.innerHeight);}
   function tick(){
     tgt=Math.max(0,Math.min(tgt,maxS()));
     const d=tgt-cur;
-    if(Math.abs(d)<0.1){cur=tgt;raf=null;return;}
+    if(Math.abs(d)<0.5){cur=tgt;document.documentElement.scrollTop=cur;raf=null;return;}
     cur+=d*ease;
     document.documentElement.scrollTop=cur;
-    document.body.scrollTop=cur;
     raf=requestAnimationFrame(tick);
   }
   window._inertiaTgt=function(v){tgt=v;if(!raf)raf=requestAnimationFrame(tick);};
-  window.addEventListener('wheel',function(e){e.preventDefault();tgt+=e.deltaY*1.15;if(!raf)raf=requestAnimationFrame(tick);},{passive:false});
+  window.addEventListener('wheel',function(e){e.preventDefault();tgt+=e.deltaY*1.1;if(!raf)raf=requestAnimationFrame(tick);},{passive:false});
   window.addEventListener('keydown',function(e){
     const m={ArrowDown:80,ArrowUp:-80,PageDown:window.innerHeight*.85,PageUp:-(window.innerHeight*.85),' ':window.innerHeight*.85};
     if(m[e.key]!==undefined){e.preventDefault();tgt+=m[e.key];if(!raf)raf=requestAnimationFrame(tick);}
@@ -445,7 +445,7 @@ function navScrollTo(id){
 /* ── CANVAS PARTICLE FIRE ── */
 (function(){
   const canvas=document.getElementById('fire-canvas');
-  const ctx=canvas.getContext('2d');
+  const ctx=canvas.getContext('2d',{alpha:true});
   let W,H,particles=[];
   function resize(){W=canvas.width=canvas.offsetWidth;H=canvas.height=canvas.offsetHeight;}
   window.addEventListener('resize',resize);
@@ -462,10 +462,12 @@ function navScrollTo(id){
     };
     this.reset();
   }
-  for(let i=0;i<380;i++){const p=new Particle();p.life=Math.random()*p.maxLife;particles.push(p);}
+  for(let i=0;i<220;i++){const p=new Particle();p.life=Math.random()*p.maxLife;particles.push(p);}
   function lerp(a,b,t){return a+(b-a)*t;}
   function draw(){
     ctx.clearRect(0,0,W,H);
+    // Draw flames in one pass with shadow glow (no per-particle gradients)
+    ctx.shadowBlur=22;
     particles.forEach(p=>{
       p.life++;
       if(p.life>=p.maxLife){p.reset();return;}
@@ -474,21 +476,22 @@ function navScrollTo(id){
       const alpha=t<.15?t/.15:1-Math.pow((t-.15)/.85,.7);
       if(p.type==='spark'){
         const s=p.size*(1-t)*.5;
+        const hue=30+Math.random()*35;
+        ctx.shadowColor=`hsla(${hue},100%,75%,${alpha})`;
         ctx.globalAlpha=alpha*.9;
-        ctx.fillStyle=`hsl(${30+Math.random()*35},100%,${65+Math.random()*25}%)`;
+        ctx.fillStyle=`hsl(${hue},100%,${65+Math.random()*25}%)`;
         ctx.beginPath();ctx.arc(p.x,p.y,Math.max(.4,s),0,Math.PI*2);ctx.fill();
       } else {
         const r=Math.round(lerp(255,90,t));
         const g=Math.round(lerp(145,8,t));
         const s=p.size*(1-t*.55);
-        ctx.globalAlpha=alpha*.42;
-        const gr=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,s*3.2);
-        gr.addColorStop(0,`rgba(${r},${g},0,1)`);
-        gr.addColorStop(1,'rgba(0,0,0,0)');
-        ctx.fillStyle=gr;
-        ctx.beginPath();ctx.arc(p.x,p.y,s*3.2,0,Math.PI*2);ctx.fill();
+        ctx.shadowColor=`rgba(${r},${g},0,0.6)`;
+        ctx.globalAlpha=alpha*.55;
+        ctx.fillStyle=`rgba(${r},${g},0,1)`;
+        ctx.beginPath();ctx.arc(p.x,p.y,s*2.2,0,Math.PI*2);ctx.fill();
       }
     });
+    ctx.shadowBlur=0;
     ctx.globalAlpha=1;
     requestAnimationFrame(draw);
   }
@@ -807,6 +810,15 @@ document.querySelectorAll('.anim').forEach(el=>obs.observe(el));
 /* ── INIT ── */
 renderCountdown();renderPhase();renderStreak();renderDayCards();renderChecklist();renderWeekTable();
 setInterval(renderCountdown,60000);
+
+/* ── DISABLE RIGHT CLICK + INSPECT ── */
+document.addEventListener('contextmenu',function(e){e.preventDefault();});
+document.addEventListener('keydown',function(e){
+  if(e.key==='F12')e.preventDefault();
+  if(e.ctrlKey&&e.shiftKey&&(e.key==='I'||e.key==='i'||e.key==='J'||e.key==='j'||e.key==='C'||e.key==='c'))e.preventDefault();
+  if(e.ctrlKey&&(e.key==='U'||e.key==='u'))e.preventDefault();
+  if(e.metaKey&&e.altKey&&(e.key==='I'||e.key==='i'||e.key==='J'||e.key==='j'))e.preventDefault();
+});
 </script>
 </body>
 </html>
