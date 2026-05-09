@@ -7,1026 +7,352 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════════════════
-   TOKENS
-═══════════════════════════════════════ */
 :root {
-  --bg: #080808;
-  --bg2: #0d0d0d;
-  --surface: #111111;
-  --surface2: #171717;
-  --border: rgba(255,255,255,0.07);
-  --border-hover: rgba(255,255,255,0.14);
-  --ink: #f0ece6;
-  --ink-dim: rgba(240,236,230,0.55);
-  --ink-faint: rgba(240,236,230,0.22);
+  --bg:#060606;--bg2:#0c0c0c;--surface:#101010;--surface2:#161616;
+  --border:rgba(255,255,255,0.07);--border-hover:rgba(255,255,255,0.15);
+  --ink:#f2ede7;--ink-dim:rgba(242,237,231,0.52);--ink-faint:rgba(242,237,231,0.2);
+  --ember:#c8612a;--ember-bright:#e07030;--ember-soft:rgba(200,97,42,0.09);
+  --R:#b85050;--W:#5580cc;--L:#3e9870;--S:#c08840;--gold:#b88820;
+  --font-display:'Cormorant Garamond',Georgia,serif;
+  --font-ui:'Outfit',system-ui,sans-serif;
+  --font-mono:'DM Mono',monospace;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scrollbar-width:none;scroll-behavior:auto;}
+html::-webkit-scrollbar{display:none;}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-ui);font-size:15px;font-weight:300;line-height:1.65;overflow-x:hidden;cursor:none;}
 
-  /* skill colors */
-  --ember: #c8612a;
-  --ember-glow: rgba(200,97,42,0.18);
-  --ember-soft: rgba(200,97,42,0.08);
-  --R: #c06060;
-  --W: #5d8fd6;
-  --L: #4aaa7d;
-  --S: #c9924a;
-  --gold: #b8922a;
+#ember-cursor{position:fixed;top:0;left:0;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(200,97,42,0.2) 0%,rgba(200,97,42,0.05) 45%,transparent 72%);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);mix-blend-mode:screen;transition:opacity 0.5s;}
+#cursor-dot{position:fixed;top:0;left:0;width:5px;height:5px;border-radius:50%;background:var(--ember-bright);pointer-events:none;z-index:10000;transform:translate(-50%,-50%);box-shadow:0 0 12px 4px rgba(224,112,48,0.55);}
 
-  --font-display: 'Cormorant Garamond', Georgia, serif;
-  --font-ui: 'Outfit', system-ui, sans-serif;
-  --font-mono: 'DM Mono', monospace;
-}
+body::before{content:'';position:fixed;inset:0;z-index:1;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");opacity:0.03;pointer-events:none;}
 
-/* ═══════════════════════════════════════
-   RESET + BASE
-═══════════════════════════════════════ */
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+/* ── FIRE HERO ── */
+#fire-hero{position:relative;min-height:100dvh;display:flex;flex-direction:column;overflow:hidden;z-index:2;}
+#fire-canvas{position:absolute;bottom:0;left:0;width:100%;height:92%;pointer-events:none;z-index:0;mask-image:linear-gradient(to top,rgba(0,0,0,1) 0%,rgba(0,0,0,0.85) 50%,transparent 100%);-webkit-mask-image:linear-gradient(to top,rgba(0,0,0,1) 0%,rgba(0,0,0,0.85) 50%,transparent 100%);}
+#fire-hero::after{content:'';position:absolute;bottom:-10%;left:50%;transform:translateX(-50%);width:100%;height:80%;border-radius:50%;background:radial-gradient(ellipse,rgba(200,70,15,0.38) 0%,rgba(140,40,8,0.16) 48%,transparent 75%);pointer-events:none;z-index:0;animation:fire-pulse 3.2s ease-in-out infinite alternate;}
+@keyframes fire-pulse{from{opacity:0.7;transform:translateX(-50%) scaleY(0.94);}to{opacity:1;transform:translateX(-50%) scaleY(1.06);}}
 
-html {
-  scroll-behavior: auto; /* overridden by JS inertia */
-  scrollbar-width: none;
-}
-html::-webkit-scrollbar { display: none; }
+nav{position:relative;z-index:10;padding:22px 40px;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{font-family:var(--font-display);font-size:21px;font-weight:300;font-style:italic;letter-spacing:0.03em;color:var(--ink);}
+.nav-logo em{color:var(--ember-bright);font-style:normal;}
+.nav-links{display:flex;gap:28px;list-style:none;font-family:var(--font-mono);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-dim);}
+.nav-links a{color:inherit;text-decoration:none;transition:color 0.2s;}
+.nav-links a:hover{color:var(--ink);}
 
-body {
-  background: var(--bg);
-  color: var(--ink);
-  font-family: var(--font-ui);
-  font-size: 15px;
-  font-weight: 300;
-  line-height: 1.65;
-  overflow-x: hidden;
-  cursor: none;
-}
+.hero-content{position:relative;z-index:5;flex:1;display:flex;flex-direction:column;justify-content:center;padding:40px 40px 0;}
+.hero-eyebrow{font-family:var(--font-mono);font-size:10px;letter-spacing:0.32em;text-transform:uppercase;color:var(--ember-bright);margin-bottom:22px;display:flex;align-items:center;gap:12px;}
+.hero-eyebrow::before{content:'';width:26px;height:1px;background:var(--ember);}
+.hero-title{font-family:var(--font-display);font-size:clamp(72px,12vw,148px);font-weight:300;line-height:0.9;letter-spacing:-0.025em;}
+.hero-title .ghost{color:transparent;-webkit-text-stroke:1px rgba(242,237,231,0.28);}
+.hero-title em{font-style:italic;color:var(--ember-bright);-webkit-text-stroke:0;}
+.hero-sub{font-size:14px;color:var(--ink-dim);max-width:340px;line-height:1.8;font-weight:300;margin-top:28px;}
 
-/* ═══════════════════════════════════════
-   CURSOR EMBER GLOW
-═══════════════════════════════════════ */
-#ember-cursor {
-  position: fixed;
-  top: 0; left: 0;
-  width: 420px; height: 420px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(200,97,42,0.22) 0%, rgba(200,97,42,0.07) 40%, transparent 70%);
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-  transition: opacity 0.4s ease;
-  mix-blend-mode: screen;
-}
-#cursor-dot {
-  position: fixed;
-  top: 0; left: 0;
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--ember);
-  pointer-events: none;
-  z-index: 10000;
-  transform: translate(-50%, -50%);
-  box-shadow: 0 0 10px 3px rgba(200,97,42,0.5);
-}
+/* ── BIG STREAK + COUNTDOWN ── */
+.streak-hero{position:relative;z-index:5;display:flex;align-items:flex-end;gap:0;padding:36px 40px 30px;flex-wrap:wrap;}
+.streak-hero-num{font-family:var(--font-display);font-size:clamp(110px,19vw,210px);font-weight:300;line-height:0.82;letter-spacing:-0.05em;color:var(--ember-bright);text-shadow:0 0 80px rgba(200,97,42,0.6),0 0 180px rgba(200,97,42,0.22);}
+.streak-hero-meta{padding-bottom:16px;margin-left:18px;}
+.streak-hero-label{font-family:var(--font-mono);font-size:10px;letter-spacing:0.28em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:5px;}
+.streak-hero-word{font-family:var(--font-display);font-size:26px;font-weight:300;font-style:italic;color:var(--ink-dim);line-height:1;}
+.countdown-badge{margin-left:auto;text-align:right;padding-bottom:10px;}
+.countdown-num{font-family:var(--font-display);font-size:clamp(50px,7vw,84px);font-weight:300;line-height:0.88;letter-spacing:-0.04em;color:var(--ink);}
+.countdown-sub{font-family:var(--font-mono);font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--ink-faint);margin-top:6px;display:block;}
+.exam-date-pill{display:inline-block;margin-top:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;color:var(--ember);background:var(--ember-soft);border:1px solid rgba(200,97,42,0.22);border-radius:20px;padding:4px 14px;}
 
-/* ═══════════════════════════════════════
-   NOISE GRAIN OVERLAY
-═══════════════════════════════════════ */
-body::before {
-  content: '';
-  position: fixed; inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-  opacity: 0.028;
-  pointer-events: none;
-  z-index: 1;
-}
+/* ── WRAP ── */
+.wrap{max-width:1080px;margin:0 auto;padding:0 40px 120px;position:relative;z-index:2;}
+.hr{height:1px;background:var(--border);margin:72px 0;}
+.sec-label{font-family:var(--font-mono);font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:30px;display:flex;align-items:center;gap:16px;}
+.sec-label::after{content:'';flex:1;height:1px;background:var(--border);}
 
-/* ═══════════════════════════════════════
-   LAYOUT WRAP
-═══════════════════════════════════════ */
-.wrap {
-  max-width: 1080px;
-  margin: 0 auto;
-  padding: 0 32px 120px;
-  position: relative;
-  z-index: 2;
-}
+/* ── JOURNEY MAP ── */
+.journey-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:22px;}
+.j-stat{background:var(--surface);padding:22px 24px;}
+.j-stat-num{font-family:var(--font-display);font-size:42px;font-weight:300;line-height:1;letter-spacing:-0.03em;}
+.j-stat-label{font-family:var(--font-mono);font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-faint);margin-top:4px;}
+.dot-map-wrap{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px 28px;}
+.dot-map-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:12px;}
+.dot-map-title{font-family:var(--font-mono);font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-faint);}
+.dot-legend{display:flex;align-items:center;gap:14px;font-family:var(--font-mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-faint);}
+.dot-legend-item{display:flex;align-items:center;gap:6px;}
+.dl-dot{width:10px;height:10px;border-radius:50%;}
+.dl-dot.done{background:var(--ember);}
+.dl-dot.rest{background:var(--surface2);border:1px dashed rgba(242,237,231,0.2);}
+.dl-dot.future{background:transparent;border:1px solid var(--border);}
+.dl-dot.today{background:transparent;border:2px solid var(--ember-bright);box-shadow:0 0 6px rgba(224,112,48,0.4);}
+#dot-row{display:flex;flex-wrap:wrap;gap:5px;}
+.sdot{width:18px;height:18px;border-radius:50%;background:transparent;border:1px solid var(--border);transition:all 0.2s;cursor:default;flex-shrink:0;}
+.sdot.done{background:var(--ember);border-color:var(--ember);box-shadow:0 0 7px rgba(200,97,42,0.5);}
+.sdot.today{background:transparent;border:2px solid var(--ember-bright);box-shadow:0 0 0 3px rgba(224,112,48,0.18);}
+.sdot.rest{background:var(--surface2);border-style:dashed;border-color:rgba(242,237,231,0.18);opacity:0.6;}
 
-/* ═══════════════════════════════════════
-   NAV
-═══════════════════════════════════════ */
-nav {
-  position: sticky; top: 0;
-  z-index: 100;
-  padding: 20px 32px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid var(--border);
-  background: rgba(8,8,8,0.88);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-}
-.nav-logo {
-  font-family: var(--font-display);
-  font-size: 22px;
-  font-weight: 300;
-  letter-spacing: 0.02em;
-  color: var(--ink);
-  font-style: italic;
-}
-.nav-logo em { color: var(--ember); font-style: normal; }
-.nav-links {
-  display: flex; gap: 32px;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--ink-dim);
-  list-style: none;
-}
-.nav-links a { color: inherit; text-decoration: none; transition: color 0.2s; }
-.nav-links a:hover { color: var(--ink); }
+/* ── PHASE ── */
+.phase-banner{border:1px solid var(--border);border-radius:16px;padding:28px 32px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;margin-bottom:72px;position:relative;overflow:hidden;}
+.phase-banner::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--ember),transparent);opacity:0.45;}
+.phase-ghost{position:absolute;right:28px;bottom:-14px;font-family:var(--font-display);font-size:88px;font-weight:300;color:var(--ink-faint);letter-spacing:-0.04em;line-height:1;pointer-events:none;}
+.phase-name{font-family:var(--font-display);font-size:26px;font-weight:400;font-style:italic;color:var(--ink);margin-bottom:6px;}
+.phase-goal{font-size:13px;color:var(--ink-dim);max-width:500px;line-height:1.75;}
+.phase-badge{font-family:var(--font-mono);font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--ember);background:var(--ember-soft);border:1px solid rgba(200,97,42,0.22);border-radius:20px;padding:6px 16px;white-space:nowrap;align-self:start;}
 
-/* ═══════════════════════════════════════
-   HERO
-═══════════════════════════════════════ */
-.hero {
-  min-height: 100dvh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 80px 0 60px;
-  position: relative;
-}
-.hero-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--ember);
-  margin-bottom: 28px;
-  display: flex; align-items: center; gap: 12px;
-}
-.hero-eyebrow::before {
-  content: '';
-  width: 32px; height: 1px;
-  background: var(--ember);
-}
-.hero-title {
-  font-family: var(--font-display);
-  font-size: clamp(68px, 11vw, 140px);
-  font-weight: 300;
-  line-height: 0.92;
-  letter-spacing: -0.02em;
-  color: var(--ink);
-  margin-bottom: 0;
-  text-wrap: balance;
-}
-.hero-title .accent {
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(240,236,230,0.35);
-}
-.hero-title em {
-  font-style: italic;
-  color: var(--ember);
-  -webkit-text-stroke: 0;
-}
+/* ── DAY CARDS ── */
+.day-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:72px;}
+.day-card{border:1px solid var(--border);border-radius:16px;padding:30px;position:relative;overflow:hidden;transition:border-color 0.3s;}
+.day-card.featured{background:var(--surface);}
+.day-card.featured::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--c,var(--ember)),transparent);}
+.day-card.preview{background:var(--bg2);opacity:0.65;}
+.dc-eyebrow{font-family:var(--font-mono);font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:18px;}
+.dc-skill-name{font-family:var(--font-display);font-size:40px;font-weight:300;font-style:italic;line-height:1;margin-bottom:12px;}
+.dc-tagline{font-size:13px;color:var(--ink-dim);line-height:1.65;margin-bottom:18px;}
+.dc-time{font-family:var(--font-mono);font-size:11px;color:var(--ink-faint);letter-spacing:0.08em;}
+.dc-time strong{color:var(--ink-dim);}
 
-.hero-bottom {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 40px;
-  align-items: end;
-  margin-top: 64px;
-}
-.hero-sub {
-  font-size: 15px;
-  color: var(--ink-dim);
-  max-width: 380px;
-  line-height: 1.75;
-  font-weight: 300;
-}
+/* ── SKILLS ── */
+.skills-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:72px;}
+.skill-card{border:1px solid var(--border);border-radius:14px;padding:22px 18px;position:relative;overflow:hidden;transition:border-color 0.25s,transform 0.25s;}
+.skill-card:hover{border-color:var(--border-hover);transform:translateY(-3px);}
+.skill-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:var(--c);opacity:0.6;}
+.sk-name{font-family:var(--font-display);font-size:21px;font-weight:300;font-style:italic;color:var(--c);margin-bottom:4px;}
+.sk-days{font-family:var(--font-mono);font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-faint);}
 
-/* COUNTDOWN */
-.countdown-block {
-  text-align: right;
-}
-.countdown-num {
-  font-family: var(--font-display);
-  font-size: clamp(64px, 9vw, 110px);
-  font-weight: 300;
-  line-height: 0.9;
-  letter-spacing: -0.04em;
-  color: var(--ember);
-}
-.countdown-label {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-  margin-top: 8px;
-}
-.exam-date {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  color: var(--ink-dim);
-  margin-top: 10px;
-}
+/* ── CHECKLIST ── */
+.checklist-wrap{border:1px solid var(--border);border-radius:16px;padding:34px 38px;margin-bottom:72px;background:var(--surface);}
+.cl-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;flex-wrap:wrap;gap:10px;}
+.cl-title{font-family:var(--font-display);font-size:30px;font-weight:300;font-style:italic;color:var(--ink);}
+.cl-day-chip{font-family:var(--font-mono);font-size:9px;letter-spacing:0.18em;text-transform:uppercase;padding:5px 14px;border-radius:20px;color:#fff;}
+.cl-sub{font-size:13px;color:var(--ink-dim);margin-bottom:28px;line-height:1.75;}
+.time-block{border-radius:10px;margin:18px 0;padding:18px 20px;border:1px solid var(--border);background:var(--bg2);}
+.time-block-label{font-family:var(--font-mono);font-size:9px;letter-spacing:0.24em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.tb-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.rest-block{display:flex;align-items:center;gap:16px;margin:22px 0;padding:14px 18px;border:1px dashed rgba(242,237,231,0.12);border-radius:10px;background:rgba(242,237,231,0.02);}
+.rest-block-icon{font-size:17px;}
+.rest-block-text{font-family:var(--font-mono);font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-faint);}
+.ci{display:flex;align-items:flex-start;gap:12px;padding:11px 0;border-bottom:1px solid var(--border);cursor:pointer;transition:opacity 0.2s;}
+.ci:last-child{border-bottom:none;}
+.ci:hover{opacity:0.78;}
+.cibox{width:18px;height:18px;border-radius:5px;border:1px solid var(--border-hover);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:10px;background:var(--bg);transition:all 0.18s;}
+.ci.done .cibox{background:var(--L);border-color:var(--L);color:#fff;}
+.ci-text{font-size:13px;color:var(--ink);line-height:1.6;}
+.ci-diff{font-size:10px;font-family:var(--font-mono);color:var(--ink-faint);margin-top:3px;}
+.ci.done .ci-text{color:var(--ink-faint);text-decoration:line-through;}
+.prog-bg{height:2px;background:var(--border);border-radius:2px;overflow:hidden;margin-top:26px;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--L),#60e8a4);width:0%;transition:width 0.5s cubic-bezier(0.25,0.8,0.25,1);border-radius:2px;}
+.prog-row{display:flex;justify-content:space-between;margin-top:8px;}
+.prog-txt{font-family:var(--font-mono);font-size:10px;color:var(--ink-faint);}
+.prog-pct{font-family:var(--font-mono);font-size:10px;color:var(--L);}
 
-/* horizontal rule */
-.hr {
-  height: 1px;
-  background: var(--border);
-  margin: 80px 0;
-}
+/* ── WEEK TABLE ── */
+.week-wrap{border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:72px;}
+.w-row{display:grid;grid-template-columns:80px 120px 1fr 90px;border-bottom:1px solid var(--border);}
+.w-row:last-child{border-bottom:none;}
+.w-row.thead{background:var(--surface2);font-family:var(--font-mono);font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-faint);}
+.w-row.active-day{background:rgba(200,97,42,0.04);border-left:2px solid var(--ember);}
+.w-cell{padding:14px 16px;border-right:1px solid var(--border);font-size:12px;line-height:1.5;display:flex;align-items:center;}
+.w-cell:last-child{border-right:none;}
+.w-cell.day{flex-direction:column;align-items:flex-start;justify-content:center;gap:2px;font-family:var(--font-mono);font-size:10px;color:var(--ink-faint);}
+.w-cell.day strong{color:var(--ink);font-size:12px;font-weight:500;}
+.w-cell.focus{align-items:flex-start;padding-top:16px;}
+.w-cell.time{color:var(--ink-dim);font-size:11px;justify-content:center;font-family:var(--font-mono);}
+.today-lbl{font-size:8px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ember);font-family:var(--font-mono);}
+.tag{display:inline-block;font-size:9px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:3px 10px;border-radius:4px;font-family:var(--font-mono);}
+.tag.R{background:rgba(184,80,80,0.12);color:var(--R);}
+.tag.W{background:rgba(85,128,204,0.12);color:var(--W);}
+.tag.L{background:rgba(62,152,112,0.12);color:var(--L);}
+.tag.S{background:rgba(192,136,64,0.12);color:var(--S);}
+.tag.rest{background:rgba(242,237,231,0.07);color:var(--ink-dim);}
+.w-task{font-size:12px;color:var(--ink);}
+.w-hint{font-size:10px;color:var(--ink-faint);margin-top:2px;font-family:var(--font-mono);}
 
-/* ═══════════════════════════════════════
-   SECTION LABEL
-═══════════════════════════════════════ */
-.sec-label {
-  font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-  margin-bottom: 36px;
-  display: flex; align-items: center; gap: 16px;
-}
-.sec-label::after {
-  content: '';
-  flex: 1; height: 1px;
-  background: var(--border);
-}
+/* ── TIPS ── */
+.tips-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:72px;}
+.tip-card{border:1px solid var(--border);border-radius:14px;padding:24px;transition:border-color 0.25s;}
+.tip-card:hover{border-color:var(--border-hover);}
+.tip-head{font-family:var(--font-display);font-size:18px;font-weight:400;font-style:italic;margin-bottom:10px;}
+.tip-body{font-size:12px;color:var(--ink-dim);line-height:1.75;}
 
-/* ═══════════════════════════════════════
-   PHASE BANNER
-═══════════════════════════════════════ */
-.phase-banner {
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 28px 32px;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 24px;
-  align-items: center;
-  margin-bottom: 80px;
-  position: relative;
-  overflow: hidden;
-}
-.phase-banner::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--ember), transparent);
-  opacity: 0.5;
-}
-.phase-num {
-  font-family: var(--font-display);
-  font-size: 72px;
-  font-weight: 300;
-  color: var(--ink-faint);
-  line-height: 1;
-  position: absolute;
-  right: 32px; bottom: -12px;
-  letter-spacing: -0.04em;
-}
-.phase-name {
-  font-family: var(--font-display);
-  font-size: 26px;
-  font-weight: 400;
-  font-style: italic;
-  color: var(--ink);
-  margin-bottom: 6px;
-}
-.phase-goal {
-  font-size: 13px;
-  color: var(--ink-dim);
-  max-width: 500px;
-  line-height: 1.7;
-}
-.phase-badge {
-  font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--ember);
-  background: var(--ember-soft);
-  border: 1px solid rgba(200,97,42,0.2);
-  border-radius: 20px;
-  padding: 6px 16px;
-  white-space: nowrap;
-  align-self: start;
-}
 
-/* ═══════════════════════════════════════
-   STREAK
-═══════════════════════════════════════ */
-.streak-section {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 48px;
-  align-items: center;
-  margin-bottom: 80px;
-}
-.streak-num-wrap {
-  position: relative;
-}
-.streak-big {
-  font-family: var(--font-display);
-  font-size: 120px;
-  font-weight: 300;
-  line-height: 0.85;
-  color: var(--ember);
-  letter-spacing: -0.05em;
-}
-.streak-label {
-  font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-  margin-top: 12px;
-}
-.dot-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  max-width: 460px;
-}
-.sdot {
-  width: 22px; height: 22px;
-  border-radius: 50%;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  transition: all 0.2s;
-}
-.sdot.done {
-  background: var(--ember);
-  border-color: var(--ember);
-  box-shadow: 0 0 8px rgba(200,97,42,0.45);
-}
-.sdot.today {
-  border-color: var(--ember);
-  box-shadow: 0 0 0 3px rgba(200,97,42,0.18);
-}
-.streak-note {
-  font-size: 13px;
-  color: var(--ink-dim);
-  margin-top: 16px;
-  line-height: 1.65;
-}
 
-/* ═══════════════════════════════════════
-   TODAY / TOMORROW
-═══════════════════════════════════════ */
-.day-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  margin-bottom: 80px;
-}
-.day-card {
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 32px;
-  position: relative;
-  overflow: hidden;
-  transition: border-color 0.3s;
-}
-.day-card.featured {
-  background: var(--surface);
-  border-color: rgba(240,236,230,0.1);
-}
-.day-card.featured::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--c, var(--ember)), transparent);
-}
-.day-card.preview {
-  background: var(--bg2);
-  opacity: 0.7;
-}
-.dc-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-  margin-bottom: 20px;
-}
-.dc-skill-name {
-  font-family: var(--font-display);
-  font-size: 42px;
-  font-weight: 300;
-  font-style: italic;
-  line-height: 1;
-  margin-bottom: 14px;
-}
-.dc-tagline {
-  font-size: 13px;
-  color: var(--ink-dim);
-  line-height: 1.65;
-  margin-bottom: 20px;
-}
-.dc-time {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--ink-faint);
-  letter-spacing: 0.08em;
-}
-.dc-time strong { color: var(--ink-dim); }
+/* ── OVERLAYS ── */
+#reward-toast{position:fixed;top:24px;left:50%;transform:translateX(-50%) translateY(-120px);z-index:2000;background:var(--surface2);border:1px solid var(--border);border-radius:50px;padding:11px 26px;display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink);box-shadow:0 20px 60px rgba(0,0,0,0.5);transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);backdrop-filter:blur(24px);}
+#reward-toast.show{transform:translateX(-50%) translateY(0);}
+#all-done-overlay{display:none;position:fixed;inset:0;background:rgba(6,6,6,0.88);z-index:3000;align-items:center;justify-content:center;backdrop-filter:blur(20px);}
+#all-done-overlay.visible{display:flex;}
+.ado-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:48px;text-align:center;max-width:400px;animation:up 0.5s cubic-bezier(0.34,1.56,0.64,1);}
+.ado-title{font-family:var(--font-display);font-size:42px;font-weight:300;font-style:italic;margin-bottom:12px;}
+.ado-sub{font-size:13px;color:var(--ink-dim);line-height:1.75;margin-bottom:26px;}
+.ado-close{background:var(--ember);color:#fff;border:none;border-radius:24px;padding:11px 26px;font-family:var(--font-mono);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;cursor:none;transition:opacity 0.15s;}
+.ado-close:hover{opacity:0.85;}
+#fireworks-canvas{position:fixed;inset:0;pointer-events:none;z-index:9997;}
 
-/* ═══════════════════════════════════════
-   SKILLS ROW
-═══════════════════════════════════════ */
-.skills-row {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  margin-bottom: 80px;
-}
-.skill-card {
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 24px 20px;
-  position: relative;
-  overflow: hidden;
-  transition: border-color 0.25s, transform 0.25s;
-  cursor: default;
-}
-.skill-card:hover {
-  border-color: var(--border-hover);
-  transform: translateY(-3px);
-}
-.skill-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 1px;
-  background: var(--c);
-  opacity: 0.6;
-}
-.sk-name {
-  font-family: var(--font-display);
-  font-size: 22px;
-  font-weight: 300;
-  font-style: italic;
-  color: var(--c);
-  margin-bottom: 4px;
-}
-.sk-days {
-  font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-}
+@keyframes up{from{opacity:0;transform:translateY(36px)}to{opacity:1;transform:none}}
+.anim{opacity:0;}
+.anim.in{animation:up 1.3s cubic-bezier(0.22,1,0.36,1) forwards;}
 
-/* ═══════════════════════════════════════
-   CHECKLIST
-═══════════════════════════════════════ */
-.checklist-wrap {
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 36px 40px;
-  margin-bottom: 80px;
-  background: var(--surface);
-}
-.cl-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 6px;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-.cl-title {
-  font-family: var(--font-display);
-  font-size: 32px;
-  font-weight: 300;
-  font-style: italic;
-  color: var(--ink);
-}
-.cl-day-chip {
-  font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  padding: 5px 14px;
-  border-radius: 20px;
-  color: #fff;
-}
-.cl-sub {
-  font-size: 13px;
-  color: var(--ink-dim);
-  margin-bottom: 32px;
-  line-height: 1.7;
-}
-.cl-section {
-  margin-bottom: 24px;
-}
-.cl-sec-title {
-  font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-  margin-bottom: 12px;
-  display: flex; align-items: center; gap: 10px;
-}
-.cl-dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--gc);
-  flex-shrink: 0;
-}
-.ci {
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--border);
-  cursor: pointer;
-  transition: opacity 0.2s;
-}
-.ci:last-child { border-bottom: none; }
-.ci:hover { opacity: 0.8; }
-.cibox {
-  width: 20px; height: 20px;
-  border-radius: 5px;
-  border: 1px solid var(--border-hover);
-  flex-shrink: 0;
-  margin-top: 1px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 11px;
-  background: var(--bg);
-  transition: all 0.18s;
-}
-.ci.done .cibox {
-  background: var(--L);
-  border-color: var(--L);
-  color: #fff;
-}
-.ci-text {
-  font-size: 13px;
-  color: var(--ink);
-  line-height: 1.6;
-}
-.ci-diff {
-  font-size: 11px;
-  font-family: var(--font-mono);
-  color: var(--ink-faint);
-  margin-top: 3px;
-}
-.ci.done .ci-text {
-  color: var(--ink-faint);
-  text-decoration: line-through;
-}
-
-/* progress */
-.prog-bg {
-  height: 2px;
-  background: var(--border);
-  border-radius: 2px;
-  overflow: hidden;
-  margin-top: 28px;
-}
-.prog-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--L), #68e8a8);
-  width: 0%;
-  transition: width 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
-  border-radius: 2px;
-}
-.prog-row {
-  display: flex; justify-content: space-between;
-  margin-top: 10px;
-}
-.prog-txt {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--ink-faint);
-  letter-spacing: 0.08em;
-}
-.prog-pct {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--L);
-  letter-spacing: 0.08em;
-}
-
-/* ═══════════════════════════════════════
-   WEEK TABLE
-═══════════════════════════════════════ */
-.week-wrap {
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  overflow: hidden;
-  margin-bottom: 80px;
-}
-.w-row {
-  display: grid;
-  grid-template-columns: 80px 120px 1fr 80px;
-  border-bottom: 1px solid var(--border);
-}
-.w-row:last-child { border-bottom: none; }
-.w-row.thead {
-  background: var(--surface2);
-  font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-}
-.w-row.active-day {
-  background: rgba(200,97,42,0.04);
-  border-left: 2px solid var(--ember);
-}
-.w-cell {
-  padding: 14px 16px;
-  border-right: 1px solid var(--border);
-  font-size: 12px;
-  line-height: 1.5;
-  display: flex; align-items: center;
-}
-.w-cell:last-child { border-right: none; }
-.w-cell.day {
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 2px;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--ink-faint);
-}
-.w-cell.day strong {
-  color: var(--ink);
-  font-size: 12px;
-  font-weight: 500;
-}
-.w-cell.focus { align-items: flex-start; padding-top: 16px; }
-.w-cell.time {
-  color: var(--ink-dim);
-  font-size: 11px;
-  justify-content: center;
-  font-family: var(--font-mono);
-}
-.today-lbl {
-  font-size: 8px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--ember);
-  font-family: var(--font-mono);
-}
-.tag {
-  display: inline-block;
-  font-size: 9px;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 3px 10px;
-  border-radius: 4px;
-  font-family: var(--font-mono);
-}
-.tag.R { background: rgba(192,96,96,0.12); color: var(--R); }
-.tag.W { background: rgba(93,143,214,0.12); color: var(--W); }
-.tag.L { background: rgba(74,170,125,0.12); color: var(--L); }
-.tag.S { background: rgba(201,146,74,0.12); color: var(--S); }
-.tag.rest { background: rgba(240,236,230,0.07); color: var(--ink-dim); }
-.w-task { font-size: 12px; color: var(--ink); }
-.w-hint { font-size: 10px; color: var(--ink-faint); margin-top: 2px; font-family: var(--font-mono); }
-
-/* ═══════════════════════════════════════
-   TIPS
-═══════════════════════════════════════ */
-.tips-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-bottom: 80px;
-}
-.tip-card {
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 24px;
-  transition: border-color 0.25s;
-}
-.tip-card:hover { border-color: var(--border-hover); }
-.tip-head {
-  font-family: var(--font-display);
-  font-size: 18px;
-  font-weight: 400;
-  font-style: italic;
-  margin-bottom: 10px;
-}
-.tip-body {
-  font-size: 12px;
-  color: var(--ink-dim);
-  line-height: 1.75;
-}
-
-/* ═══════════════════════════════════════
-   MUSIC PLAYER
-═══════════════════════════════════════ */
-#music-player {
-  position: fixed;
-  bottom: 28px; right: 28px;
-  z-index: 1000;
-  background: rgba(17,17,17,0.92);
-  border: 1px solid var(--border);
-  border-radius: 50px;
-  padding: 10px 20px 10px 12px;
-  display: flex; align-items: center; gap: 12px;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
-  transition: border-color 0.25s;
-  min-width: 230px;
-}
-#music-player:hover { border-color: var(--ember); }
-.mp-art {
-  width: 34px; height: 34px;
-  border-radius: 50%;
-  background: conic-gradient(var(--ember), #d4824a, #8a3d18, var(--ember));
-  display: flex; align-items: center; justify-content: center;
-  font-size: 14px; flex-shrink: 0;
-  animation: spin-slow 10s linear infinite;
-  animation-play-state: paused;
-}
-.mp-art.playing { animation-play-state: running; }
-@keyframes spin-slow { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
-.mp-info { flex: 1; min-width: 0; }
-.mp-title {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--ink);
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  letter-spacing: 0.04em;
-}
-.mp-artist {
-  font-size: 9px; color: var(--ink-faint);
-  margin-top: 1px;
-  font-family: var(--font-mono);
-}
-.mp-controls { display: flex; align-items: center; gap: 8px; }
-.mp-btn {
-  background: none; border: none; cursor: none;
-  padding: 4px; color: var(--ink-dim);
-  transition: color 0.15s; font-size: 13px; line-height: 1;
-  display: flex; align-items: center; justify-content: center;
-}
-.mp-btn:hover { color: var(--ink); }
-.mp-btn.play-btn {
-  width: 28px; height: 28px; border-radius: 50%;
-  background: var(--ember); color: #fff; font-size: 11px;
-}
-.mp-btn.play-btn:hover { background: #d97040; }
-.mp-vol {
-  -webkit-appearance: none; appearance: none;
-  width: 48px; height: 2px; border-radius: 1px;
-  background: var(--border); outline: none; cursor: none;
-}
-.mp-vol::-webkit-slider-thumb {
-  -webkit-appearance: none; width: 10px; height: 10px;
-  border-radius: 50%; background: var(--ember); cursor: none;
-}
-
-/* ═══════════════════════════════════════
-   OVERLAYS
-═══════════════════════════════════════ */
-#reward-toast {
-  position: fixed; top: 28px; left: 50%;
-  transform: translateX(-50%) translateY(-120px);
-  z-index: 2000;
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  border-radius: 50px;
-  padding: 12px 28px;
-  display: flex; align-items: center; gap: 12px;
-  font-size: 13px; color: var(--ink);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  backdrop-filter: blur(20px);
-}
-#reward-toast.show { transform: translateX(-50%) translateY(0); }
-.rt-emoji { font-size: 18px; }
-
-#all-done-overlay {
-  display: none; position: fixed; inset: 0;
-  background: rgba(8,8,8,0.88);
-  z-index: 3000;
-  align-items: center; justify-content: center;
-  backdrop-filter: blur(16px);
-}
-#all-done-overlay.visible { display: flex; }
-.ado-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 52px;
-  text-align: center;
-  max-width: 420px;
-  animation: up 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-.ado-title {
-  font-family: var(--font-display);
-  font-size: 44px;
-  font-weight: 300;
-  font-style: italic;
-  margin-bottom: 12px;
-}
-.ado-sub {
-  font-size: 13px;
-  color: var(--ink-dim);
-  line-height: 1.75;
-  margin-bottom: 28px;
-}
-.ado-close {
-  background: var(--ember);
-  color: #fff;
-  border: none;
-  border-radius: 24px;
-  padding: 12px 28px;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  cursor: none;
-  transition: opacity 0.15s;
-}
-.ado-close:hover { opacity: 0.85; }
-
-/* ═══════════════════════════════════════
-   FIREWORKS
-═══════════════════════════════════════ */
-#fireworks-canvas {
-  position: fixed; inset: 0;
-  pointer-events: none; z-index: 9998;
-}
-
-/* ═══════════════════════════════════════
-   ANIMATIONS
-═══════════════════════════════════════ */
-@keyframes up {
-  from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: none; }
-}
-.anim { opacity: 0; }
-.anim.in { animation: up 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
-
-/* ═══════════════════════════════════════
-   RESPONSIVE
-═══════════════════════════════════════ */
-@media(max-width: 720px) {
-  .hero-bottom { grid-template-columns: 1fr; }
-  .countdown-block { text-align: left; }
-  .day-grid { grid-template-columns: 1fr; }
-  .skills-row { grid-template-columns: repeat(2, 1fr); }
-  .tips-grid { grid-template-columns: 1fr; }
-  .w-row { grid-template-columns: 72px 100px 1fr; }
-  .w-row .w-cell:last-child { display: none; }
-  .streak-section { grid-template-columns: 1fr; }
-  .wrap { padding: 0 20px 80px; }
-  nav { padding: 16px 20px; }
-  .nav-links { display: none; }
+@media(max-width:720px){
+  nav,.hero-content,.streak-hero{padding-left:22px;padding-right:22px;}
+  .wrap{padding:0 22px 80px;}
+  .hero-title{font-size:clamp(62px,18vw,96px);}
+  .streak-hero-num{font-size:clamp(90px,24vw,150px);}
+  .streak-hero{flex-wrap:wrap;}
+  .countdown-badge{margin-left:0;}
+  .day-grid,.journey-stats{grid-template-columns:1fr;}
+  .skills-row{grid-template-columns:repeat(2,1fr);}
+  .tips-grid{grid-template-columns:1fr;}
+  .w-row{grid-template-columns:68px 100px 1fr;}
+  .w-row .w-cell:last-child{display:none;}
+  .nav-links{display:none;}
+  .phase-banner{grid-template-columns:1fr;}
 }
 </style>
 </head>
 <body>
-
-<!-- Cursor elements -->
 <div id="ember-cursor"></div>
 <div id="cursor-dot"></div>
-
-<!-- Fireworks -->
 <canvas id="fireworks-canvas"></canvas>
 
-<!-- Reward Toast -->
 <div id="reward-toast">
-  <span class="rt-emoji" id="rt-emoji">⭐</span>
-  <div id="rt-text" style="font-weight:500;">Nice work!</div>
-  <div id="rt-sub" style="color:var(--ink-dim);font-size:12px;">Keep the streak alive</div>
+  <span id="rt-emoji">⭐</span>
+  <div id="rt-text" style="font-weight:500">Solid.</div>
+  <div id="rt-sub" style="color:var(--ink-dim);font-size:12px">Keep going.</div>
 </div>
-
-<!-- All Done Overlay -->
 <div id="all-done-overlay">
   <div class="ado-card">
-    <div style="font-size:36px;margin-bottom:16px;">🏆</div>
+    <div style="font-size:34px;margin-bottom:16px">🔥</div>
     <div class="ado-title">All done today.</div>
-    <div class="ado-sub">Every task checked. Streak updated. Rest well — tomorrow you continue.</div>
+    <div class="ado-sub">Every task checked. Streak preserved. The fire keeps burning.</div>
     <button class="ado-close" onclick="closeAllDone()">Close · See you tomorrow</button>
   </div>
 </div>
 
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">IELTS <em>Prep</em></div>
-  <ul class="nav-links">
-    <li><a href="#phase">Phase</a></li>
-    <li><a href="#today">Today</a></li>
-    <li><a href="#checklist">Tasks</a></li>
-    <li><a href="#week">Schedule</a></li>
-    <li><a href="#tips">Tips</a></li>
-  </ul>
-</nav>
+<!-- FIRE HERO -->
+<section id="fire-hero">
+  <canvas id="fire-canvas"></canvas>
 
-<div class="wrap">
+  <nav>
+    <div class="nav-logo">IELTS <em>Prep</em></div>
+    <ul class="nav-links">
+      <li><a href="#" onclick="navScrollTo('phase-section');return false;">Phase</a></li>
+      <li><a href="#" onclick="navScrollTo('today-section');return false;">Today</a></li>
+      <li><a href="#" onclick="navScrollTo('checklist-section');return false;">Tasks</a></li>
+      <li><a href="#" onclick="navScrollTo('week-section');return false;">Schedule</a></li>
+      <li><a href="#" onclick="navScrollTo('tips-section');return false;">Tips</a></li>
+    </ul>
+  </nav>
 
-  <!-- ─── HERO ─── -->
-  <section class="hero" id="hero">
-    <div class="hero-eyebrow">IELTS Prep · One skill. One day.</div>
-    <h1 class="hero-title">
+  <div class="hero-content">
+    <div class="hero-eyebrow anim">IELTS Prep · Deep Work + Daily Core</div>
+    <h1 class="hero-title anim">
       Study.<br>
       Practice.<br>
       <em>Ace it.</em>
     </h1>
-    <div class="hero-bottom">
-      <p class="hero-sub">Built around your real life — school included. One skill per day, 45–60 min max. A new chapter begins.</p>
-      <div class="countdown-block">
-        <div class="countdown-num" id="countdown-num">—</div>
-        <div class="countdown-label">days remaining</div>
-        <div class="exam-date">📅 August 8, 2026</div>
+    <p class="hero-sub anim">Anti-burnout architecture. Morning deep work. Afternoon rest. Evening wind-down. Built around your real life.</p>
+  </div>
+
+  <div class="streak-hero">
+    <div class="streak-hero-num anim" id="streak-num">0</div>
+    <div class="streak-hero-meta anim">
+      <span class="streak-hero-label">Day streak</span>
+      <span class="streak-hero-word">days on fire</span>
+    </div>
+    <div class="countdown-badge anim">
+      <div class="countdown-num" id="countdown-num">—</div>
+      <span class="countdown-sub">days remaining</span>
+      <span class="exam-date-pill">📅 August 8, 2026</span>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+
+  <!-- JOURNEY MAP -->
+  <section style="padding-top:72px;" id="journey-section">
+    <div class="sec-label">92-day journey map</div>
+    <div class="anim">
+      <div class="journey-stats">
+        <div class="j-stat">
+          <div class="j-stat-num" id="js-streak" style="color:var(--ember)">0</div>
+          <div class="j-stat-label">Current streak</div>
+        </div>
+        <div class="j-stat">
+          <div class="j-stat-num" id="js-completed" style="color:var(--L)">0</div>
+          <div class="j-stat-label">Days completed</div>
+        </div>
+        <div class="j-stat">
+          <div class="j-stat-num" id="js-remaining" style="color:var(--ink-dim)">—</div>
+          <div class="j-stat-label">Days to exam</div>
+        </div>
+      </div>
+      <div class="dot-map-wrap">
+        <div class="dot-map-head">
+          <span class="dot-map-title">Missed days become rest nodes — momentum is never broken</span>
+          <div class="dot-legend">
+            <div class="dot-legend-item"><div class="dl-dot done"></div> done</div>
+            <div class="dot-legend-item"><div class="dl-dot today"></div> today</div>
+            <div class="dot-legend-item"><div class="dl-dot rest"></div> rest</div>
+            <div class="dot-legend-item"><div class="dl-dot future"></div> ahead</div>
+          </div>
+        </div>
+        <div id="dot-row"></div>
       </div>
     </div>
   </section>
 
   <div class="hr"></div>
 
-  <!-- ─── PHASE ─── -->
-  <div id="phase">
+  <!-- PHASE -->
+  <div id="phase-section">
     <div class="sec-label">Current phase</div>
     <div class="phase-banner anim">
       <div>
         <div class="phase-name" id="pb-name">Phase 2 — Build Skills</div>
-        <div class="phase-goal" id="pb-goal">Start timed practice. Write full essays. Speak every Tuesday and Thursday. Stay consistent.</div>
-        <div style="margin-top:14px;">
-          <span class="phase-badge" id="pb-badge">Weeks 5–10</span>
-        </div>
+        <div class="phase-goal" id="pb-goal">PEES paragraphs daily. Record yourself speaking every session. Timed reading passages. Stay consistent.</div>
+        <div style="margin-top:14px"><span class="phase-badge" id="pb-badge">Weeks 5–11</span></div>
       </div>
-      <div class="phase-num" id="phase-ghost">2</div>
+      <div class="phase-ghost" id="phase-ghost">2</div>
     </div>
   </div>
 
-  <!-- ─── STREAK ─── -->
-  <div>
-    <div class="sec-label">Day streak</div>
-    <div class="streak-section anim">
-      <div class="streak-num-wrap">
-        <div class="streak-big" id="streak-num">0</div>
-        <div class="streak-label">days in a row</div>
-      </div>
-      <div>
-        <div class="dot-row" id="dot-row"></div>
-        <div class="streak-note">Complete today's checklist to keep the streak alive.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="hr"></div>
-
-  <!-- ─── TODAY / TOMORROW ─── -->
-  <div id="today">
+  <!-- TODAY / TOMORROW -->
+  <div id="today-section">
     <div class="sec-label">Today & tomorrow</div>
     <div class="day-grid anim">
-      <div class="today-card featured day-card" id="today-card" style="--c: var(--L);">
+      <div class="day-card featured" id="today-card" style="--c:var(--L)">
         <div class="dc-eyebrow">Today — <span id="today-dayname">Saturday</span></div>
-        <div class="dc-skill-name" id="today-skill" style="color:var(--L);">Listening</div>
-        <div class="dc-tagline" id="today-tagline">Saturdays are for Listening + light mock practice.</div>
-        <div class="dc-time" id="today-time"><strong>60 min</strong> · Phase 2</div>
+        <div class="dc-skill-name" id="today-skill" style="color:var(--L)">Listening</div>
+        <div class="dc-tagline" id="today-tagline">Listening deep work + daily writing and speaking core.</div>
+        <div class="dc-time" id="today-time"><strong>75 min</strong> · Phase 2</div>
       </div>
-      <div class="day-card preview" id="tomorrow-card">
+      <div class="day-card preview">
         <div class="dc-eyebrow">Tomorrow — <span id="tmr-dayname">Sunday</span></div>
-        <div class="dc-skill-name" id="tmr-skill" style="color:var(--S);">Speaking</div>
-        <div class="dc-tagline" id="tmr-tagline">Sunday speaking warm-up — light and conversational.</div>
-        <div class="dc-time" id="tmr-time">Prep: <strong>30 min</strong></div>
+        <div class="dc-skill-name" id="tmr-skill" style="color:var(--gold)">Review</div>
+        <div class="dc-tagline" id="tmr-tagline">Sundays are for light review and resetting the week.</div>
+        <div class="dc-time" id="tmr-time">Prep: <strong>45 min</strong></div>
       </div>
     </div>
   </div>
 
-  <!-- ─── SKILLS ─── -->
+  <!-- SKILLS -->
   <div>
-    <div class="sec-label">4 skills · rotating daily</div>
+    <div class="sec-label">Daily structure · rotating deep work</div>
     <div class="skills-row anim">
-      <div class="skill-card" style="--c:var(--R)"><div class="sk-name">Reading</div><div class="sk-days">Tue · Fri</div></div>
-      <div class="skill-card" style="--c:var(--W)"><div class="sk-name">Writing</div><div class="sk-days">Mon · Thu</div></div>
-      <div class="skill-card" style="--c:var(--L)"><div class="sk-name">Listening</div><div class="sk-days">Wed · Sat</div></div>
-      <div class="skill-card" style="--c:var(--S)"><div class="sk-name">Speaking</div><div class="sk-days">Tue · Thu</div></div>
+      <div class="skill-card" style="--c:var(--R)"><div class="sk-name">Reading</div><div class="sk-days">Mon · Wed · Fri</div></div>
+      <div class="skill-card" style="--c:var(--L)"><div class="sk-name">Listening</div><div class="sk-days">Tue · Thu · Sat</div></div>
+      <div class="skill-card" style="--c:var(--W)"><div class="sk-name">Writing</div><div class="sk-days">Daily · 15 min PEES</div></div>
+      <div class="skill-card" style="--c:var(--S)"><div class="sk-name">Speaking</div><div class="sk-days">Daily · 10 min voice</div></div>
     </div>
   </div>
 
   <div class="hr"></div>
 
-  <!-- ─── CHECKLIST ─── -->
-  <div id="checklist">
+  <!-- CHECKLIST -->
+  <div id="checklist-section">
     <div class="sec-label">Today's checklist · <span id="checklist-skill-label" style="color:var(--ink-dim)">Listening · Phase 2</span></div>
     <div class="checklist-wrap anim">
       <div class="cl-top">
-        <div class="cl-title" id="cl-title">Listening — Build</div>
-        <div class="cl-day-chip" id="day-chip" style="background:var(--L);">Saturday</div>
+        <div class="cl-title" id="cl-title">Listening Focus + PEES Core</div>
+        <div class="cl-day-chip" id="day-chip" style="background:var(--L)">Saturday</div>
       </div>
-      <div class="cl-sub" id="cl-subtitle">Full Sections 3 &amp; 4 today — these are the harder academic ones. Stay focused, don't panic.</div>
+      <div class="cl-sub" id="cl-subtitle">Push into harder audio sections. Keep the daily output consistent but manageable.</div>
       <div id="cl-sections"></div>
       <div class="prog-bg"><div class="prog-fill" id="prog-fill"></div></div>
       <div class="prog-row">
@@ -1036,608 +362,451 @@ nav {
     </div>
   </div>
 
-  <!-- ─── WEEK ─── -->
-  <div id="week">
+  <!-- WEEK -->
+  <div id="week-section">
     <div class="sec-label">This week at a glance</div>
     <div class="week-wrap anim" id="week-table"></div>
   </div>
 
   <div class="hr"></div>
 
-  <!-- ─── TIPS ─── -->
-  <div id="tips">
+  <!-- TIPS -->
+  <div id="tips-section">
     <div class="sec-label">Tips that actually help</div>
     <div class="tips-grid anim">
-      <div class="tip-card"><div class="tip-head" style="color:var(--R)">Reading first</div><p class="tip-body">Read the questions before the passage. You're not reading — you're hunting. Scan for keywords.</p></div>
-      <div class="tip-card"><div class="tip-head" style="color:var(--W)">Task 2 formula</div><p class="tip-body">Hook → Position → Body 1 (claim + example) → Body 2 → Conclusion. Never skip the overview in Task 1.</p></div>
-      <div class="tip-card"><div class="tip-head" style="color:var(--L)">Listening prep</div><p class="tip-body">Use the 30-second gaps to read ahead and predict answers. Spelling counts — check it.</p></div>
-      <div class="tip-card"><div class="tip-head" style="color:var(--S)">Speaking recovery</div><p class="tip-body">Mistakes are fine. Correct yourself naturally and keep going. Examiners reward fluency, not perfection.</p></div>
-      <div class="tip-card"><div class="tip-head" style="color:var(--ember)">Streak mindset</div><p class="tip-body">On brutal school days, 20 minutes still counts. Showing up is the real skill you're training.</p></div>
-      <div class="tip-card"><div class="tip-head" style="color:var(--gold)">Exam day</div><p class="tip-body">Arrive 30 min early. Bring passport or ID. Don't review notes in the morning — trust your prep.</p></div>
+      <div class="tip-card"><div class="tip-head" style="color:var(--R)">Read questions first</div><p class="tip-body">Read the questions before the passage. You're not reading — you're hunting. Skim for keywords, not meaning.</p></div>
+      <div class="tip-card"><div class="tip-head" style="color:var(--W)">PEES paragraph logic</div><p class="tip-body">Point → Explain → Example → Summary. One tight paragraph per day builds more muscle memory than a full essay under pressure.</p></div>
+      <div class="tip-card"><div class="tip-head" style="color:var(--L)">Predict before you hear</div><p class="tip-body">Use the 30-second gaps to read ahead and predict answers. Spelling counts — one wrong letter is a wrong answer.</p></div>
+      <div class="tip-card"><div class="tip-head" style="color:var(--S)">Record everything</div><p class="tip-body">Your ear hears what your mouth misses. Record every session. Listen back. One session of this beats five unchecked runs.</p></div>
+      <div class="tip-card"><div class="tip-head" style="color:var(--ember)">The 4 PM anchor</div><p class="tip-body">Heavy cognitive work before your nap. Core habits after. Wind-down post-class. Structure is how you protect the streak without burning out.</p></div>
+      <div class="tip-card"><div class="tip-head" style="color:var(--gold)">Exam day</div><p class="tip-body">Arrive 30 min early. Bring ID. Don't review notes in the morning — trust your months of preparation. You've already done the work.</p></div>
     </div>
   </div>
 
 </div><!-- /wrap -->
 
-<!-- MUSIC PLAYER -->
-<div id="music-player">
-  <div class="mp-art" id="mp-art">🎵</div>
-  <div class="mp-info">
-    <div class="mp-title" id="mp-title">Study Lofi Mix</div>
-    <div class="mp-artist">Focus Session</div>
-  </div>
-  <div class="mp-controls">
-    <button class="mp-btn play-btn" id="mp-play" onclick="toggleMusic()">▶</button>
-    <input type="range" class="mp-vol" id="mp-vol" min="0" max="1" step="0.05" value="0.45">
-  </div>
-</div>
+
 
 <script>
-/* ════════════════════════════════════════
-   SMOOTH INERTIA SCROLL (no visible stop)
-════════════════════════════════════════ */
-(function() {
-  let current = 0;
-  let target = 0;
-  let ease = 0.085;
-  let raf;
-  let isTouch = 'ontouchstart' in window;
-
-  if (isTouch) return; // native on mobile
-
-  document.documentElement.style.overflow = 'hidden';
-  document.body.style.overflow = 'hidden';
-
-  const proxy = document.createElement('div');
-  proxy.style.cssText = `position:fixed;top:0;left:0;width:100%;height:100%;overflow-y:scroll;z-index:-1;opacity:0;pointer-events:none;`;
-  document.body.appendChild(proxy);
-
-  const content = document.createElement('div');
-  content.style.cssText = 'height:100000px;';
-  proxy.appendChild(content);
-
-  function getMaxScroll() {
-    return Math.max(0, document.body.scrollHeight - window.innerHeight);
+/* ── SMOOTH INERTIA SCROLL ── */
+(function(){
+  if('ontouchstart' in window)return;
+  let cur=0,tgt=0,raf=null;
+  const ease=0.082;
+  document.documentElement.style.overflow='hidden';
+  document.body.style.overflow='hidden';
+  function maxS(){return Math.max(0,document.body.scrollHeight-window.innerHeight);}
+  function tick(){
+    tgt=Math.max(0,Math.min(tgt,maxS()));
+    const d=tgt-cur;
+    if(Math.abs(d)<0.1){cur=tgt;raf=null;return;}
+    cur+=d*ease;
+    document.documentElement.scrollTop=cur;
+    document.body.scrollTop=cur;
+    raf=requestAnimationFrame(tick);
   }
+  window._inertiaTgt=function(v){tgt=v;if(!raf)raf=requestAnimationFrame(tick);};
+  window.addEventListener('wheel',function(e){e.preventDefault();tgt+=e.deltaY*1.15;if(!raf)raf=requestAnimationFrame(tick);},{passive:false});
+  window.addEventListener('keydown',function(e){
+    const m={ArrowDown:80,ArrowUp:-80,PageDown:window.innerHeight*.85,PageUp:-(window.innerHeight*.85),' ':window.innerHeight*.85};
+    if(m[e.key]!==undefined){e.preventDefault();tgt+=m[e.key];if(!raf)raf=requestAnimationFrame(tick);}
+  });
+})();
 
-  function update() {
-    target = Math.max(0, Math.min(target, getMaxScroll()));
-    const diff = target - current;
-    if (Math.abs(diff) < 0.1) {
-      current = target;
-      raf = null;
-      return;
+/* ── NAV SCROLL ── */
+function navScrollTo(id){
+  const el=document.getElementById(id);
+  if(!el)return;
+  // Works with the inertia scroll system by setting its tgt
+  const rect=el.getBoundingClientRect();
+  const scrollTop=document.documentElement.scrollTop||document.body.scrollTop;
+  const dest=scrollTop+rect.top-60;
+  // Dispatch a synthetic wheel event chain — simpler: just nudge the inertia tgt
+  // We expose tgt via a global setter
+  if(typeof window._inertiaTgt!=='undefined'){
+    window._inertiaTgt(dest);
+  } else {
+    window.scrollTo({top:dest,behavior:'smooth'});
+  }
+}
+
+
+(function(){
+  const glow=document.getElementById('ember-cursor');
+  const dot=document.getElementById('cursor-dot');
+  let gx=0,gy=0,tx=0,ty=0;
+  document.addEventListener('mousemove',function(e){tx=e.clientX;ty=e.clientY;dot.style.left=tx+'px';dot.style.top=ty+'px';});
+  function ag(){gx+=(tx-gx)*.065;gy+=(ty-gy)*.065;glow.style.left=gx+'px';glow.style.top=gy+'px';requestAnimationFrame(ag);}
+  ag();
+  document.addEventListener('mouseleave',()=>glow.style.opacity='0');
+  document.addEventListener('mouseenter',()=>glow.style.opacity='1');
+})();
+
+/* ── CANVAS PARTICLE FIRE ── */
+(function(){
+  const canvas=document.getElementById('fire-canvas');
+  const ctx=canvas.getContext('2d');
+  let W,H,particles=[];
+  function resize(){W=canvas.width=canvas.offsetWidth;H=canvas.height=canvas.offsetHeight;}
+  window.addEventListener('resize',resize);
+  resize();
+  function Particle(){
+    this.reset=function(){
+      this.x=W/2+(Math.random()-.5)*W*1.05;
+      this.y=H*.95+Math.random()*H*.07;
+      this.vx=(Math.random()-.5)*2.2;
+      this.vy=-(1.4+Math.random()*3.6);
+      this.life=0;this.maxLife=65+Math.random()*110;
+      this.size=2+Math.random()*7;
+      this.type=Math.random()<0.16?'spark':'flame';
+    };
+    this.reset();
+  }
+  for(let i=0;i<380;i++){const p=new Particle();p.life=Math.random()*p.maxLife;particles.push(p);}
+  function lerp(a,b,t){return a+(b-a)*t;}
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    particles.forEach(p=>{
+      p.life++;
+      if(p.life>=p.maxLife){p.reset();return;}
+      const t=p.life/p.maxLife;
+      p.x+=p.vx+(Math.random()-.5)*.3;p.y+=p.vy;p.vy*=.996;
+      const alpha=t<.15?t/.15:1-Math.pow((t-.15)/.85,.7);
+      if(p.type==='spark'){
+        const s=p.size*(1-t)*.5;
+        ctx.globalAlpha=alpha*.9;
+        ctx.fillStyle=`hsl(${30+Math.random()*35},100%,${65+Math.random()*25}%)`;
+        ctx.beginPath();ctx.arc(p.x,p.y,Math.max(.4,s),0,Math.PI*2);ctx.fill();
+      } else {
+        const r=Math.round(lerp(255,90,t));
+        const g=Math.round(lerp(145,8,t));
+        const s=p.size*(1-t*.55);
+        ctx.globalAlpha=alpha*.42;
+        const gr=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,s*3.2);
+        gr.addColorStop(0,`rgba(${r},${g},0,1)`);
+        gr.addColorStop(1,'rgba(0,0,0,0)');
+        ctx.fillStyle=gr;
+        ctx.beginPath();ctx.arc(p.x,p.y,s*3.2,0,Math.PI*2);ctx.fill();
+      }
+    });
+    ctx.globalAlpha=1;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ── DATA ── */
+const EXAM_DATE=new Date('2026-08-08T00:00:00');
+const PHASES=[
+  {id:1,name:'Phase 1 — Foundation',ghost:'1',start:'2026-03-01',end:'2026-03-28',goal:'Learn the exam format. No pressure. Build the daily habit, not the knowledge.',badge:'Weeks 1–4'},
+  {id:2,name:'Phase 2 — Build Skills',ghost:'2',start:'2026-03-29',end:'2026-05-18',goal:'PEES paragraphs daily. Timed passages. Record yourself speaking every session. Stay consistent.',badge:'Weeks 5–11'},
+  {id:3,name:'Phase 3 — Intensify',ghost:'3',start:'2026-05-19',end:'2026-07-04',goal:'Full mock tests every Saturday. Deep-dive on weak areas. Aim for your target band score.',badge:'Weeks 12–18'},
+  {id:4,name:'Phase 4 — Final Sprint',ghost:'4',start:'2026-07-05',end:'2026-08-08',goal:'No new material. Sharpen what you know. Build confidence, manage nerves, sleep well.',badge:'Weeks 19–22'},
+];
+const DAY_SCHEDULE={
+  0:{skill:'Review',   cssColor:'#b88820',tagline:'Sundays are for light review and resetting the week.',          timeByPhase:[45,45,60,30]},
+  1:{skill:'Reading',  cssColor:'#b85050',tagline:'Reading deep work + daily writing and speaking core.',          timeByPhase:[60,75,90,60]},
+  2:{skill:'Listening',cssColor:'#3e9870',tagline:'Listening deep work + daily writing and speaking core.',        timeByPhase:[60,75,90,60]},
+  3:{skill:'Reading',  cssColor:'#b85050',tagline:'Reading deep work + daily writing and speaking core.',          timeByPhase:[60,75,90,60]},
+  4:{skill:'Listening',cssColor:'#3e9870',tagline:'Listening deep work + daily writing and speaking core.',        timeByPhase:[60,75,90,60]},
+  5:{skill:'Reading',  cssColor:'#b85050',tagline:'Reading deep work + daily writing and speaking core.',          timeByPhase:[60,75,90,60]},
+  6:{skill:'Listening',cssColor:'#3e9870',tagline:'Full mock test or heavy listening + core habits.',              timeByPhase:[90,120,180,90]},
+};
+const WEEK_SCHEDULE=[
+  {day:'Mon',skill:'Reading',  tag:'R',task:'Passage practice + core habits',hint:'Skim/scan focus',time:'1h 15m'},
+  {day:'Tue',skill:'Listening',tag:'L',task:'Section practice + core habits',hint:'Prediction focus',time:'1h 15m'},
+  {day:'Wed',skill:'Reading',  tag:'R',task:'Passage practice + core habits',hint:'Accuracy focus',time:'1h 15m'},
+  {day:'Thu',skill:'Listening',tag:'L',task:'Section practice + core habits',hint:'Spelling & grammar',time:'1h 15m'},
+  {day:'Fri',skill:'Reading',  tag:'R',task:'Passage practice + core habits',hint:'Speed focus',time:'1h 15m'},
+  {day:'Sat',skill:'Listening',tag:'L',task:'Heavy practice + core habits',hint:'Stamina building',time:'2h 00m'},
+  {day:'Sun',skill:'Review',   tag:'rest',task:'Light review & planning',hint:'Protect your energy',time:'45 min'},
+];
+const TASKS={
+  Reading:{
+    1:{title:'Reading Focus + Daily Core',subtitle:'Knock out the heavy reading early. Save your core habits for after your afternoon rest.',sections:[
+      {label:'Deep Work · Pre-Nap',gc:'var(--R)',items:[{text:'Read 1 IELTS passage — underline topic sentences only',diff:'Train your eyes to skim, not read like a novel'},{text:'Answer 10 True / False / Not Given questions',diff:'Strict 15-minute timer'}]},
+      {_rest:true},
+      {label:'Daily Core · Post 4 PM Nap',gc:'var(--W)',items:[{text:'Writing: outline 1 Task 2 intro and conclusion',diff:'No body paragraphs today, just structure'},{text:'Speaking: record 3 Part 1 questions on voice memo',diff:'Listen back immediately. Check fluency.'}]},
+      {label:'Wind Down · Post-Evening Class',gc:'var(--gold)',items:[{text:'Review 5 vocabulary words',diff:'Low mental effort. Just absorb.'}]},
+    ]},
+    2:{title:'Reading Focus + PEES Core',subtitle:'Time to introduce structural writing habits alongside timed reading.',sections:[
+      {label:'Deep Work · Pre-Nap',gc:'var(--R)',items:[{text:'1 full reading passage (20 min strict)',diff:'Do not stop the timer'},{text:'Review mistake patterns — log the question type you missed',diff:'Why did you get it wrong?'}]},
+      {_rest:true},
+      {label:'Daily Core · Post 4 PM Nap',gc:'var(--W)',items:[{text:'Writing: draft 1 body paragraph using PEES logic',diff:'Point → Explain → Example → Summary. Keep it tight.'},{text:'Speaking: 2-minute cue card recording',diff:'Use 1 min to prep, 2 mins to speak without stopping.'}]},
+      {label:'Wind Down · Post-Evening Class',gc:'var(--gold)',items:[{text:'15 mins of enjoyable English media',diff:'Let your brain relax before sleep'}]},
+    ]},
+    3:{title:'Reading Intensify + PEES Core',subtitle:'Full passage under timed conditions. Structural writing is now a reflex — push quality.',sections:[
+      {label:'Deep Work · Pre-Nap',gc:'var(--R)',items:[{text:'Full 3-passage test — 60 min strict, real conditions',diff:'No stopping. Guess rather than skip if time runs out.'},{text:'Deep review: categorize every mistake by question type',diff:'Where do you lose the most marks?'}]},
+      {_rest:true},
+      {label:'Daily Core · Post 4 PM Nap',gc:'var(--W)',items:[{text:'Writing: draft a full Task 2 body paragraph with evidence',diff:'PEES at full speed. No outlining first.'},{text:'Speaking: full 2-min cue card + 5 min Part 3 extension',diff:'Record. Transcribe 30 seconds. Note filler words.'}]},
+      {label:'Wind Down · Post-Evening Class',gc:'var(--gold)',items:[{text:'10 new vocab words + 1 example sentence each',diff:'Quality over quantity'}]},
+    ]},
+    4:{title:'Reading Light + Final Core',subtitle:'Light practice only. You\'re staying sharp, not training.',sections:[
+      {label:'Light Practice · Pre-Nap',gc:'var(--R)',items:[{text:'1 reading passage — relaxed pace, no strict timer',diff:'Accuracy over speed in the final stretch'},{text:'Review your most common mistake type one last time',diff:'Notes only — no new practice'}]},
+      {_rest:true},
+      {label:'Daily Core · Post 4 PM Nap',gc:'var(--W)',items:[{text:'Writing: re-read your 2 best paragraphs — absorb the pattern',diff:'Recognition over production today'},{text:'Speaking: 5-minute casual recording on any topic',diff:'Keep the voice warm and confident'}]},
+      {label:'Wind Down · Post-Evening Class',gc:'var(--gold)',items:[{text:'Review only your strongest vocab words',diff:'Confidence building, not cramming'}]},
+    ]},
+  },
+  Listening:{
+    1:{title:'Listening Focus + Daily Core',subtitle:'Train your ear today, then hit your daily writing and speaking habits.',sections:[
+      {label:'Deep Work · Pre-Nap',gc:'var(--L)',items:[{text:'Complete Listening Sections 1 & 2',diff:'Focus on predicting answers in the silent gaps'},{text:'Transcribe 2 minutes of difficult audio',diff:'Write exactly what you hear to catch errors'}]},
+      {_rest:true},
+      {label:'Daily Core · Post 4 PM Nap',gc:'var(--W)',items:[{text:'Writing: draft an overview paragraph for Task 1',diff:'Just the trends. No data specifics yet.'},{text:'Speaking: shadow a native speaker for 3 mins',diff:'Copy their intonation and stress exactly.'}]},
+      {label:'Wind Down · Post-Evening Class',gc:'var(--gold)',items:[{text:'Review your PEES structure notes',diff:'Passive review only'}]},
+    ]},
+    2:{title:'Listening Focus + PEES Core',subtitle:'Push into harder audio sections. Keep the daily output consistent but manageable.',sections:[
+      {label:'Deep Work · Pre-Nap',gc:'var(--L)',items:[{text:'Complete Listening Sections 3 & 4',diff:'Academic and heavy. Stay focused.'},{text:'Error analysis — check your spelling',diff:'One wrong letter = wrong answer.'}]},
+      {_rest:true},
+      {label:'Daily Core · Post 4 PM Nap',gc:'var(--W)',items:[{text:'Writing: fix a weak PEES paragraph from yesterday',diff:'Editing is faster than writing from scratch.'},{text:'Speaking: record 3 Part 3 discussion questions',diff:'Expand answers with "because" and "for example"'}]},
+      {label:'Wind Down · Post-Evening Class',gc:'var(--gold)',items:[{text:'Add 5 words to your vocabulary log',diff:'Only words you actually want to use'}]},
+    ]},
+    3:{title:'Listening Intensify + PEES Core',subtitle:'Go after your weakest section. Targeted reps beat full tests when closing a gap.',sections:[
+      {label:'Deep Work · Pre-Nap',gc:'var(--L)',items:[{text:'Identify your weakest section (1–4) — do it 3 times back to back',diff:'Same section, different audio. Pattern recognition.'},{text:'Transcription: write exactly what you hear for 2 minutes',diff:"Don't look at the script until after"},{text:'Saturday: full 4-section mock test, real conditions',diff:'No phone. No pause. Time it properly.'}]},
+      {_rest:true},
+      {label:'Daily Core · Post 4 PM Nap',gc:'var(--W)',items:[{text:'Writing: full Task 2 body paragraph under 15-minute timer',diff:'PEES at exam speed. No second-guessing.'},{text:'Speaking: full 2-min cue card + Part 3 questions',diff:'Record. Listen. Note one thing to improve.'}]},
+      {label:'Wind Down · Post-Evening Class',gc:'var(--gold)',items:[{text:'20 min English audio — vary accents',diff:'IELTS uses British, Australian, and American accents'}]},
+    ]},
+    4:{title:'Listening Light + Final Core',subtitle:'One light section only. Your ear is already trained.',sections:[
+      {label:'Light Practice · Pre-Nap',gc:'var(--L)',items:[{text:'1 listening section — comfortable pace, double-check spelling',diff:'Spelling errors cost easy marks.'},{text:'Quick review of your error log from Phase 3',diff:"Just read — don't redo"}]},
+      {_rest:true},
+      {label:'Daily Core · Post 4 PM Nap',gc:'var(--W)',items:[{text:'Speaking: 5-minute easy English — any topic',diff:'Relax the voice, relax the mind'},{text:'Writing: read 1 Band 8.0 model essay — absorb the structure',diff:"Don't write. Just observe."}]},
+      {label:'Wind Down · Post-Evening Class',gc:'var(--gold)',items:[{text:'15 min of something you enjoy in English',diff:'Keep the engine warm, not stressed'}]},
+    ]},
+  },
+  Review:{
+    1:{title:'Sunday Reset',subtitle:'No heavy lifting today. Protect your streak, protect your energy.',sections:[
+      {label:'Light Maintenance',gc:'var(--S)',items:[{text:'Speaking: talk in English for 5 mins — call a friend or monologue',diff:'Just keep the vocal cords warm'},{text:'Writing: read 1 Band 8.0 model essay',diff:"Don't write. Just observe the PEES structure."}]},
+      {label:'Planning',gc:'var(--gold)',items:[{text:'Check your schedule for next week',diff:'Adjust study blocks around your evening classes'}]},
+    ]},
+    2:{title:'Sunday Reset',subtitle:'No heavy lifting today. Protect your streak, protect your energy.',sections:[
+      {label:'Light Maintenance',gc:'var(--S)',items:[{text:'Speaking: 5-minute casual recording — what did you learn this week?',diff:''},{text:'Writing: read 1 Band 8.0 model essay — highlight linking words',diff:''}]},
+      {label:'Planning',gc:'var(--gold)',items:[{text:'Check your schedule for next week',diff:'Adjust study blocks around your evening classes'}]},
+    ]},
+    3:{title:'Sunday Reset',subtitle:'No heavy lifting. Review, reset, recharge.',sections:[
+      {label:'Light Maintenance',gc:'var(--S)',items:[{text:'Speaking: 5-minute casual recording',diff:'Topic: what was your hardest moment this week?'},{text:'Writing: glance at your best PEES paragraph from this week',diff:'Just appreciate the growth'}]},
+      {label:'Planning',gc:'var(--gold)',items:[{text:'Check your schedule for next week',diff:'Protect your energy for Saturday mock test'}]},
+    ]},
+    4:{title:'Sunday Reset — Final Phase',subtitle:'Almost there. Today is protection, not preparation.',sections:[
+      {label:'Light Maintenance',gc:'var(--S)',items:[{text:'Speaking: 3-minute easy talking — any topic you enjoy',diff:'Relax the voice, relax the mind'},{text:'Writing: re-read your very best essay from the whole journey',diff:"Remind yourself how far you've come"}]},
+      {label:'Planning',gc:'var(--gold)',items:[{text:'Confirm your exam logistics — ID, location, time',diff:"Don't leave this to exam day"}]},
+    ]},
+  },
+};
+
+/* ── HELPERS ── */
+function today(){const d=new Date();d.setHours(0,0,0,0);return d;}
+function dateStr(d){return d.toISOString().slice(0,10);}
+function getStorage(k){try{return JSON.parse(localStorage.getItem(k));}catch{return null;}}
+function setStorage(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch{}}
+function getPhase(){
+  const now=today();
+  for(const p of PHASES){if(now>=new Date(p.start)&&now<=new Date(p.end))return p;}
+  if(now<new Date(PHASES[0].start))return PHASES[0];
+  return PHASES[PHASES.length-1];
+}
+
+/* ── COUNTDOWN ── */
+function renderCountdown(){
+  const days=Math.max(0,Math.ceil((EXAM_DATE-today())/86400000));
+  document.getElementById('countdown-num').textContent=days;
+  document.getElementById('js-remaining').textContent=days;
+}
+
+/* ── PHASE ── */
+function renderPhase(){
+  const p=getPhase();
+  document.getElementById('pb-name').textContent=p.name;
+  document.getElementById('pb-goal').textContent=p.goal;
+  document.getElementById('pb-badge').textContent='📍 You are here · '+p.badge;
+  document.getElementById('phase-ghost').textContent=p.ghost;
+}
+
+/* ── MOMENTUM STREAK MAP ── */
+function renderStreak(){
+  const stored=getStorage('ielts_checked_days')||{};
+  const startDate=new Date('2026-03-01T00:00:00');
+  const todayDate=today();
+  const mapContainer=document.getElementById('dot-row');
+  mapContainer.innerHTML='';
+  let currentStreak=0,totalNodes=0,completedCount=0,targetLen=92;
+  let checkDate=new Date(startDate);
+  while(checkDate<=todayDate){
+    const k=dateStr(checkDate);
+    const node=document.createElement('div');
+    if(stored[k]){
+      currentStreak++;completedCount++;
+      node.className='sdot done';
+    } else if(checkDate<todayDate){
+      node.className='sdot rest';
+      targetLen++;
+    } else {
+      node.className='sdot today';
     }
-    current += diff * ease;
-    document.documentElement.scrollTop = current;
-    document.body.scrollTop = current;
-    raf = requestAnimationFrame(update);
+    node.title=k;
+    mapContainer.appendChild(node);
+    checkDate.setDate(checkDate.getDate()+1);
+    totalNodes++;
   }
-
-  window.addEventListener('wheel', function(e) {
-    e.preventDefault();
-    target += e.deltaY * 1.2;
-    if (!raf) raf = requestAnimationFrame(update);
-  }, { passive: false });
-
-  window.addEventListener('keydown', function(e) {
-    const map = { 'ArrowDown': 80, 'ArrowUp': -80, 'PageDown': window.innerHeight * 0.85, 'PageUp': -(window.innerHeight * 0.85), ' ': window.innerHeight * 0.85 };
-    if (map[e.key]) { e.preventDefault(); target += map[e.key]; if (!raf) raf = requestAnimationFrame(update); }
-  });
-
-  // content height sync
-  function syncHeight() { content.style.height = document.body.scrollHeight + 'px'; }
-  const ro = new ResizeObserver(syncHeight);
-  ro.observe(document.body);
-  syncHeight();
-})();
-
-/* ════════════════════════════════════════
-   EMBER CURSOR
-════════════════════════════════════════ */
-(function() {
-  const glow = document.getElementById('ember-cursor');
-  const dot = document.getElementById('cursor-dot');
-  let gx = 0, gy = 0, tx = 0, ty = 0;
-
-  document.addEventListener('mousemove', function(e) {
-    tx = e.clientX; ty = e.clientY;
-    dot.style.left = tx + 'px';
-    dot.style.top = ty + 'px';
-  });
-
-  function animGlow() {
-    gx += (tx - gx) * 0.06;
-    gy += (ty - gy) * 0.06;
-    glow.style.left = gx + 'px';
-    glow.style.top = gy + 'px';
-    requestAnimationFrame(animGlow);
+  while(totalNodes<targetLen){
+    const fn=document.createElement('div');fn.className='sdot';
+    mapContainer.appendChild(fn);totalNodes++;
   }
-  animGlow();
-
-  document.addEventListener('mouseleave', () => glow.style.opacity = '0');
-  document.addEventListener('mouseenter', () => glow.style.opacity = '1');
-})();
-
-/* ════════════════════════════════════════
-   CORE DATA
-════════════════════════════════════════ */
-const EXAM_DATE = new Date('2026-08-08T00:00:00');
-const START_DATE = new Date('2026-03-01T00:00:00');
-
-const PHASES = [
-  { id:1, name:'Phase 1 — Foundation', ghost:'1', start:'2026-03-01', end:'2026-03-28', goal:'Learn the exam format. No pressure. One skill per day, 45 min max. You\'re building a habit, not cramming.', color:'#5d8fd6', badge:'Weeks 1–4' },
-  { id:2, name:'Phase 2 — Build Skills', ghost:'2', start:'2026-03-29', end:'2026-05-18', goal:'Start timed practice. Write full essays. Speak every Tuesday and Thursday. Stay consistent.', color:'#4aaa7d', badge:'Weeks 5–11' },
-  { id:3, name:'Phase 3 — Intensify', ghost:'3', start:'2026-05-19', end:'2026-07-04', goal:'Full mock tests every Saturday. Deep-dive on weak areas. Aim for your target band score.', color:'#c9924a', badge:'Weeks 12–18' },
-  { id:4, name:'Phase 4 — Final Sprint', ghost:'4', start:'2026-07-05', end:'2026-08-08', goal:'No new material. Sharpen what you know. Build confidence, manage nerves, sleep well.', color:'#c06060', badge:'Weeks 19–22' },
-];
-
-const DAY_SCHEDULE = {
-  0: { skill:'Speaking',  color:'var(--S)', cssColor:'#c9924a', tagline:'Sunday speaking warm-up — light and conversational.', timeByPhase:[30,40,50,30] },
-  1: { skill:'Writing',   color:'var(--W)', cssColor:'#5d8fd6', tagline:'Mondays are for Writing — essays and graphs.',           timeByPhase:[45,60,75,45] },
-  2: { skill:'Reading',   color:'var(--R)', cssColor:'#c06060', tagline:'Tuesdays are for Reading — skim, scan, conquer.',        timeByPhase:[45,55,70,40] },
-  3: { skill:'Listening', color:'var(--L)', cssColor:'#4aaa7d', tagline:'Wednesdays are for Listening — train your ear.',         timeByPhase:[45,55,65,35] },
-  4: { skill:'Speaking',  color:'var(--S)', cssColor:'#c9924a', tagline:'Thursdays are for Speaking — record and review.',        timeByPhase:[45,55,65,40] },
-  5: { skill:'Reading',   color:'var(--R)', cssColor:'#c06060', tagline:'Fridays are for Reading — timed and sharp.',             timeByPhase:[45,55,65,35] },
-  6: { skill:'Listening', color:'var(--L)', cssColor:'#4aaa7d', tagline:'Saturdays are for Listening + light mock practice.',     timeByPhase:[60,75,240,60] },
-};
-
-const TASKS = {
-  Writing: {
-    1: { title:'Writing — Foundation', subtitle:'Today\'s goal: <strong>understand</strong> the structure. Don\'t write a full essay yet — study and absorb.', sections:[
-      { label:'Core Task', gc:'var(--W)', items:[{ text:'Read and analyze one model Task 1 answer (bar chart or line graph)', diff:'Study the intro → overview → 2 body paragraph structure' },{ text:'Copy-write one paragraph of a model Task 2 answer by hand', diff:'Muscle memory for structure and phrasing' }]},
-      { label:'Daily English', gc:'var(--gold)', items:[{ text:'Watch or listen to something in English for 15 min', diff:'Habit building' },{ text:'Add 10 new vocabulary words', diff:'Prioritize academic vocabulary (AWL list)' }]},
-    ]},
-    2: { title:'Writing — Build', subtitle:'Time to go <strong>timed and full</strong>. One essay, 40 minutes strict. Then review every mistake.', sections:[
-      { label:'Core Task', gc:'var(--W)', items:[{ text:'Write Task 2 essay under timed conditions (40 min, no breaks)', diff:'Hard mode: no editing as you write. Just flow.' },{ text:'Rewrite one previous Task 2 using corrections — compare side by side', diff:'This is the fastest way to improve' },{ text:'Write Task 1 in 18 minutes (push your speed)', diff:'Accuracy + efficiency together' }]},
-      { label:'Daily English', gc:'var(--gold)', items:[{ text:'20 min English immersion — podcast, documentary, anything you enjoy', diff:'Enjoyment = retention' },{ text:'Vocabulary: 10 new words + review the last 30', diff:'Spaced repetition works' }]},
-    ]},
-    3: { title:'Writing — Intensify', subtitle:'<strong>No holding back.</strong> Full test conditions. You\'re at peak training — push the quality.', sections:[
-      { label:'Core Task', gc:'var(--W)', items:[{ text:'Full Task 2 essay under 40 min — strict no-edits rule', diff:'Flow > perfection. You can fix in review.' },{ text:'Full Task 1 under 18 min — data report', diff:'Accuracy + speed combined' },{ text:'Self-grade using band descriptors — find your weakest criterion', diff:'Task Response, Coherence, Lexical Resource, Grammar' }]},
-      { label:'Daily English', gc:'var(--gold)', items:[{ text:'20 min English audio or reading', diff:'' },{ text:'10 vocab + 2 example sentences each', diff:'Usage > memorization' }]},
-    ]},
-    4: { title:'Writing — Final Review', subtitle:'<strong>No new essays.</strong> Re-read your best work. Absorb the patterns. Confidence is built on what you\'ve already done.', sections:[
-      { label:'Light Review', gc:'var(--W)', items:[{ text:'Re-read your 2 best Task 2 essays — note what made them good', diff:'Recognition over production today' },{ text:'Glance at one model answer for Task 1 — absorb the language', diff:'Light. No writing.' }]},
-      { label:'Daily English', gc:'var(--gold)', items:[{ text:'15 min English media — something enjoyable, low effort', diff:'Just stay in English mode' },{ text:'Vocab: review your strongest words only — build confidence', diff:'No new words this phase' }]},
-    ]},
-  },
-  Reading: {
-    1: { title:'Reading — Foundation', subtitle:'Today\'s goal: learn <strong>how to read for IELTS</strong>, not like a book. Skim first, scan for answers second.', sections:[
-      { label:'Core Task', gc:'var(--R)', items:[{ text:'Read 1 article — underline the topic sentence of each paragraph only', diff:'Don\'t read every word. Find the main idea per paragraph.' },{ text:'Practice True / False / Not Given on 10 questions', diff:'The most misunderstood question type — learn it cold' }]},
-      { label:'Daily English', gc:'var(--gold)', items:[{ text:'Watch or listen to something in English for 15+ min', diff:'Habit building' },{ text:'Add 10 new vocab words', diff:'Prioritize academic vocabulary (AWL list)' }]},
-    ]},
-    2: { title:'Reading — Build', subtitle:'Time to go <strong>timed and full</strong>. One passage, 20 minutes strict. Then review every single mistake.', sections:[
-      { label:'Core Task', gc:'var(--R)', items:[{ text:'Do 1 full IELTS reading passage under 20-minute timer', diff:'Cambridge IELTS books are best' },{ text:'After time\'s up — review every wrong answer, understand why', diff:'Error log: write down the question type you missed' },{ text:'Practice matching headings on a separate passage', diff:'Match paragraphs to a heading list' }]},
-      { label:'Daily English', gc:'var(--gold)', items:[{ text:'15 min English media', diff:'News = good reading vocab exposure' },{ text:'15 vocab words + review last week\'s', diff:'' }]},
-    ]},
-    3: { title:'Reading — Intensify', subtitle:'<strong>Full 3-passage test today, 60 minutes strict.</strong> Simulate the real thing. No pausing, no phone.', sections:[
-      { label:'Core Task', gc:'var(--R)', items:[{ text:'Full timed reading test — all 3 passages, 60 min, real conditions', diff:'No stopping. If you run out of time, guess don\'t skip.' },{ text:'Deep review: categorize every mistake by question type', diff:'Pattern recognition — where do you lose the most points?' },{ text:'Speed drill: skim passage 3 in 3 minutes, then answer only confident ones', diff:'Time management training' }]},
-      { label:'Daily English', gc:'var(--gold)', items:[{ text:'20 min English immersion', diff:'' },{ text:'10 new vocab + review 20 old ones', diff:'Quality over quantity now' }]},
-    ]},
-    4: { title:'Reading — Final Sprint', subtitle:'<strong>Light practice only.</strong> One passage, comfortable pace. You\'re not training anymore — you\'re staying sharp.', sections:[
-      { label:'Light Practice', gc:'var(--R)', items:[{ text:'1 reading passage — relaxed pace, no strict timer today', diff:'Accuracy over speed in the final stretch' },{ text:'Review your most common mistake type one more time', diff:'Just review your notes — no new practice' }]},
-      { label:'Daily English', gc:'var(--gold)', items:[{ text:'15 min enjoyable English content', diff:'Keep the brain warm, not stressed' },{ text:'Vocab: only your strongest known words today', diff:'Confidence building, not cramming' }]},
-    ]},
-  },
-  Listening: {
-    1: { title:'Listening — Foundation', subtitle:'Get familiar with the <strong>4 sections</strong> and question types. Prediction is the key skill to build right now.', sections:[
-      { label:'Core Task', gc:'var(--L)', items:[{ text:'Study Section 1 & 2 question types — form completion, MCQ, note filling', diff:'Cambridge IELTS guide or YouTube IELTS channel' },{ text:'Do 1 Section 1 practice — focus on predicting answers before you hear the audio', diff:'Read all questions in the gap time before each section' }]},
-      { label:'Daily English', gc:'var(--gold)', items:[{ text:'Listen to an English podcast for 15+ min', diff:'Anything you enjoy — accent diversity is a bonus' },{ text:'Add 10 vocabulary words', diff:'' }]},
-    ]},
-    2: { title:'Listening — Build', subtitle:'Full Sections 3 &amp; 4 today — these are the harder academic ones. <strong>Stay focused, don\'t panic.</strong>', sections:[
-      { label:'Core Task', gc:'var(--L)', items:[{ text:'Do Sections 3 & 4 full practice (academic discussion + monologue)', diff:'Section 4 has no pause — train your stamina' },{ text:'Review every wrong answer — write down WHY you missed it', diff:'Was it: distraction? spelling? mishearing? Log it.' },{ text:'Re-listen to 2 questions you got wrong — transcribe what you hear word for word', diff:'Transcription exercise builds accuracy fast' }]},
-      { label:'Daily English', gc:'var(--gold)', items:[{ text:'15 min English podcast or news audio', diff:'' },{ text:'15 vocab words + 2 new sentences', diff:'' }]},
-    ]},
-    3: { title:'Listening — Intensify', subtitle:'Go after your <strong>weakest section</strong> today. Targeted reps beat full tests when you\'re trying to close a gap.', sections:[
-      { label:'Core Task', gc:'var(--L)', items:[{ text:'Identify your weakest section (1–4) — do it 3 times back to back', diff:'Same section, different audio. Repetition = pattern recognition.' },{ text:'Transcription exercise: write exactly what you hear for 2 minutes of audio', diff:'Don\'t look at the script until after — then compare' },{ text:'Saturday only: full 4-section mock test under real conditions', diff:'No phone. No pause. Time it properly.' }]},
-      { label:'Daily English', gc:'var(--gold)', items:[{ text:'20 min English audio — vary accents (British, Australian, American)', diff:'IELTS uses multiple accents' },{ text:'10 vocab + spaced review', diff:'' }]},
-    ]},
-    4: { title:'Listening — Final Sprint', subtitle:'<strong>One light section only.</strong> Stay tuned in, don\'t overthink. Your ear is already trained.', sections:[
-      { label:'Light Practice', gc:'var(--L)', items:[{ text:'1 listening section — comfortable pace, double-check spelling on answers', diff:'Spelling errors cost easy marks. Don\'t let them.' },{ text:'Quick review of your error log from Phase 3 — just read, don\'t redo', diff:'Remind yourself what to avoid' }]},
-      { label:'Daily English', gc:'var(--gold)', items:[{ text:'15 min of something you enjoy in English', diff:'Keep the engine warm' },{ text:'Quick vocab review — your top 20 IELTS words', diff:'' }]},
-    ]},
-  },
-  Speaking: {
-    1: { title:'Speaking — Foundation', subtitle:'Today\'s goal: just <strong>open your mouth and speak</strong>. Fluency over perfection. Habit over quality.', sections:[
-      { label:'Core Task', gc:'var(--S)', items:[{ text:'Study Part 1 topics: family, work, hobbies, hometown — prepare 2-sentence answers', diff:'Short, fluent answers beat long, hesitant ones' },{ text:'Record yourself for 5 min on any topic — play it back', diff:'You\'ll hear your own patterns. That\'s the point.' }]},
-      { label:'Daily English', gc:'var(--gold)', items:[{ text:'15 min English listening', diff:'' },{ text:'10 new vocabulary words', diff:'' }]},
-    ]},
-    2: { title:'Speaking — Build', subtitle:'Cue card and Part 3 today. <strong>Record everything.</strong> You can\'t improve what you can\'t hear.', sections:[
-      { label:'Core Task', gc:'var(--S)', items:[{ text:'Draw a cue card topic at random — speak for 2 minutes without stopping', diff:'Use the 1-minute prep time to jot 3 key points only' },{ text:'Do Part 3 style discussion questions on the same topic for 10 min', diff:'Practice elaborating, giving opinions, comparing ideas' },{ text:'Play back the recording — note 2 things to improve', diff:'Fluency? Filler words? Vocabulary range?' }]},
-      { label:'Daily English', gc:'var(--gold)', items:[{ text:'15 min English media', diff:'' },{ text:'10 vocab + practice using them in spoken sentences', diff:'Say them out loud' }]},
-    ]},
-    3: { title:'Speaking — Intensify', subtitle:'Simulate a <strong>full speaking test</strong> today. 11–14 minutes, all 3 parts, timed and recorded.', sections:[
-      { label:'Core Task', gc:'var(--S)', items:[{ text:'Full mock speaking test — Parts 1, 2, and 3 recorded', diff:'Time each part correctly. Part 2 = 2 min exactly.' },{ text:'Transcribe your Part 2 answer — count your filler words', diff:'\"Um\", \"like\", \"you know\" — reduce by half next time' },{ text:'Review your weakest vocabulary area — practice 5 topic-specific phrases', diff:'Environment, technology, education, health, culture' }]},
-      { label:'Daily English', gc:'var(--gold)', items:[{ text:'20 min English listening — varied accents', diff:'' },{ text:'10 vocab + 2 speaking-focused sentences', diff:'' }]},
-    ]},
-    4: { title:'Speaking — Final Sprint', subtitle:'Light and confident today. <strong>No pressure.</strong> You\'re warming the engine, not training it.', sections:[
-      { label:'Light Practice', gc:'var(--S)', items:[{ text:'5 min speaking on any topic you enjoy — no timer pressure', diff:'Just keep the voice warm and the mind in English mode' },{ text:'Review your best cue card answer from Phase 3 — read it aloud', diff:'Remind yourself what great feels like' }]},
-      { label:'Daily English', gc:'var(--gold)', items:[{ text:'15 min enjoyable English content', diff:'Relax. You\'ve done the work.' },{ text:'No new vocab today — just enjoy the language', diff:'' }]},
-    ]},
-  },
-};
-
-const WEEK_SCHEDULE = [
-  { day:'Mon', skill:'Writing',   tag:'W', task:'Full Task 2 essay (or Task 1 in early phases)', hint:'Timed + self-grade', time:'45 min' },
-  { day:'Tue', skill:'Reading',   tag:'R', task:'Timed reading passage(s)', hint:'Skim questions first, then the text', time:'40 min' },
-  { day:'Wed', skill:'Listening', tag:'L', task:'Sections practice + error review', hint:'Transcription exercise on hard questions', time:'35 min' },
-  { day:'Thu', skill:'Speaking',  tag:'S', task:'Cue card + Part 3 discussion', hint:'Record yourself — always', time:'40 min' },
-  { day:'Fri', skill:'Reading',   tag:'R', task:'Speed reading + question type drill', hint:'Focus on your weakest question type', time:'35 min' },
-  { day:'Sat', skill:'Listening', tag:'L', task:'Full listening test or mock (Phase 3+)', hint:'Simulate real exam conditions', time:'60 min' },
-  { day:'Sun', skill:'Speaking',  tag:'S', task:'Light speaking warm-up', hint:'Low effort, stay in the habit', time:'30 min' },
-];
-
-/* ════════════════════════════════════════
-   HELPERS
-════════════════════════════════════════ */
-function today() { return new Date(); }
-function daysBetween(a, b) { return Math.ceil((b - a) / 86400000); }
-function dateStr(d) { return d.toISOString().slice(0,10); }
-
-function getPhase() {
-  const now = today();
-  for (const p of PHASES) {
-    if (now >= new Date(p.start) && now <= new Date(p.end)) return p;
-  }
-  if (now < new Date(PHASES[0].start)) return PHASES[0];
-  return PHASES[PHASES.length - 1];
+  document.getElementById('streak-num').textContent=currentStreak;
+  document.getElementById('js-streak').textContent=currentStreak;
+  document.getElementById('js-completed').textContent=completedCount;
 }
 
-function getStorage(key) { try { return JSON.parse(localStorage.getItem(key)); } catch { return null; } }
-function setStorage(key, val) { try { localStorage.setItem(key, JSON.stringify(val)); } catch {} }
-
-/* ════════════════════════════════════════
-   COUNTDOWN
-════════════════════════════════════════ */
-function renderCountdown() {
-  const days = Math.max(0, daysBetween(today(), EXAM_DATE));
-  document.getElementById('countdown-num').textContent = days;
+/* ── DAY CARDS ── */
+function renderDayCards(){
+  const now=today();const dow=now.getDay();
+  const phase=getPhase();const phIdx=phase.id-1;
+  const dnames=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const ts=DAY_SCHEDULE[dow];const tmrDow=(dow+1)%7;const tms=DAY_SCHEDULE[tmrDow];
+  document.getElementById('today-dayname').textContent=dnames[dow];
+  document.getElementById('today-skill').textContent=ts.skill;
+  document.getElementById('today-skill').style.color=ts.cssColor;
+  document.getElementById('today-tagline').textContent=ts.tagline;
+  document.getElementById('today-time').innerHTML=`<strong>${ts.timeByPhase[phIdx]} min</strong> · ${phase.name.split(' — ')[0]}`;
+  document.getElementById('today-card').style.setProperty('--c',ts.cssColor);
+  document.getElementById('tmr-dayname').textContent=dnames[tmrDow];
+  document.getElementById('tmr-skill').textContent=tms.skill;
+  document.getElementById('tmr-skill').style.color=tms.cssColor;
+  document.getElementById('tmr-tagline').textContent=tms.tagline;
+  document.getElementById('tmr-time').innerHTML=`Prep: <strong>${tms.timeByPhase[phIdx]} min</strong>`;
+  document.getElementById('checklist-skill-label').textContent=ts.skill+' · '+phase.name.split(' — ')[0];
 }
 
-/* ════════════════════════════════════════
-   PHASE BANNER
-════════════════════════════════════════ */
-function renderPhase() {
-  const p = getPhase();
-  document.getElementById('pb-name').textContent = p.name;
-  document.getElementById('pb-goal').textContent = p.goal;
-  document.getElementById('pb-badge').textContent = '📍 You are here · ' + p.badge;
-  document.getElementById('phase-ghost').textContent = p.ghost;
-}
-
-/* ════════════════════════════════════════
-   STREAK
-════════════════════════════════════════ */
-function renderStreak() {
-  const stored = getStorage('ielts_checked_days') || {};
-  const startDate = new Date('2026-04-19');
-  const endDate = today();
-
-  let streak = 0, checking = true;
-  const d = new Date(endDate);
-  d.setHours(0,0,0,0);
-  while (checking) {
-    const k = dateStr(d);
-    if (stored[k]) { streak++; d.setDate(d.getDate() - 1); }
-    else { checking = false; }
+/* ── CHECKLIST ── */
+let allDoneTriggered=false;
+function renderChecklist(){
+  const now=today();const dow=now.getDay();
+  const phase=getPhase();const phId=phase.id;
+  const skill=DAY_SCHEDULE[dow].skill;
+  const skillBank=TASKS[skill]||TASKS['Review'];
+  const td=skillBank[phId]||skillBank[Math.min(phId,Object.keys(skillBank).length)]||skillBank[1];
+  document.getElementById('cl-title').textContent=td.title;
+  document.getElementById('cl-subtitle').innerHTML=td.subtitle;
+  const dnames=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const chip=document.getElementById('day-chip');
+  chip.textContent=dnames[dow];chip.style.background=DAY_SCHEDULE[dow].cssColor;
+  const todayKey=dateStr(now);
+  const stored=getStorage('ielts_checked_days')||{};
+  const checkedItems=stored[todayKey+'_items']||{};
+  const container=document.getElementById('cl-sections');
+  container.innerHTML='';
+  function updateProgress(){
+    const allCIs=container.querySelectorAll('.ci');
+    const doneCIs=container.querySelectorAll('.ci.done');
+    const total=allCIs.length,done=doneCIs.length;
+    const pct=total?Math.round(done/total*100):0;
+    document.getElementById('prog-fill').style.width=pct+'%';
+    document.getElementById('prog-txt').textContent=done+' / '+total+' complete';
+    document.getElementById('prog-pct').textContent=pct+'%';
+    if(done===total&&total>0&&!allDoneTriggered){
+      allDoneTriggered=true;
+      const s2=getStorage('ielts_checked_days')||{};
+      s2[todayKey]=true;setStorage('ielts_checked_days',s2);
+      renderStreak();
+      setTimeout(()=>{
+        document.getElementById('all-done-overlay').classList.add('visible');
+        for(let i=0;i<6;i++)setTimeout(()=>burstRandom(),i*180);
+      },500);
+    }
   }
-
-  document.getElementById('streak-num').textContent = streak;
-
-  const dotRow = document.getElementById('dot-row');
-  dotRow.innerHTML = '';
-  const cur = new Date(startDate);
-  while (cur <= endDate) {
-    const k = dateStr(cur);
-    const dot = document.createElement('div');
-    dot.className = 'sdot' + (stored[k] ? ' done' : '') + (k === dateStr(endDate) ? ' today' : '');
-    dot.title = k;
-    dotRow.appendChild(dot);
-    cur.setDate(cur.getDate() + 1);
-  }
-}
-
-/* ════════════════════════════════════════
-   TODAY / TOMORROW
-════════════════════════════════════════ */
-function renderDayCards() {
-  const now = today();
-  const dow = now.getDay();
-  const phase = getPhase();
-  const phaseIdx = phase.id - 1;
-  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-
-  const todaySched = DAY_SCHEDULE[dow];
-  const tmrDow = (dow + 1) % 7;
-  const tmrSched = DAY_SCHEDULE[tmrDow];
-
-  document.getElementById('today-dayname').textContent = days[dow];
-  document.getElementById('today-skill').textContent = todaySched.skill;
-  document.getElementById('today-skill').style.color = todaySched.cssColor;
-  document.getElementById('today-tagline').textContent = todaySched.tagline;
-  document.getElementById('today-time').innerHTML = `<strong>${todaySched.timeByPhase[phaseIdx]} min</strong> · ${phase.name.split(' — ')[0]}`;
-  document.getElementById('today-card').style.setProperty('--c', todaySched.cssColor);
-
-  document.getElementById('tmr-dayname').textContent = days[tmrDow];
-  document.getElementById('tmr-skill').textContent = tmrSched.skill;
-  document.getElementById('tmr-skill').style.color = tmrSched.cssColor;
-  document.getElementById('tmr-tagline').textContent = tmrSched.tagline;
-  document.getElementById('tmr-time').innerHTML = `Prep: <strong>${tmrSched.timeByPhase[phaseIdx]} min</strong>`;
-
-  document.getElementById('checklist-skill-label').textContent = todaySched.skill + ' · ' + phase.name.split(' — ')[0];
-}
-
-/* ════════════════════════════════════════
-   CHECKLIST
-════════════════════════════════════════ */
-let allDoneTriggered = false;
-
-function renderChecklist() {
-  const now = today();
-  const dow = now.getDay();
-  const phase = getPhase();
-  const skill = DAY_SCHEDULE[dow].skill;
-  const taskData = TASKS[skill][phase.id];
-
-  document.getElementById('cl-title').textContent = taskData.title;
-  document.getElementById('cl-subtitle').innerHTML = taskData.subtitle;
-  const chip = document.getElementById('day-chip');
-  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-  chip.textContent = days[dow];
-  chip.style.background = DAY_SCHEDULE[dow].cssColor;
-
-  const stored = getStorage('ielts_checked_days') || {};
-  const todayKey = dateStr(now);
-  const checkedItems = (stored[todayKey + '_items']) || {};
-
-  const container = document.getElementById('cl-sections');
-  container.innerHTML = '';
-
-  let totalItems = 0, doneItems = 0;
-
-  taskData.sections.forEach(sec => {
-    const secEl = document.createElement('div');
-    secEl.className = 'cl-section';
-    secEl.innerHTML = `<div class="cl-sec-title"><div class="cl-dot" style="--gc:${sec.gc};background:${sec.gc}"></div>${sec.label}</div>`;
-    const itemsEl = document.createElement('div');
-
-    sec.items.forEach((item, i) => {
-      const key = sec.label + '_' + i;
-      const isDone = !!checkedItems[key];
-      totalItems++;
-      if (isDone) doneItems++;
-
-      const ci = document.createElement('div');
-      ci.className = 'ci' + (isDone ? ' done' : '');
-      ci.innerHTML = `<div class="cibox">${isDone ? '✓' : ''}</div><div><div class="ci-text">${item.text}</div>${item.diff ? `<div class="ci-diff">${item.diff}</div>` : ''}</div>`;
-      ci.onclick = function() {
-        const now2 = today();
-        const todayKey2 = dateStr(now2);
-        const stored2 = getStorage('ielts_checked_days') || {};
-        if (!stored2[todayKey2 + '_items']) stored2[todayKey2 + '_items'] = {};
-        const wasDone = ci.classList.contains('done');
-        stored2[todayKey2 + '_items'][key] = !wasDone;
-        setStorage('ielts_checked_days', stored2);
-
-        if (!wasDone) {
-          burstAt(ci.querySelector('.cibox') || ci);
-          showReward();
-          ci.classList.add('done');
-          ci.querySelector('.cibox').textContent = '✓';
-        } else {
-          ci.classList.remove('done');
-          ci.querySelector('.cibox').textContent = '';
-        }
+  td.sections.forEach((sec,si)=>{
+    if(sec._rest){
+      const rb=document.createElement('div');rb.className='rest-block';
+      rb.innerHTML=`<span class="rest-block-icon">🌙</span><span class="rest-block-text">4:00 PM · Rest & recharge — close your eyes, step away</span>`;
+      container.appendChild(rb);return;
+    }
+    const secEl=document.createElement('div');secEl.className='time-block';
+    secEl.innerHTML=`<div class="time-block-label"><div class="tb-dot" style="background:${sec.gc}"></div>${sec.label}</div>`;
+    const itemsEl=document.createElement('div');
+    sec.items.forEach((item,i)=>{
+      const key=si+'_'+i;const isDone=!!checkedItems[key];
+      const ci=document.createElement('div');ci.className='ci'+(isDone?' done':'');
+      ci.innerHTML=`<div class="cibox">${isDone?'✓':''}</div><div><div class="ci-text">${item.text}</div>${item.diff?`<div class="ci-diff">${item.diff}</div>`:''}</div>`;
+      ci.onclick=function(){
+        const s2=getStorage('ielts_checked_days')||{};
+        if(!s2[todayKey+'_items'])s2[todayKey+'_items']={};
+        const wasDone=ci.classList.contains('done');
+        s2[todayKey+'_items'][key]=!wasDone;setStorage('ielts_checked_days',s2);
+        if(!wasDone){ci.classList.add('done');ci.querySelector('.cibox').textContent='✓';burstAt(ci.querySelector('.cibox')||ci);showReward();}
+        else{ci.classList.remove('done');ci.querySelector('.cibox').textContent='';}
         updateProgress();
-        renderStreak();
       };
       itemsEl.appendChild(ci);
     });
-
-    secEl.appendChild(itemsEl);
-    container.appendChild(secEl);
+    secEl.appendChild(itemsEl);container.appendChild(secEl);
   });
-
-  function updateProgress() {
-    const allCIs = container.querySelectorAll('.ci');
-    const doneCIs = container.querySelectorAll('.ci.done');
-    const total = allCIs.length;
-    const done = doneCIs.length;
-    const pct = total ? Math.round(done / total * 100) : 0;
-    document.getElementById('prog-fill').style.width = pct + '%';
-    document.getElementById('prog-txt').textContent = done + ' / ' + total + ' complete';
-    document.getElementById('prog-pct').textContent = pct + '%';
-
-    if (done === total && total > 0 && !allDoneTriggered) {
-      allDoneTriggered = true;
-      const stored2 = getStorage('ielts_checked_days') || {};
-      stored2[dateStr(today())] = true;
-      setStorage('ielts_checked_days', stored2);
-      renderStreak();
-      setTimeout(() => {
-        document.getElementById('all-done-overlay').classList.add('visible');
-        for (let i = 0; i < 6; i++) setTimeout(() => burstRandom(), i * 200);
-      }, 500);
-    }
-  }
-
   updateProgress();
 }
 
-/* ════════════════════════════════════════
-   WEEK TABLE
-════════════════════════════════════════ */
-function renderWeekTable() {
-  const todayDow = today().getDay(); // 0=Sun
-  const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-  const container = document.getElementById('week-table');
-
-  let html = `<div class="w-row thead"><div class="w-cell">Day</div><div class="w-cell">Skill</div><div class="w-cell">Focus</div><div class="w-cell time">Time</div></div>`;
-
-  WEEK_SCHEDULE.forEach(row => {
-    const dow = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].indexOf(row.day) + 1;
-    const actualDow = dow % 7;
-    const isToday = actualDow === todayDow;
-    html += `<div class="w-row ${isToday ? 'active-day' : ''}">
-      <div class="w-cell day"><strong>${row.day}</strong>${isToday ? '<span class="today-lbl">← today</span>' : ''}</div>
-      <div class="w-cell focus"><span class="tag ${row.tag}">${row.skill}</span></div>
-      <div class="w-cell"><div><div class="w-task">${row.task}</div><div class="w-hint">${row.hint}</div></div></div>
-      <div class="w-cell time">${row.time}</div>
-    </div>`;
+/* ── WEEK TABLE ── */
+function renderWeekTable(){
+  const todayDow=today().getDay();
+  const dmap={Mon:1,Tue:2,Wed:3,Thu:4,Fri:5,Sat:6,Sun:0};
+  const c=document.getElementById('week-table');
+  let html=`<div class="w-row thead"><div class="w-cell">Day</div><div class="w-cell">Focus</div><div class="w-cell">Tasks</div><div class="w-cell time">Time</div></div>`;
+  WEEK_SCHEDULE.forEach(row=>{
+    const isToday=dmap[row.day]===todayDow;
+    html+=`<div class="w-row ${isToday?'active-day':''}"><div class="w-cell day"><strong>${row.day}</strong>${isToday?'<span class="today-lbl">← today</span>':''}</div><div class="w-cell focus"><span class="tag ${row.tag}">${row.skill}</span></div><div class="w-cell"><div><div class="w-task">${row.task}</div><div class="w-hint">${row.hint}</div></div></div><div class="w-cell time">${row.time}</div></div>`;
   });
-
-  container.innerHTML = html;
+  c.innerHTML=html;
 }
 
-/* ════════════════════════════════════════
-   REWARD TOAST
-════════════════════════════════════════ */
-const rewards = [
-  ['🎯','Sharp.','Another one down.'],
-  ['⭐','Solid.','Keep the streak alive.'],
-  ['🔥','On fire.','Don\'t stop now.'],
-  ['💪','Strong.','You\'re building something real.'],
-  ['✅','Done.','Next.'],
-];
+/* ── TOAST + FIREWORKS ── */
+const rewards=[['🎯','Sharp.','Another one down.'],['⭐','Solid.','Keep the streak alive.'],['🔥','On fire.',"Don't stop now."],['💪','Strong.',"You're building something real."],['✅','Done.','Next.']];
 let toastTimeout;
-function showReward() {
-  const [emoji, text, sub] = rewards[Math.floor(Math.random() * rewards.length)];
-  document.getElementById('rt-emoji').textContent = emoji;
-  document.getElementById('rt-text').textContent = text;
-  document.getElementById('rt-sub').textContent = sub;
-  const toast = document.getElementById('reward-toast');
-  toast.classList.add('show');
-  clearTimeout(toastTimeout);
-  toastTimeout = setTimeout(() => toast.classList.remove('show'), 2200);
+function showReward(){
+  const[e,t,s]=rewards[Math.floor(Math.random()*rewards.length)];
+  document.getElementById('rt-emoji').textContent=e;
+  document.getElementById('rt-text').textContent=t;
+  document.getElementById('rt-sub').textContent=s;
+  const toast=document.getElementById('reward-toast');
+  toast.classList.add('show');clearTimeout(toastTimeout);
+  toastTimeout=setTimeout(()=>toast.classList.remove('show'),2200);
+}
+function closeAllDone(){document.getElementById('all-done-overlay').classList.remove('visible');}
+const fwC=document.getElementById('fireworks-canvas');
+const fwX=fwC.getContext('2d');
+let fwP=[],fwR=null;
+function fwResize(){fwC.width=window.innerWidth;fwC.height=window.innerHeight;}
+fwResize();window.addEventListener('resize',fwResize);
+function fwAnim(){
+  fwX.clearRect(0,0,fwC.width,fwC.height);
+  fwP=fwP.filter(p=>p.alpha>0.02);
+  fwP.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=0.04;p.vx*=.985;p.vy*=.985;p.alpha-=p.decay;fwX.globalAlpha=p.alpha;fwX.fillStyle=p.color;fwX.beginPath();fwX.arc(p.x,p.y,p.size,0,Math.PI*2);fwX.fill();});
+  fwX.globalAlpha=1;
+  if(fwP.length){fwR=requestAnimationFrame(fwAnim);}else{fwR=null;}
+}
+function burstAt(el){
+  const r=el.getBoundingClientRect();const cx=r.left+r.width/2;const cy=r.top+r.height/2;
+  const cols=['#c8612a','#e07030','#e8a860','#3e9870','#60e8a4','#f2ede7'];
+  for(let i=0;i<22;i++){const a=Math.random()*Math.PI*2;const sp=2+Math.random()*3.5;fwP.push({x:cx,y:cy,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-1.8,alpha:1,color:cols[Math.floor(Math.random()*cols.length)],size:2+Math.random()*2.5,decay:0.018+Math.random()*.01});}
+  if(!fwR)fwR=requestAnimationFrame(fwAnim);
+}
+function burstRandom(){
+  const cx=120+Math.random()*(window.innerWidth-240);const cy=80+Math.random()*(window.innerHeight*.55);
+  const cols=['#c8612a','#e07030','#e8a860','#3e9870','#f2ede7','#b88820'];
+  for(let i=0;i<30;i++){const a=Math.random()*Math.PI*2;const sp=3+Math.random()*4;fwP.push({x:cx,y:cy,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-1.5,alpha:1,color:cols[Math.floor(Math.random()*cols.length)],size:2.5+Math.random()*3,decay:0.014+Math.random()*.012});}
+  if(!fwR)fwR=requestAnimationFrame(fwAnim);
 }
 
-function closeAllDone() {
-  document.getElementById('all-done-overlay').classList.remove('visible');
-}
 
-/* ════════════════════════════════════════
-   FIREWORKS
-════════════════════════════════════════ */
-const canvas = document.getElementById('fireworks-canvas');
-const ctx = canvas.getContext('2d');
-let particles = [];
-let fwAnimId = null;
 
-function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
-
-function animateFireworks() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  particles = particles.filter(p => p.alpha > 0.02);
-  particles.forEach(p => {
-    p.x += p.vx; p.y += p.vy; p.vy += 0.04;
-    p.vx *= 0.98; p.vy *= 0.98;
-    p.alpha -= p.decay;
-    ctx.globalAlpha = p.alpha;
-    ctx.fillStyle = p.color;
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-    ctx.fill();
+/* ── SCROLL REVEAL ── */
+const obs=new IntersectionObserver((entries)=>{
+  entries.forEach((entry,i)=>{
+    if(entry.isIntersecting){entry.target.style.animationDelay=(i*.18)+'s';entry.target.classList.add('in');obs.unobserve(entry.target);}
   });
-  ctx.globalAlpha = 1;
-  if (particles.length) { fwAnimId = requestAnimationFrame(animateFireworks); }
-  else { fwAnimId = null; }
-}
+},{threshold:0.04,rootMargin:'0px 0px -20px 0px'});
+document.querySelectorAll('.anim').forEach(el=>obs.observe(el));
 
-function burstAt(el) {
-  const rect = el.getBoundingClientRect();
-  const cx = rect.left + rect.width / 2;
-  const cy = rect.top + rect.height / 2 + window.scrollY;
-  const colors = ['#c8612a','#d4824a','#e8a870','#4aaa7d','#68e8a8','#f0ece6'];
-  for (let i = 0; i < 24; i++) {
-    const angle = Math.random() * Math.PI * 2;
-    const speed = 2 + Math.random() * 3.5;
-    particles.push({ x:cx, y:cy, vx: Math.cos(angle)*speed, vy: Math.sin(angle)*speed - 2, alpha:1, color: colors[Math.floor(Math.random()*colors.length)], size: 2 + Math.random()*2.5, decay: 0.018 + Math.random()*0.01 });
-  }
-  if (!fwAnimId) fwAnimId = requestAnimationFrame(animateFireworks);
-}
-
-function burstRandom() {
-  const cx = 100 + Math.random() * (window.innerWidth - 200);
-  const cy = 100 + Math.random() * (window.innerHeight * 0.6);
-  const colors = ['#c8612a','#d4824a','#e8a870','#4aaa7d','#f0ece6','#b8922a'];
-  for (let i = 0; i < 32; i++) {
-    const angle = Math.random() * Math.PI * 2;
-    const speed = 3 + Math.random() * 4;
-    particles.push({ x:cx, y:cy, vx: Math.cos(angle)*speed, vy: Math.sin(angle)*speed - 1.5, alpha:1, color: colors[Math.floor(Math.random()*colors.length)], size: 2.5 + Math.random()*3, decay: 0.014 + Math.random()*0.012 });
-  }
-  if (!fwAnimId) fwAnimId = requestAnimationFrame(animateFireworks);
-}
-
-/* ════════════════════════════════════════
-   MUSIC PLAYER
-════════════════════════════════════════ */
-let audio, musicPlaying = false;
-const tracks = [
-  { title: 'Lofi Study Beat', artist: 'Focus Mode', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
-  { title: 'Ambient Flow', artist: 'Deep Work', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3' },
-];
-let trackIdx = 0;
-
-function initAudio() {
-  if (audio) return;
-  audio = new Audio(tracks[trackIdx].url);
-  audio.loop = true;
-  audio.volume = parseFloat(document.getElementById('mp-vol').value);
-}
-
-function toggleMusic() {
-  initAudio();
-  if (musicPlaying) {
-    audio.pause();
-    musicPlaying = false;
-    document.getElementById('mp-play').textContent = '▶';
-    document.getElementById('mp-art').classList.remove('playing');
-  } else {
-    audio.play().catch(() => {});
-    musicPlaying = true;
-    document.getElementById('mp-play').textContent = '⏸';
-    document.getElementById('mp-art').classList.add('playing');
-  }
-}
-
-document.getElementById('mp-vol').addEventListener('input', function() {
-  if (audio) audio.volume = parseFloat(this.value);
-});
-
-document.addEventListener('click', function startOnce() {
-  if (!musicPlaying) toggleMusic();
-  document.removeEventListener('click', startOnce);
-}, { once: true });
-
-/* ════════════════════════════════════════
-   SCROLL REVEAL
-════════════════════════════════════════ */
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry, i) => {
-    if (entry.isIntersecting) {
-      const el = entry.target;
-      el.style.animationDelay = (i * 0.05) + 's';
-      el.classList.add('in');
-      observer.unobserve(el);
-    }
-  });
-}, { threshold: 0.1 });
-
-document.querySelectorAll('.anim').forEach(el => observer.observe(el));
-
-/* ════════════════════════════════════════
-   INIT
-════════════════════════════════════════ */
-renderCountdown();
-renderPhase();
-renderStreak();
-renderDayCards();
-renderChecklist();
-renderWeekTable();
-
-setInterval(renderCountdown, 60000);
+/* ── INIT ── */
+renderCountdown();renderPhase();renderStreak();renderDayCards();renderChecklist();renderWeekTable();
+setInterval(renderCountdown,60000);
 </script>
 </body>
 </html>
