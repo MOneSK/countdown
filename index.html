@@ -3,1390 +3,1641 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IELTS Prep — July 21</title>
-<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Cabinet+Grotesk:wght@400;500;700&family=Fira+Code:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<title>IELTS Prep — August 8</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
+/* ═══════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════ */
 :root {
-  --bg:#0e0f13; --bg2:#141619; --surface:#1a1c22; --surface2:#22252d;
-  --border:#2c2f3a; --ink:#edeaf3; --muted:#6b6e80; --dimmed:#3a3d4a;
-  --R:#e05555; --W:#4f8ef7; --L:#3ec98a; --S:#f0a340;
-  --streak:#ff5a1f; --gold:#d4a017;
-}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{background:var(--bg);color:var(--ink);font-family:'Cabinet Grotesk',sans-serif;min-height:100vh;overflow-x:hidden;}
-body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,.035) 1px,transparent 1px);background-size:28px 28px;pointer-events:none;z-index:0;}
-.wrap{max-width:1060px;margin:0 auto;padding:44px 20px 80px;position:relative;z-index:1;}
+  --bg: #080808;
+  --bg2: #0d0d0d;
+  --surface: #111111;
+  --surface2: #171717;
+  --border: rgba(255,255,255,0.07);
+  --border-hover: rgba(255,255,255,0.14);
+  --ink: #f0ece6;
+  --ink-dim: rgba(240,236,230,0.55);
+  --ink-faint: rgba(240,236,230,0.22);
 
-/* HERO */
-.hero{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:start;margin-bottom:40px;animation:up .6s ease both;}
-@media(max-width:560px){.hero{grid-template-columns:1fr;}}
-.eyebrow{font-family:'Fira Code',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
-h1{font-family:'Clash Display',sans-serif;font-size:clamp(32px,6vw,64px);font-weight:700;line-height:.95;letter-spacing:-.03em;}
-h1 em{font-style:normal;color:var(--streak);}
-.hero-sub{font-size:13px;color:var(--muted);margin-top:10px;line-height:1.65;max-width:360px;}
-.clock-box{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:22px 28px;text-align:center;min-width:180px;box-shadow:0 0 40px rgba(255,90,31,.07);}
-.clock-num{font-family:'Clash Display',sans-serif;font-size:58px;font-weight:700;line-height:1;letter-spacing:-.04em;color:var(--streak);}
-.clock-label{font-family:'Fira Code',monospace;font-size:10px;letter-spacing:.2em;color:var(--muted);margin-top:4px;text-transform:uppercase;}
-.exam-chip{display:inline-block;margin-top:10px;background:rgba(255,90,31,.12);color:var(--streak);font-family:'Fira Code',monospace;font-size:10px;letter-spacing:.08em;padding:4px 12px;border-radius:20px;}
+  /* skill colors */
+  --ember: #c8612a;
+  --ember-glow: rgba(200,97,42,0.18);
+  --ember-soft: rgba(200,97,42,0.08);
+  --R: #c06060;
+  --W: #5d8fd6;
+  --L: #4aaa7d;
+  --S: #c9924a;
+  --gold: #b8922a;
 
-/* PHASE BANNER — auto detected */
-.phase-banner{border-radius:12px;padding:14px 20px;margin-bottom:32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;animation:up .6s .06s ease both;}
-.pb-left{display:flex;align-items:center;gap:14px;}
-.pb-icon{font-size:24px;}
-.pb-name{font-family:'Clash Display',sans-serif;font-size:16px;font-weight:600;}
-.pb-range{font-family:'Fira Code',monospace;font-size:10px;color:var(--muted);margin-top:2px;}
-.pb-goal{font-size:12px;color:var(--muted);max-width:420px;line-height:1.6;}
-.pb-badge{font-family:'Fira Code',monospace;font-size:10px;letter-spacing:.1em;padding:5px 14px;border-radius:20px;font-weight:600;}
-
-/* STREAK */
-.streak-wrap{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:32px;animation:up .6s .1s ease both;}
-.streak-left{display:flex;align-items:center;gap:14px;}
-.s-fire{font-size:30px;animation:bob 2.2s infinite;}
-@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
-.s-num{font-family:'Clash Display',sans-serif;font-size:42px;font-weight:700;color:var(--streak);line-height:1;}
-.s-meta strong{color:var(--ink);font-size:14px;display:block;}
-.s-meta span{color:var(--muted);font-size:11px;}
-.dot-row{display:flex;gap:5px;flex-wrap:wrap;max-width:380px;}
-.sdot{width:20px;height:20px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);transition:all .2s;cursor:default;}
-.sdot.done{background:var(--streak);border-color:var(--streak);box-shadow:0 0 6px rgba(255,90,31,.4);}
-.sdot.today{border-color:var(--streak);box-shadow:0 0 0 2px rgba(255,90,31,.25);}
-
-/* SEC LABEL */
-.sec{font-family:'Fira Code',monospace;font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;display:flex;align-items:center;gap:12px;}
-.sec::after{content:'';flex:1;height:1px;background:var(--border);}
-
-/* TODAY + TOMORROW CARDS */
-.day-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px;animation:up .6s .14s ease both;}
-@media(max-width:620px){.day-grid{grid-template-columns:1fr;}}
-
-.today-card{border-radius:14px;padding:22px;border:1px solid var(--border);position:relative;overflow:hidden;}
-.today-card.featured{background:var(--surface);}
-.today-card.preview{background:var(--bg2);opacity:.85;}
-.tc-eyebrow{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
-.tc-skill{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
-.tc-icon{font-size:28px;}
-.tc-name{font-family:'Clash Display',sans-serif;font-size:22px;font-weight:700;}
-.tc-tagline{font-size:12px;color:var(--muted);line-height:1.55;margin-bottom:14px;}
-.tc-time{font-family:'Fira Code',monospace;font-size:11px;color:var(--muted);}
-.tc-time strong{color:var(--ink);}
-.tc-accent{position:absolute;top:0;right:0;width:80px;height:80px;border-radius:0 14px 0 100%;opacity:.08;}
-
-/* CHECKLIST */
-.checklist-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:32px;animation:up .6s .18s ease both;}
-.cl-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:10px;}
-.cl-head h2{font-family:'Clash Display',sans-serif;font-size:18px;font-weight:600;}
-.day-chip{font-family:'Fira Code',monospace;font-size:10px;letter-spacing:.1em;padding:4px 14px;border-radius:20px;color:#fff;}
-.cl-subtitle{font-size:12px;color:var(--muted);margin-bottom:20px;line-height:1.5;}
-.cl-subtitle strong{color:var(--ink);}
-
-.cl-section{margin-bottom:20px;}
-.cl-section-title{font-family:'Fira Code',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:8px;}
-.cl-dot{width:7px;height:7px;border-radius:50%;background:var(--gc);flex-shrink:0;}
-
-.ci{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);cursor:pointer;}
-.ci:last-child{border-bottom:none;}
-.cibox{width:18px;height:18px;border-radius:4px;border:1.5px solid var(--border);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:10px;background:var(--bg2);transition:all .15s;}
-.ci.done .cibox{background:var(--L);border-color:var(--L);color:#fff;}
-.ci-text{font-size:12px;color:var(--ink);line-height:1.5;}
-.ci-diff{font-size:9px;font-family:'Fira Code',monospace;color:var(--muted);margin-top:2px;}
-.ci.done .ci-text{color:var(--muted);text-decoration:line-through;}
-
-.prog-bg{height:5px;background:var(--border);border-radius:3px;overflow:hidden;margin-top:18px;}
-.prog-fill{height:100%;background:linear-gradient(90deg,var(--L),#60e8a4);width:0%;transition:width .4s ease;border-radius:3px;}
-.prog-row{display:flex;justify-content:space-between;align-items:center;margin-top:7px;}
-.prog-txt{font-family:'Fira Code',monospace;font-size:10px;color:var(--muted);}
-.prog-pct{font-family:'Fira Code',monospace;font-size:11px;color:var(--L);font-weight:500;}
-
-/* SKILL CARDS */
-.skill-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:32px;animation:up .6s .22s ease both;}
-@media(max-width:680px){.skill-row{grid-template-columns:repeat(2,1fr);}}
-.sk{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;position:relative;overflow:hidden;transition:transform .2s,border-color .2s;}
-.sk:hover{transform:translateY(-3px);border-color:var(--c);}
-.sk::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--c);}
-.sk-icon{font-size:18px;margin-bottom:7px;}
-.sk-name{font-family:'Clash Display',sans-serif;font-size:13px;font-weight:600;color:var(--c);margin-bottom:3px;}
-.sk-day{font-family:'Fira Code',monospace;font-size:9px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;}
-
-/* WEEKLY VIEW */
-.week-table{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:32px;animation:up .6s .26s ease both;}
-.tr{display:grid;grid-template-columns:90px 120px 1fr 80px;border-bottom:1px solid var(--border);min-height:50px;}
-.tr:last-child{border-bottom:none;}
-.tr.thead{background:var(--surface2);font-family:'Fira Code',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);}
-.tr.active-day{background:rgba(255,90,31,.04);border-left:3px solid var(--streak);}
-.td{padding:11px 14px;border-right:1px solid var(--border);font-size:11.5px;line-height:1.5;display:flex;align-items:center;}
-.td:last-child{border-right:none;}
-.td.day{font-family:'Fira Code',monospace;font-size:10px;color:var(--muted);flex-direction:column;align-items:flex-start;gap:1px;}
-.td.day strong{color:var(--ink);font-size:12px;}
-.td.focus{align-items:flex-start;padding-top:13px;}
-.td.time{color:var(--muted);font-size:11px;justify-content:center;}
-.tag{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:2px 8px;border-radius:4px;}
-.tag.R{background:rgba(224,85,85,.15);color:var(--R);}
-.tag.W{background:rgba(79,142,247,.15);color:var(--W);}
-.tag.L{background:rgba(62,201,138,.15);color:var(--L);}
-.tag.S{background:rgba(240,163,64,.15);color:var(--S);}
-.tag.rest{background:rgba(107,110,128,.15);color:var(--muted);}
-.tag.mock{background:rgba(212,160,23,.15);color:var(--gold);}
-.task-txt{font-size:11.5px;color:var(--ink);}
-.hint-txt{font-size:10px;color:var(--muted);margin-top:2px;}
-.today-label{font-size:9px;color:var(--streak);font-family:'Fira Code',monospace;letter-spacing:.1em;margin-top:2px;}
-
-/* TIPS */
-.tips-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:32px;animation:up .6s .3s ease both;}
-@media(max-width:600px){.tips-grid{grid-template-columns:1fr;}}
-.tip{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;}
-.tip h4{font-family:'Clash Display',sans-serif;font-size:13px;font-weight:600;margin-bottom:5px;}
-.tip p{font-size:11px;color:var(--muted);line-height:1.65;}
-
-@keyframes up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
-@media(max-width:640px){.tr{grid-template-columns:72px 100px 1fr;}.tr .td:last-child,.tr.thead .td:last-child{display:none;}}
-
-/* ── iOS EMOJI everywhere ── */
-* { font-family: 'Cabinet Grotesk', 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif; }
-.emoji-render {
-  font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', 'Twemoji Mozilla', sans-serif !important;
-  font-style: normal;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-ui: 'Outfit', system-ui, sans-serif;
+  --font-mono: 'DM Mono', monospace;
 }
 
-/* ── FIREWORKS CANVAS ── */
-#fireworks-canvas {
-  position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+/* ═══════════════════════════════════════
+   RESET + BASE
+═══════════════════════════════════════ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  scroll-behavior: auto; /* overridden by JS inertia */
+  scrollbar-width: none;
+}
+html::-webkit-scrollbar { display: none; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.65;
+  overflow-x: hidden;
+  cursor: none;
 }
 
-/* ── MUSIC PLAYER ── */
-#music-player {
-  position: fixed; bottom: 24px; right: 24px; z-index: 1000;
+/* ═══════════════════════════════════════
+   CURSOR EMBER GLOW
+═══════════════════════════════════════ */
+#ember-cursor {
+  position: fixed;
+  top: 0; left: 0;
+  width: 420px; height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(200,97,42,0.22) 0%, rgba(200,97,42,0.07) 40%, transparent 70%);
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.4s ease;
+  mix-blend-mode: screen;
+}
+#cursor-dot {
+  position: fixed;
+  top: 0; left: 0;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--ember);
+  pointer-events: none;
+  z-index: 10000;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 10px 3px rgba(200,97,42,0.5);
+}
+
+/* ═══════════════════════════════════════
+   NOISE GRAIN OVERLAY
+═══════════════════════════════════════ */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.028;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ═══════════════════════════════════════
+   LAYOUT WRAP
+═══════════════════════════════════════ */
+.wrap {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 32px 120px;
+  position: relative;
+  z-index: 2;
+}
+
+/* ═══════════════════════════════════════
+   NAV
+═══════════════════════════════════════ */
+nav {
+  position: sticky; top: 0;
+  z-index: 100;
+  padding: 20px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  background: rgba(8,8,8,0.88);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  font-style: italic;
+}
+.nav-logo em { color: var(--ember); font-style: normal; }
+.nav-links {
+  display: flex; gap: 32px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  list-style: none;
+}
+.nav-links a { color: inherit; text-decoration: none; transition: color 0.2s; }
+.nav-links a:hover { color: var(--ink); }
+
+/* ═══════════════════════════════════════
+   HERO
+═══════════════════════════════════════ */
+.hero {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 0 60px;
+  position: relative;
+}
+.hero-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ember);
+  margin-bottom: 28px;
+  display: flex; align-items: center; gap: 12px;
+}
+.hero-eyebrow::before {
+  content: '';
+  width: 32px; height: 1px;
+  background: var(--ember);
+}
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(68px, 11vw, 140px);
+  font-weight: 300;
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 0;
+  text-wrap: balance;
+}
+.hero-title .accent {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(240,236,230,0.35);
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--ember);
+  -webkit-text-stroke: 0;
+}
+
+.hero-bottom {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 40px;
+  align-items: end;
+  margin-top: 64px;
+}
+.hero-sub {
+  font-size: 15px;
+  color: var(--ink-dim);
+  max-width: 380px;
+  line-height: 1.75;
+  font-weight: 300;
+}
+
+/* COUNTDOWN */
+.countdown-block {
+  text-align: right;
+}
+.countdown-num {
+  font-family: var(--font-display);
+  font-size: clamp(64px, 9vw, 110px);
+  font-weight: 300;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: var(--ember);
+}
+.countdown-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-top: 8px;
+}
+.exam-date {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--ink-dim);
+  margin-top: 10px;
+}
+
+/* horizontal rule */
+.hr {
+  height: 1px;
+  background: var(--border);
+  margin: 80px 0;
+}
+
+/* ═══════════════════════════════════════
+   SECTION LABEL
+═══════════════════════════════════════ */
+.sec-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 36px;
+  display: flex; align-items: center; gap: 16px;
+}
+.sec-label::after {
+  content: '';
+  flex: 1; height: 1px;
+  background: var(--border);
+}
+
+/* ═══════════════════════════════════════
+   PHASE BANNER
+═══════════════════════════════════════ */
+.phase-banner {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px 32px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 24px;
+  align-items: center;
+  margin-bottom: 80px;
+  position: relative;
+  overflow: hidden;
+}
+.phase-banner::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--ember), transparent);
+  opacity: 0.5;
+}
+.phase-num {
+  font-family: var(--font-display);
+  font-size: 72px;
+  font-weight: 300;
+  color: var(--ink-faint);
+  line-height: 1;
+  position: absolute;
+  right: 32px; bottom: -12px;
+  letter-spacing: -0.04em;
+}
+.phase-name {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.phase-goal {
+  font-size: 13px;
+  color: var(--ink-dim);
+  max-width: 500px;
+  line-height: 1.7;
+}
+.phase-badge {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ember);
+  background: var(--ember-soft);
+  border: 1px solid rgba(200,97,42,0.2);
+  border-radius: 20px;
+  padding: 6px 16px;
+  white-space: nowrap;
+  align-self: start;
+}
+
+/* ═══════════════════════════════════════
+   STREAK
+═══════════════════════════════════════ */
+.streak-section {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 48px;
+  align-items: center;
+  margin-bottom: 80px;
+}
+.streak-num-wrap {
+  position: relative;
+}
+.streak-big {
+  font-family: var(--font-display);
+  font-size: 120px;
+  font-weight: 300;
+  line-height: 0.85;
+  color: var(--ember);
+  letter-spacing: -0.05em;
+}
+.streak-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-top: 12px;
+}
+.dot-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-width: 460px;
+}
+.sdot {
+  width: 22px; height: 22px;
+  border-radius: 50%;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 50px;
-  padding: 10px 18px 10px 12px;
-  display: flex; align-items: center; gap: 10px;
-  box-shadow: 0 8px 32px rgba(0,0,0,.4);
-  transition: all 0.3s ease;
-  min-width: 220px;
+  transition: all 0.2s;
 }
-#music-player:hover { border-color: var(--streak); }
+.sdot.done {
+  background: var(--ember);
+  border-color: var(--ember);
+  box-shadow: 0 0 8px rgba(200,97,42,0.45);
+}
+.sdot.today {
+  border-color: var(--ember);
+  box-shadow: 0 0 0 3px rgba(200,97,42,0.18);
+}
+.streak-note {
+  font-size: 13px;
+  color: var(--ink-dim);
+  margin-top: 16px;
+  line-height: 1.65;
+}
 
-.mp-art {
-  width: 36px; height: 36px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--streak), #ff9a3c);
+/* ═══════════════════════════════════════
+   TODAY / TOMORROW
+═══════════════════════════════════════ */
+.day-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 80px;
+}
+.day-card {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s;
+}
+.day-card.featured {
+  background: var(--surface);
+  border-color: rgba(240,236,230,0.1);
+}
+.day-card.featured::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--c, var(--ember)), transparent);
+}
+.day-card.preview {
+  background: var(--bg2);
+  opacity: 0.7;
+}
+.dc-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 20px;
+}
+.dc-skill-name {
+  font-family: var(--font-display);
+  font-size: 42px;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1;
+  margin-bottom: 14px;
+}
+.dc-tagline {
+  font-size: 13px;
+  color: var(--ink-dim);
+  line-height: 1.65;
+  margin-bottom: 20px;
+}
+.dc-time {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-faint);
+  letter-spacing: 0.08em;
+}
+.dc-time strong { color: var(--ink-dim); }
+
+/* ═══════════════════════════════════════
+   SKILLS ROW
+═══════════════════════════════════════ */
+.skills-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 80px;
+}
+.skill-card {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px 20px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.25s, transform 0.25s;
+  cursor: default;
+}
+.skill-card:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-3px);
+}
+.skill-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: var(--c);
+  opacity: 0.6;
+}
+.sk-name {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--c);
+  margin-bottom: 4px;
+}
+.sk-days {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* ═══════════════════════════════════════
+   CHECKLIST
+═══════════════════════════════════════ */
+.checklist-wrap {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 36px 40px;
+  margin-bottom: 80px;
+  background: var(--surface);
+}
+.cl-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.cl-title {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--ink);
+}
+.cl-day-chip {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 20px;
+  color: #fff;
+}
+.cl-sub {
+  font-size: 13px;
+  color: var(--ink-dim);
+  margin-bottom: 32px;
+  line-height: 1.7;
+}
+.cl-section {
+  margin-bottom: 24px;
+}
+.cl-sec-title {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 12px;
+  display: flex; align-items: center; gap: 10px;
+}
+.cl-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--gc);
+  flex-shrink: 0;
+}
+.ci {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.ci:last-child { border-bottom: none; }
+.ci:hover { opacity: 0.8; }
+.cibox {
+  width: 20px; height: 20px;
+  border-radius: 5px;
+  border: 1px solid var(--border-hover);
+  flex-shrink: 0;
+  margin-top: 1px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 16px; flex-shrink: 0;
-  animation: spin-slow 8s linear infinite;
+  font-size: 11px;
+  background: var(--bg);
+  transition: all 0.18s;
+}
+.ci.done .cibox {
+  background: var(--L);
+  border-color: var(--L);
+  color: #fff;
+}
+.ci-text {
+  font-size: 13px;
+  color: var(--ink);
+  line-height: 1.6;
+}
+.ci-diff {
+  font-size: 11px;
+  font-family: var(--font-mono);
+  color: var(--ink-faint);
+  margin-top: 3px;
+}
+.ci.done .ci-text {
+  color: var(--ink-faint);
+  text-decoration: line-through;
+}
+
+/* progress */
+.prog-bg {
+  height: 2px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 28px;
+}
+.prog-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--L), #68e8a8);
+  width: 0%;
+  transition: width 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+  border-radius: 2px;
+}
+.prog-row {
+  display: flex; justify-content: space-between;
+  margin-top: 10px;
+}
+.prog-txt {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ink-faint);
+  letter-spacing: 0.08em;
+}
+.prog-pct {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--L);
+  letter-spacing: 0.08em;
+}
+
+/* ═══════════════════════════════════════
+   WEEK TABLE
+═══════════════════════════════════════ */
+.week-wrap {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 80px;
+}
+.w-row {
+  display: grid;
+  grid-template-columns: 80px 120px 1fr 80px;
+  border-bottom: 1px solid var(--border);
+}
+.w-row:last-child { border-bottom: none; }
+.w-row.thead {
+  background: var(--surface2);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.w-row.active-day {
+  background: rgba(200,97,42,0.04);
+  border-left: 2px solid var(--ember);
+}
+.w-cell {
+  padding: 14px 16px;
+  border-right: 1px solid var(--border);
+  font-size: 12px;
+  line-height: 1.5;
+  display: flex; align-items: center;
+}
+.w-cell:last-child { border-right: none; }
+.w-cell.day {
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ink-faint);
+}
+.w-cell.day strong {
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 500;
+}
+.w-cell.focus { align-items: flex-start; padding-top: 16px; }
+.w-cell.time {
+  color: var(--ink-dim);
+  font-size: 11px;
+  justify-content: center;
+  font-family: var(--font-mono);
+}
+.today-lbl {
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ember);
+  font-family: var(--font-mono);
+}
+.tag {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+}
+.tag.R { background: rgba(192,96,96,0.12); color: var(--R); }
+.tag.W { background: rgba(93,143,214,0.12); color: var(--W); }
+.tag.L { background: rgba(74,170,125,0.12); color: var(--L); }
+.tag.S { background: rgba(201,146,74,0.12); color: var(--S); }
+.tag.rest { background: rgba(240,236,230,0.07); color: var(--ink-dim); }
+.w-task { font-size: 12px; color: var(--ink); }
+.w-hint { font-size: 10px; color: var(--ink-faint); margin-top: 2px; font-family: var(--font-mono); }
+
+/* ═══════════════════════════════════════
+   TIPS
+═══════════════════════════════════════ */
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 80px;
+}
+.tip-card {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+  transition: border-color 0.25s;
+}
+.tip-card:hover { border-color: var(--border-hover); }
+.tip-head {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 400;
+  font-style: italic;
+  margin-bottom: 10px;
+}
+.tip-body {
+  font-size: 12px;
+  color: var(--ink-dim);
+  line-height: 1.75;
+}
+
+/* ═══════════════════════════════════════
+   MUSIC PLAYER
+═══════════════════════════════════════ */
+#music-player {
+  position: fixed;
+  bottom: 28px; right: 28px;
+  z-index: 1000;
+  background: rgba(17,17,17,0.92);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  padding: 10px 20px 10px 12px;
+  display: flex; align-items: center; gap: 12px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+  transition: border-color 0.25s;
+  min-width: 230px;
+}
+#music-player:hover { border-color: var(--ember); }
+.mp-art {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: conic-gradient(var(--ember), #d4824a, #8a3d18, var(--ember));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; flex-shrink: 0;
+  animation: spin-slow 10s linear infinite;
   animation-play-state: paused;
 }
 .mp-art.playing { animation-play-state: running; }
 @keyframes spin-slow { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
-
 .mp-info { flex: 1; min-width: 0; }
 .mp-title {
-  font-family: 'Fira Code', monospace; font-size: 10px; font-weight: 500;
-  color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  letter-spacing: .03em;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ink);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  letter-spacing: 0.04em;
 }
-.mp-artist { font-size: 9px; color: var(--muted); margin-top: 1px; font-family: 'Fira Code', monospace; }
-
+.mp-artist {
+  font-size: 9px; color: var(--ink-faint);
+  margin-top: 1px;
+  font-family: var(--font-mono);
+}
 .mp-controls { display: flex; align-items: center; gap: 8px; }
 .mp-btn {
-  background: none; border: none; cursor: pointer; padding: 4px;
-  color: var(--muted); transition: color .15s; font-size: 13px; line-height: 1;
+  background: none; border: none; cursor: none;
+  padding: 4px; color: var(--ink-dim);
+  transition: color 0.15s; font-size: 13px; line-height: 1;
   display: flex; align-items: center; justify-content: center;
 }
 .mp-btn:hover { color: var(--ink); }
 .mp-btn.play-btn {
   width: 28px; height: 28px; border-radius: 50%;
-  background: var(--streak); color: #fff; font-size: 11px;
+  background: var(--ember); color: #fff; font-size: 11px;
 }
-.mp-btn.play-btn:hover { background: #ff7040; }
-
+.mp-btn.play-btn:hover { background: #d97040; }
 .mp-vol {
   -webkit-appearance: none; appearance: none;
-  width: 50px; height: 3px; border-radius: 2px;
-  background: var(--border); outline: none; cursor: pointer;
+  width: 48px; height: 2px; border-radius: 1px;
+  background: var(--border); outline: none; cursor: none;
 }
 .mp-vol::-webkit-slider-thumb {
   -webkit-appearance: none; width: 10px; height: 10px;
-  border-radius: 50%; background: var(--streak); cursor: pointer;
+  border-radius: 50%; background: var(--ember); cursor: none;
 }
 
-/* waveform bars */
-.mp-wave { display: flex; align-items: center; gap: 2px; height: 16px; }
-.mp-bar {
-  width: 2px; border-radius: 2px; background: var(--streak);
-  animation: wave-anim 0.6s ease-in-out infinite alternate;
-  transform-origin: bottom;
-}
-.mp-bar:nth-child(1){height:4px;animation-delay:0s}
-.mp-bar:nth-child(2){height:10px;animation-delay:.1s}
-.mp-bar:nth-child(3){height:14px;animation-delay:.2s}
-.mp-bar:nth-child(4){height:8px;animation-delay:.3s}
-.mp-bar:nth-child(5){height:12px;animation-delay:.15s}
-.mp-wave.paused .mp-bar { animation-play-state: paused; }
-@keyframes wave-anim { from{transform:scaleY(.3)} to{transform:scaleY(1)} }
-
-/* ── REWARD TOAST ── */
+/* ═══════════════════════════════════════
+   OVERLAYS
+═══════════════════════════════════════ */
 #reward-toast {
-  position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%) scale(0.5);
-  background: var(--surface); border: 1px solid var(--L);
-  border-radius: 20px; padding: 20px 32px;
-  text-align: center; z-index: 10000;
-  opacity: 0; pointer-events: none;
-  transition: all 0.3s cubic-bezier(.34,1.56,.64,1);
-  box-shadow: 0 0 60px rgba(62,201,138,.2);
+  position: fixed; top: 28px; left: 50%;
+  transform: translateX(-50%) translateY(-120px);
+  z-index: 2000;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  padding: 12px 28px;
+  display: flex; align-items: center; gap: 12px;
+  font-size: 13px; color: var(--ink);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  backdrop-filter: blur(20px);
 }
-#reward-toast.show {
-  opacity: 1; transform: translate(-50%,-50%) scale(1);
-}
-.rt-emoji { font-size: 40px; display: block; margin-bottom: 6px; font-family: 'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif; }
-.rt-text { font-family: 'Clash Display', sans-serif; font-size: 16px; font-weight: 700; color: var(--L); }
-.rt-sub { font-size: 11px; color: var(--muted); margin-top: 3px; font-family: 'Fira Code',monospace; }
+#reward-toast.show { transform: translateX(-50%) translateY(0); }
+.rt-emoji { font-size: 18px; }
 
-/* ── ALL DONE OVERLAY ── */
 #all-done-overlay {
-  position: fixed; inset: 0; z-index: 9998;
-  background: rgba(14,15,19,.85); backdrop-filter: blur(8px);
-  display: flex; align-items: center; justify-content: center;
-  opacity: 0; pointer-events: none; transition: opacity .5s;
+  display: none; position: fixed; inset: 0;
+  background: rgba(8,8,8,0.88);
+  z-index: 3000;
+  align-items: center; justify-content: center;
+  backdrop-filter: blur(16px);
 }
-#all-done-overlay.show { opacity: 1; pointer-events: all; }
+#all-done-overlay.visible { display: flex; }
 .ado-card {
-  background: var(--surface); border: 1px solid var(--L);
-  border-radius: 24px; padding: 40px 48px; text-align: center;
-  max-width: 380px; box-shadow: 0 0 80px rgba(62,201,138,.25);
-  animation: up .5s ease both;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 52px;
+  text-align: center;
+  max-width: 420px;
+  animation: up 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-.ado-emoji { font-size: 56px; display: block; margin-bottom: 16px; font-family: 'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif; }
-.ado-title { font-family: 'Clash Display',sans-serif; font-size: 28px; font-weight: 700; color: var(--L); margin-bottom: 8px; }
-.ado-sub { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 20px; }
+.ado-title {
+  font-family: var(--font-display);
+  font-size: 44px;
+  font-weight: 300;
+  font-style: italic;
+  margin-bottom: 12px;
+}
+.ado-sub {
+  font-size: 13px;
+  color: var(--ink-dim);
+  line-height: 1.75;
+  margin-bottom: 28px;
+}
 .ado-close {
-  background: var(--L); color: #000; border: none; border-radius: 20px;
-  padding: 10px 24px; font-family: 'Fira Code',monospace; font-size: 12px;
-  letter-spacing: .1em; cursor: pointer; font-weight: 600;
-  transition: opacity .15s;
+  background: var(--ember);
+  color: #fff;
+  border: none;
+  border-radius: 24px;
+  padding: 12px 28px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: none;
+  transition: opacity 0.15s;
 }
-.ado-close:hover { opacity: .8; }
+.ado-close:hover { opacity: 0.85; }
+
+/* ═══════════════════════════════════════
+   FIREWORKS
+═══════════════════════════════════════ */
+#fireworks-canvas {
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 9998;
+}
+
+/* ═══════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════ */
+@keyframes up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: none; }
+}
+.anim { opacity: 0; }
+.anim.in { animation: up 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+
+/* ═══════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════ */
+@media(max-width: 720px) {
+  .hero-bottom { grid-template-columns: 1fr; }
+  .countdown-block { text-align: left; }
+  .day-grid { grid-template-columns: 1fr; }
+  .skills-row { grid-template-columns: repeat(2, 1fr); }
+  .tips-grid { grid-template-columns: 1fr; }
+  .w-row { grid-template-columns: 72px 100px 1fr; }
+  .w-row .w-cell:last-child { display: none; }
+  .streak-section { grid-template-columns: 1fr; }
+  .wrap { padding: 0 20px 80px; }
+  nav { padding: 16px 20px; }
+  .nav-links { display: none; }
+}
 </style>
 </head>
 <body>
 
-<!-- FIREWORKS -->
+<!-- Cursor elements -->
+<div id="ember-cursor"></div>
+<div id="cursor-dot"></div>
+
+<!-- Fireworks -->
 <canvas id="fireworks-canvas"></canvas>
 
-<!-- REWARD TOAST -->
+<!-- Reward Toast -->
 <div id="reward-toast">
   <span class="rt-emoji" id="rt-emoji">⭐</span>
-  <div class="rt-text" id="rt-text">Nice work!</div>
-  <div class="rt-sub" id="rt-sub">Keep going</div>
+  <div id="rt-text" style="font-weight:500;">Nice work!</div>
+  <div id="rt-sub" style="color:var(--ink-dim);font-size:12px;">Keep the streak alive</div>
 </div>
 
-<!-- ALL DONE OVERLAY -->
+<!-- All Done Overlay -->
 <div id="all-done-overlay">
   <div class="ado-card">
-    <span class="ado-emoji">🏆</span>
-    <div class="ado-title">All done today!</div>
-    <div class="ado-sub">You crushed every task. Streak updated. School + IELTS prep in one day — that's impressive. See you tomorrow. 💪</div>
-    <button class="ado-close" onclick="closeAllDone()">CLOSE · SEE YOU TOMORROW</button>
+    <div style="font-size:36px;margin-bottom:16px;">🏆</div>
+    <div class="ado-title">All done today.</div>
+    <div class="ado-sub">Every task checked. Streak updated. Rest well — tomorrow you continue.</div>
+    <button class="ado-close" onclick="closeAllDone()">Close · See you tomorrow</button>
   </div>
 </div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">IELTS <em>Prep</em></div>
+  <ul class="nav-links">
+    <li><a href="#phase">Phase</a></li>
+    <li><a href="#today">Today</a></li>
+    <li><a href="#checklist">Tasks</a></li>
+    <li><a href="#week">Schedule</a></li>
+    <li><a href="#tips">Tips</a></li>
+  </ul>
+</nav>
+
 <div class="wrap">
 
-<div class="hero">
-  <div>
-    <div class="eyebrow">// IELTS Prep · One skill. One day.</div>
-    <h1>Study.<br>Practice.<br><em>Ace it.</em></h1>
-    <div class="hero-sub">Built around your real life — school included. One skill per day, 45–60 min max.</div>
-  </div>
-  <div class="clock-box">
-    <div class="clock-num" id="countdown-num">—</div>
-    <div class="clock-label">days to go</div>
-    <div class="exam-chip">📅 Jul 21, 2026</div>
-  </div>
-</div>
+  <!-- ─── HERO ─── -->
+  <section class="hero" id="hero">
+    <div class="hero-eyebrow">IELTS Prep · One skill. One day.</div>
+    <h1 class="hero-title">
+      Study.<br>
+      Practice.<br>
+      <em>Ace it.</em>
+    </h1>
+    <div class="hero-bottom">
+      <p class="hero-sub">Built around your real life — school included. One skill per day, 45–60 min max. A new chapter begins.</p>
+      <div class="countdown-block">
+        <div class="countdown-num" id="countdown-num">—</div>
+        <div class="countdown-label">days remaining</div>
+        <div class="exam-date">📅 August 8, 2026</div>
+      </div>
+    </div>
+  </section>
 
-<!-- AUTO PHASE BANNER -->
-<div class="phase-banner" id="phase-banner">
-  <div class="pb-left">
-    <div class="pb-icon" id="pb-icon">📘</div>
-    <div>
-      <div class="pb-name" id="pb-name">—</div>
-      <div class="pb-range" id="pb-range">—</div>
-      <div class="pb-goal" id="pb-goal">—</div>
+  <div class="hr"></div>
+
+  <!-- ─── PHASE ─── -->
+  <div id="phase">
+    <div class="sec-label">Current phase</div>
+    <div class="phase-banner anim">
+      <div>
+        <div class="phase-name" id="pb-name">Phase 2 — Build Skills</div>
+        <div class="phase-goal" id="pb-goal">Start timed practice. Write full essays. Speak every Tuesday and Thursday. Stay consistent.</div>
+        <div style="margin-top:14px;">
+          <span class="phase-badge" id="pb-badge">Weeks 5–10</span>
+        </div>
+      </div>
+      <div class="phase-num" id="phase-ghost">2</div>
     </div>
   </div>
-  <div class="pb-badge" id="pb-badge">—</div>
-</div>
 
-<!-- STREAK -->
-<div class="streak-wrap">
-  <div class="streak-left">
-    <div class="s-fire">🔥</div>
-    <div>
-      <div class="s-num" id="streak-num">0</div>
-      <div class="s-meta">
-        <strong>Day Streak</strong>
-        <span>Complete today's checklist to keep it alive</span>
+  <!-- ─── STREAK ─── -->
+  <div>
+    <div class="sec-label">Day streak</div>
+    <div class="streak-section anim">
+      <div class="streak-num-wrap">
+        <div class="streak-big" id="streak-num">0</div>
+        <div class="streak-label">days in a row</div>
+      </div>
+      <div>
+        <div class="dot-row" id="dot-row"></div>
+        <div class="streak-note">Complete today's checklist to keep the streak alive.</div>
       </div>
     </div>
   </div>
-  <div class="dot-row" id="dot-row"></div>
-</div>
 
-<!-- TODAY + TOMORROW -->
-<div class="sec">today & tomorrow</div>
-<div class="day-grid">
-  <div class="today-card featured" id="today-card">
-    <div class="tc-eyebrow">TODAY — <span id="today-dayname">—</span></div>
-    <div class="tc-skill">
-      <div class="tc-icon" id="today-icon">—</div>
-      <div class="tc-name" id="today-skill">—</div>
+  <div class="hr"></div>
+
+  <!-- ─── TODAY / TOMORROW ─── -->
+  <div id="today">
+    <div class="sec-label">Today & tomorrow</div>
+    <div class="day-grid anim">
+      <div class="today-card featured day-card" id="today-card" style="--c: var(--L);">
+        <div class="dc-eyebrow">Today — <span id="today-dayname">Saturday</span></div>
+        <div class="dc-skill-name" id="today-skill" style="color:var(--L);">Listening</div>
+        <div class="dc-tagline" id="today-tagline">Saturdays are for Listening + light mock practice.</div>
+        <div class="dc-time" id="today-time"><strong>60 min</strong> · Phase 2</div>
+      </div>
+      <div class="day-card preview" id="tomorrow-card">
+        <div class="dc-eyebrow">Tomorrow — <span id="tmr-dayname">Sunday</span></div>
+        <div class="dc-skill-name" id="tmr-skill" style="color:var(--S);">Speaking</div>
+        <div class="dc-tagline" id="tmr-tagline">Sunday speaking warm-up — light and conversational.</div>
+        <div class="dc-time" id="tmr-time">Prep: <strong>30 min</strong></div>
+      </div>
     </div>
-    <div class="tc-tagline" id="today-tagline">—</div>
-    <div class="tc-time" id="today-time">—</div>
-    <div class="tc-accent" id="today-accent"></div>
   </div>
-  <div class="today-card preview" id="tomorrow-card">
-    <div class="tc-eyebrow">TOMORROW — <span id="tmr-dayname">—</span></div>
-    <div class="tc-skill">
-      <div class="tc-icon" id="tmr-icon">—</div>
-      <div class="tc-name" id="tmr-skill">—</div>
+
+  <!-- ─── SKILLS ─── -->
+  <div>
+    <div class="sec-label">4 skills · rotating daily</div>
+    <div class="skills-row anim">
+      <div class="skill-card" style="--c:var(--R)"><div class="sk-name">Reading</div><div class="sk-days">Tue · Fri</div></div>
+      <div class="skill-card" style="--c:var(--W)"><div class="sk-name">Writing</div><div class="sk-days">Mon · Thu</div></div>
+      <div class="skill-card" style="--c:var(--L)"><div class="sk-name">Listening</div><div class="sk-days">Wed · Sat</div></div>
+      <div class="skill-card" style="--c:var(--S)"><div class="sk-name">Speaking</div><div class="sk-days">Tue · Thu</div></div>
     </div>
-    <div class="tc-tagline" id="tmr-tagline">—</div>
-    <div class="tc-time" id="tmr-time">—</div>
+  </div>
+
+  <div class="hr"></div>
+
+  <!-- ─── CHECKLIST ─── -->
+  <div id="checklist">
+    <div class="sec-label">Today's checklist · <span id="checklist-skill-label" style="color:var(--ink-dim)">Listening · Phase 2</span></div>
+    <div class="checklist-wrap anim">
+      <div class="cl-top">
+        <div class="cl-title" id="cl-title">Listening — Build</div>
+        <div class="cl-day-chip" id="day-chip" style="background:var(--L);">Saturday</div>
+      </div>
+      <div class="cl-sub" id="cl-subtitle">Full Sections 3 &amp; 4 today — these are the harder academic ones. Stay focused, don't panic.</div>
+      <div id="cl-sections"></div>
+      <div class="prog-bg"><div class="prog-fill" id="prog-fill"></div></div>
+      <div class="prog-row">
+        <div class="prog-txt" id="prog-txt">0 / 0 complete</div>
+        <div class="prog-pct" id="prog-pct">0%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── WEEK ─── -->
+  <div id="week">
+    <div class="sec-label">This week at a glance</div>
+    <div class="week-wrap anim" id="week-table"></div>
+  </div>
+
+  <div class="hr"></div>
+
+  <!-- ─── TIPS ─── -->
+  <div id="tips">
+    <div class="sec-label">Tips that actually help</div>
+    <div class="tips-grid anim">
+      <div class="tip-card"><div class="tip-head" style="color:var(--R)">Reading first</div><p class="tip-body">Read the questions before the passage. You're not reading — you're hunting. Scan for keywords.</p></div>
+      <div class="tip-card"><div class="tip-head" style="color:var(--W)">Task 2 formula</div><p class="tip-body">Hook → Position → Body 1 (claim + example) → Body 2 → Conclusion. Never skip the overview in Task 1.</p></div>
+      <div class="tip-card"><div class="tip-head" style="color:var(--L)">Listening prep</div><p class="tip-body">Use the 30-second gaps to read ahead and predict answers. Spelling counts — check it.</p></div>
+      <div class="tip-card"><div class="tip-head" style="color:var(--S)">Speaking recovery</div><p class="tip-body">Mistakes are fine. Correct yourself naturally and keep going. Examiners reward fluency, not perfection.</p></div>
+      <div class="tip-card"><div class="tip-head" style="color:var(--ember)">Streak mindset</div><p class="tip-body">On brutal school days, 20 minutes still counts. Showing up is the real skill you're training.</p></div>
+      <div class="tip-card"><div class="tip-head" style="color:var(--gold)">Exam day</div><p class="tip-body">Arrive 30 min early. Bring passport or ID. Don't review notes in the morning — trust your prep.</p></div>
+    </div>
+  </div>
+
+</div><!-- /wrap -->
+
+<!-- MUSIC PLAYER -->
+<div id="music-player">
+  <div class="mp-art" id="mp-art">🎵</div>
+  <div class="mp-info">
+    <div class="mp-title" id="mp-title">Study Lofi Mix</div>
+    <div class="mp-artist">Focus Session</div>
+  </div>
+  <div class="mp-controls">
+    <button class="mp-btn play-btn" id="mp-play" onclick="toggleMusic()">▶</button>
+    <input type="range" class="mp-vol" id="mp-vol" min="0" max="1" step="0.05" value="0.45">
   </div>
 </div>
 
-<!-- SKILLS -->
-<div class="sec">4 skills · rotating daily</div>
-<div class="skill-row">
-  <div class="sk" style="--c:var(--R)"><div class="sk-icon">📖</div><div class="sk-name">Reading</div><div class="sk-day">Tue · Fri</div></div>
-  <div class="sk" style="--c:var(--W)"><div class="sk-icon">✍️</div><div class="sk-name">Writing</div><div class="sk-day">Mon · Thu</div></div>
-  <div class="sk" style="--c:var(--L)"><div class="sk-icon">🎧</div><div class="sk-name">Listening</div><div class="sk-day">Wed · Sat</div></div>
-  <div class="sk" style="--c:var(--S)"><div class="sk-icon">🗣️</div><div class="sk-name">Speaking</div><div class="sk-day">Tue · Thu</div></div>
-</div>
-
-<!-- CHECKLIST -->
-<div class="sec">today's checklist · <span id="checklist-skill-label" style="color:var(--ink)">—</span></div>
-<div class="checklist-card">
-  <div class="cl-head">
-    <h2 id="cl-title">Daily Tasks</h2>
-    <div class="day-chip" id="day-chip" style="background:var(--streak)">—</div>
-  </div>
-  <div class="cl-subtitle" id="cl-subtitle">—</div>
-  <div id="cl-sections"></div>
-  <div class="prog-bg"><div class="prog-fill" id="prog-fill"></div></div>
-  <div class="prog-row">
-    <div class="prog-txt" id="prog-txt">0 / 0 complete</div>
-    <div class="prog-pct" id="prog-pct">0%</div>
-  </div>
-</div>
-
-<!-- THIS WEEK -->
-<div class="sec">this week at a glance</div>
-<div class="week-table" id="week-table"></div>
-
-<!-- TIPS -->
-<div class="sec">tips that actually help</div>
-<div class="tips-grid">
-  <div class="tip"><h4 style="color:var(--R)">📖 Reading first</h4><p>Read the questions before the passage. You're not reading — you're hunting. Scan for keywords.</p></div>
-  <div class="tip"><h4 style="color:var(--W)">✍️ Task 2 formula</h4><p>Hook → Position → Body 1 (claim + example) → Body 2 → Conclusion. Never skip the overview in Task 1.</p></div>
-  <div class="tip"><h4 style="color:var(--L)">🎧 Listening prep</h4><p>Use the 30-second gaps to read ahead and predict answers. Spelling counts — check it.</p></div>
-  <div class="tip"><h4 style="color:var(--S)">🗣️ Speaking recovery</h4><p>Mistakes are fine. Correct yourself naturally and keep going. Examiners reward fluency, not perfection.</p></div>
-  <div class="tip"><h4 style="color:var(--streak)">🔥 Streak mindset</h4><p>On brutal school days, 20 minutes still counts. Showing up is the real skill you're training.</p></div>
-  <div class="tip"><h4 style="color:var(--gold)">📅 Exam day</h4><p>Arrive 30 min early. Bring passport/ID. Don't review notes in the morning — trust your prep.</p></div>
-</div>
-
-</div>
 <script>
-// ─────────────────────────────────────────────
-// CORE DATA
-// ─────────────────────────────────────────────
+/* ════════════════════════════════════════
+   SMOOTH INERTIA SCROLL (no visible stop)
+════════════════════════════════════════ */
+(function() {
+  let current = 0;
+  let target = 0;
+  let ease = 0.085;
+  let raf;
+  let isTouch = 'ontouchstart' in window;
 
-const EXAM_DATE = new Date('2026-07-21T00:00:00');
+  if (isTouch) return; // native on mobile
+
+  document.documentElement.style.overflow = 'hidden';
+  document.body.style.overflow = 'hidden';
+
+  const proxy = document.createElement('div');
+  proxy.style.cssText = `position:fixed;top:0;left:0;width:100%;height:100%;overflow-y:scroll;z-index:-1;opacity:0;pointer-events:none;`;
+  document.body.appendChild(proxy);
+
+  const content = document.createElement('div');
+  content.style.cssText = 'height:100000px;';
+  proxy.appendChild(content);
+
+  function getMaxScroll() {
+    return Math.max(0, document.body.scrollHeight - window.innerHeight);
+  }
+
+  function update() {
+    target = Math.max(0, Math.min(target, getMaxScroll()));
+    const diff = target - current;
+    if (Math.abs(diff) < 0.1) {
+      current = target;
+      raf = null;
+      return;
+    }
+    current += diff * ease;
+    document.documentElement.scrollTop = current;
+    document.body.scrollTop = current;
+    raf = requestAnimationFrame(update);
+  }
+
+  window.addEventListener('wheel', function(e) {
+    e.preventDefault();
+    target += e.deltaY * 1.2;
+    if (!raf) raf = requestAnimationFrame(update);
+  }, { passive: false });
+
+  window.addEventListener('keydown', function(e) {
+    const map = { 'ArrowDown': 80, 'ArrowUp': -80, 'PageDown': window.innerHeight * 0.85, 'PageUp': -(window.innerHeight * 0.85), ' ': window.innerHeight * 0.85 };
+    if (map[e.key]) { e.preventDefault(); target += map[e.key]; if (!raf) raf = requestAnimationFrame(update); }
+  });
+
+  // content height sync
+  function syncHeight() { content.style.height = document.body.scrollHeight + 'px'; }
+  const ro = new ResizeObserver(syncHeight);
+  ro.observe(document.body);
+  syncHeight();
+})();
+
+/* ════════════════════════════════════════
+   EMBER CURSOR
+════════════════════════════════════════ */
+(function() {
+  const glow = document.getElementById('ember-cursor');
+  const dot = document.getElementById('cursor-dot');
+  let gx = 0, gy = 0, tx = 0, ty = 0;
+
+  document.addEventListener('mousemove', function(e) {
+    tx = e.clientX; ty = e.clientY;
+    dot.style.left = tx + 'px';
+    dot.style.top = ty + 'px';
+  });
+
+  function animGlow() {
+    gx += (tx - gx) * 0.06;
+    gy += (ty - gy) * 0.06;
+    glow.style.left = gx + 'px';
+    glow.style.top = gy + 'px';
+    requestAnimationFrame(animGlow);
+  }
+  animGlow();
+
+  document.addEventListener('mouseleave', () => glow.style.opacity = '0');
+  document.addEventListener('mouseenter', () => glow.style.opacity = '1');
+})();
+
+/* ════════════════════════════════════════
+   CORE DATA
+════════════════════════════════════════ */
+const EXAM_DATE = new Date('2026-08-08T00:00:00');
 const START_DATE = new Date('2026-03-01T00:00:00');
 
-// Phase definitions
 const PHASES = [
-  {
-    id:1, name:'Phase 1 — Foundation', icon:'📘',
-    start:'2026-03-01', end:'2026-03-28',
-    goal:'Learn the exam format. No pressure. One skill per day, 45 min max. You\'re building a habit, not cramming.',
-    color:'#4f8ef7', badge:'Weeks 1–4'
-  },
-  {
-    id:2, name:'Phase 2 — Build Skills', icon:'📗',
-    start:'2026-03-29', end:'2026-05-09',
-    goal:'Start timed practice. Write full essays. Speak every Tuesday & Thursday. Stay consistent.',
-    color:'#3ec98a', badge:'Weeks 5–10'
-  },
-  {
-    id:3, name:'Phase 3 — Intensify', icon:'📙',
-    start:'2026-05-10', end:'2026-06-20',
-    goal:'Full mock tests every Saturday. Deep-dive on weak areas. Aim for your target band score.',
-    color:'#f0a340', badge:'Weeks 11–16'
-  },
-  {
-    id:4, name:'Phase 4 — Final Sprint', icon:'🏁',
-    start:'2026-06-21', end:'2026-07-21',
-    goal:'No new material. Sharpen what you know. Build confidence, manage nerves, sleep well.',
-    color:'#e05555', badge:'Weeks 17–20'
-  }
+  { id:1, name:'Phase 1 — Foundation', ghost:'1', start:'2026-03-01', end:'2026-03-28', goal:'Learn the exam format. No pressure. One skill per day, 45 min max. You\'re building a habit, not cramming.', color:'#5d8fd6', badge:'Weeks 1–4' },
+  { id:2, name:'Phase 2 — Build Skills', ghost:'2', start:'2026-03-29', end:'2026-05-18', goal:'Start timed practice. Write full essays. Speak every Tuesday and Thursday. Stay consistent.', color:'#4aaa7d', badge:'Weeks 5–11' },
+  { id:3, name:'Phase 3 — Intensify', ghost:'3', start:'2026-05-19', end:'2026-07-04', goal:'Full mock tests every Saturday. Deep-dive on weak areas. Aim for your target band score.', color:'#c9924a', badge:'Weeks 12–18' },
+  { id:4, name:'Phase 4 — Final Sprint', ghost:'4', start:'2026-07-05', end:'2026-08-08', goal:'No new material. Sharpen what you know. Build confidence, manage nerves, sleep well.', color:'#c06060', badge:'Weeks 19–22' },
 ];
 
-// Day schedule: 0=Sun,1=Mon,2=Tue,3=Wed,4=Thu,5=Fri,6=Sat
 const DAY_SCHEDULE = {
-  0: { skill:'Speaking',  icon:'🗣️', color:'var(--S)', cssColor:'#f0a340', tagline:'Sunday speaking warm-up — light and conversational.', timeByPhase:[30,40,50,30] },
-  1: { skill:'Writing',   icon:'✍️', color:'var(--W)', cssColor:'#4f8ef7', tagline:'Mondays are for Writing — essays and graphs.',           timeByPhase:[45,60,75,45] },
-  2: { skill:'Reading',   icon:'📖', color:'var(--R)', cssColor:'#e05555', tagline:'Tuesdays are for Reading — skim, scan, conquer.',        timeByPhase:[45,55,70,40] },
-  3: { skill:'Listening', icon:'🎧', color:'var(--L)', cssColor:'#3ec98a', tagline:'Wednesdays are for Listening — train your ear.',         timeByPhase:[45,55,65,35] },
-  4: { skill:'Speaking',  icon:'🗣️', color:'var(--S)', cssColor:'#f0a340', tagline:'Thursdays are for Speaking — record and review.',        timeByPhase:[45,55,65,40] },
-  5: { skill:'Reading',   icon:'📖', color:'var(--R)', cssColor:'#e05555', tagline:'Fridays are for Reading — timed and sharp.',             timeByPhase:[45,55,65,35] },
-  6: { skill:'Listening', icon:'🎧', color:'var(--L)', cssColor:'#3ec98a', tagline:'Saturdays are for Listening + light mock practice.',     timeByPhase:[60,75,240,60] },
+  0: { skill:'Speaking',  color:'var(--S)', cssColor:'#c9924a', tagline:'Sunday speaking warm-up — light and conversational.', timeByPhase:[30,40,50,30] },
+  1: { skill:'Writing',   color:'var(--W)', cssColor:'#5d8fd6', tagline:'Mondays are for Writing — essays and graphs.',           timeByPhase:[45,60,75,45] },
+  2: { skill:'Reading',   color:'var(--R)', cssColor:'#c06060', tagline:'Tuesdays are for Reading — skim, scan, conquer.',        timeByPhase:[45,55,70,40] },
+  3: { skill:'Listening', color:'var(--L)', cssColor:'#4aaa7d', tagline:'Wednesdays are for Listening — train your ear.',         timeByPhase:[45,55,65,35] },
+  4: { skill:'Speaking',  color:'var(--S)', cssColor:'#c9924a', tagline:'Thursdays are for Speaking — record and review.',        timeByPhase:[45,55,65,40] },
+  5: { skill:'Reading',   color:'var(--R)', cssColor:'#c06060', tagline:'Fridays are for Reading — timed and sharp.',             timeByPhase:[45,55,65,35] },
+  6: { skill:'Listening', color:'var(--L)', cssColor:'#4aaa7d', tagline:'Saturdays are for Listening + light mock practice.',     timeByPhase:[60,75,240,60] },
 };
 
-// Task bank — keyed by skill, then phase (1-4), each has sections
 const TASKS = {
   Writing: {
-    1: {
-      title: 'Writing — Foundation',
-      subtitle: 'Today\'s goal: <strong>understand</strong> the structure. Don\'t write a full essay yet — study and absorb.',
-      sections: [
-        { label:'Core Task', gc:'var(--W)', items:[
-          { text:'Read and analyze one model Task 1 answer (bar chart or line graph)', diff:'Study the intro → overview → 2 body paragraph structure' },
-          { text:'Write a 2-sentence overview for a graph you find online — don\'t do the full thing', diff:'Just the overview. That\'s it.' },
-        ]},
-        { label:'Daily English', gc:'var(--gold)', items:[
-          { text:'Watch one YouTube video in English (15+ min) — no subtitles if possible', diff:'Immersion habit' },
-          { text:'Add 10 new IELTS vocabulary words to your notebook or Anki deck', diff:'Consistency beats volume' },
-        ]},
-      ]
-    },
-    2: {
-      title: 'Writing — Build',
-      subtitle: 'Write a full <strong>Task 2 essay</strong> today. 250+ words, 40-minute timer, then self-grade using the band descriptors.',
-      sections: [
-        { label:'Core Task', gc:'var(--W)', items:[
-          { text:'Write a full Task 2 essay — opinion or discussion type', diff:'250+ words · strict 40-min timer' },
-          { text:'Self-grade: check for coherence, topic sentences, and lexical range', diff:'Be honest with yourself' },
-          { text:'Write a Task 1 graph response (150 words, 20 min)', diff:'Always write an overview sentence — it\'s worth a lot' },
-        ]},
-        { label:'Daily English', gc:'var(--gold)', items:[
-          { text:'Watch or read English news for 15 min', diff:'BBC, CNN, or an English podcast' },
-          { text:'Review 15 vocabulary words + write 2 in new sentences', diff:'Active recall > passive reading' },
-        ]},
-      ]
-    },
-    3: {
-      title: 'Writing — Intensify',
-      subtitle: 'Write under <strong>real test pressure</strong>. Then rewrite using feedback. Gap between drafts = your improvement.',
-      sections: [
-        { label:'Core Task', gc:'var(--W)', items:[
-          { text:'Write Task 2 essay under timed conditions (40 min, no breaks)', diff:'Hard mode: no editing as you write. Just flow.' },
-          { text:'Rewrite one previous Task 2 using corrections — compare side by side', diff:'This is the fastest way to improve' },
-          { text:'Write Task 1 in 18 minutes (push your speed)', diff:'Accuracy + efficiency together' },
-        ]},
-        { label:'Daily English', gc:'var(--gold)', items:[
-          { text:'20 min English immersion — podcast, documentary, anything you enjoy', diff:'Enjoyment = retention' },
-          { text:'Vocabulary: 10 new words + review the last 30', diff:'Spaced repetition works' },
-        ]},
-      ]
-    },
-    4: {
-      title: 'Writing — Final Review',
-      subtitle: '<strong>No new essays.</strong> Re-read your best work. Absorb the patterns. Confidence is built on what you\'ve already done.',
-      sections: [
-        { label:'Light Review', gc:'var(--W)', items:[
-          { text:'Re-read your 2 best Task 2 essays — note what made them good', diff:'Recognition over production today' },
-          { text:'Glance at one model answer for Task 1 — absorb the language', diff:'Light. No writing.' },
-        ]},
-        { label:'Daily English', gc:'var(--gold)', items:[
-          { text:'15 min English media — something enjoyable, low effort', diff:'Just stay in English mode' },
-          { text:'Vocab: review your strongest words only — build confidence', diff:'No new words this phase' },
-        ]},
-      ]
-    },
+    1: { title:'Writing — Foundation', subtitle:'Today\'s goal: <strong>understand</strong> the structure. Don\'t write a full essay yet — study and absorb.', sections:[
+      { label:'Core Task', gc:'var(--W)', items:[{ text:'Read and analyze one model Task 1 answer (bar chart or line graph)', diff:'Study the intro → overview → 2 body paragraph structure' },{ text:'Copy-write one paragraph of a model Task 2 answer by hand', diff:'Muscle memory for structure and phrasing' }]},
+      { label:'Daily English', gc:'var(--gold)', items:[{ text:'Watch or listen to something in English for 15 min', diff:'Habit building' },{ text:'Add 10 new vocabulary words', diff:'Prioritize academic vocabulary (AWL list)' }]},
+    ]},
+    2: { title:'Writing — Build', subtitle:'Time to go <strong>timed and full</strong>. One essay, 40 minutes strict. Then review every mistake.', sections:[
+      { label:'Core Task', gc:'var(--W)', items:[{ text:'Write Task 2 essay under timed conditions (40 min, no breaks)', diff:'Hard mode: no editing as you write. Just flow.' },{ text:'Rewrite one previous Task 2 using corrections — compare side by side', diff:'This is the fastest way to improve' },{ text:'Write Task 1 in 18 minutes (push your speed)', diff:'Accuracy + efficiency together' }]},
+      { label:'Daily English', gc:'var(--gold)', items:[{ text:'20 min English immersion — podcast, documentary, anything you enjoy', diff:'Enjoyment = retention' },{ text:'Vocabulary: 10 new words + review the last 30', diff:'Spaced repetition works' }]},
+    ]},
+    3: { title:'Writing — Intensify', subtitle:'<strong>No holding back.</strong> Full test conditions. You\'re at peak training — push the quality.', sections:[
+      { label:'Core Task', gc:'var(--W)', items:[{ text:'Full Task 2 essay under 40 min — strict no-edits rule', diff:'Flow > perfection. You can fix in review.' },{ text:'Full Task 1 under 18 min — data report', diff:'Accuracy + speed combined' },{ text:'Self-grade using band descriptors — find your weakest criterion', diff:'Task Response, Coherence, Lexical Resource, Grammar' }]},
+      { label:'Daily English', gc:'var(--gold)', items:[{ text:'20 min English audio or reading', diff:'' },{ text:'10 vocab + 2 example sentences each', diff:'Usage > memorization' }]},
+    ]},
+    4: { title:'Writing — Final Review', subtitle:'<strong>No new essays.</strong> Re-read your best work. Absorb the patterns. Confidence is built on what you\'ve already done.', sections:[
+      { label:'Light Review', gc:'var(--W)', items:[{ text:'Re-read your 2 best Task 2 essays — note what made them good', diff:'Recognition over production today' },{ text:'Glance at one model answer for Task 1 — absorb the language', diff:'Light. No writing.' }]},
+      { label:'Daily English', gc:'var(--gold)', items:[{ text:'15 min English media — something enjoyable, low effort', diff:'Just stay in English mode' },{ text:'Vocab: review your strongest words only — build confidence', diff:'No new words this phase' }]},
+    ]},
   },
-
   Reading: {
-    1: {
-      title: 'Reading — Foundation',
-      subtitle: 'Today\'s goal: learn <strong>how to read for IELTS</strong>, not like a book. Skim first, scan for answers second.',
-      sections: [
-        { label:'Core Task', gc:'var(--R)', items:[
-          { text:'Read 1 article (news or academic) — underline the topic sentence of each paragraph only', diff:'Don\'t read every word. Find the main idea per paragraph.' },
-          { text:'Practice True / False / Not Given on 10 questions', diff:'The most misunderstood question type — learn it cold' },
-        ]},
-        { label:'Daily English', gc:'var(--gold)', items:[
-          { text:'Watch or listen to something in English for 15+ min', diff:'Habit building' },
-          { text:'Add 10 new vocab words', diff:'Prioritize academic vocabulary (AWL list)' },
-        ]},
-      ]
-    },
-    2: {
-      title: 'Reading — Build',
-      subtitle: 'Time to go <strong>timed and full</strong>. One passage, 20 minutes strict. Then review every single mistake.',
-      sections: [
-        { label:'Core Task', gc:'var(--R)', items:[
-          { text:'Do 1 full IELTS reading passage under 20-minute timer', diff:'Cambridge IELTS books are best' },
-          { text:'After time\'s up — review every wrong answer, understand why', diff:'Error log: write down the question type you missed' },
-          { text:'Practice matching headings on a separate passage (common weak spot)', diff:'Match paragraphs to a heading list' },
-        ]},
-        { label:'Daily English', gc:'var(--gold)', items:[
-          { text:'15 min English media', diff:'News = good reading vocab exposure' },
-          { text:'15 vocab words + review last week\'s', diff:'' },
-        ]},
-      ]
-    },
-    3: {
-      title: 'Reading — Intensify',
-      subtitle: '<strong>Full 3-passage test today, 60 minutes strict.</strong> Simulate the real thing. No pausing, no phone.',
-      sections: [
-        { label:'Core Task', gc:'var(--R)', items:[
-          { text:'Full timed reading test — all 3 passages, 60 min, real conditions', diff:'No stopping. If you run out of time, guess don\'t skip.' },
-          { text:'Deep review: categorize every mistake by question type', diff:'Pattern recognition — where do you lose the most points?' },
-          { text:'Speed drill: skim passage 3 in 3 minutes, then answer only the questions you\'re confident about', diff:'Time management training' },
-        ]},
-        { label:'Daily English', gc:'var(--gold)', items:[
-          { text:'20 min English immersion', diff:'' },
-          { text:'10 new vocab + review 20 old ones', diff:'Quality over quantity now' },
-        ]},
-      ]
-    },
-    4: {
-      title: 'Reading — Final Sprint',
-      subtitle: '<strong>Light practice only.</strong> One passage, comfortable pace. You\'re not training anymore — you\'re staying sharp.',
-      sections: [
-        { label:'Light Practice', gc:'var(--R)', items:[
-          { text:'1 reading passage — relaxed pace, no strict timer today', diff:'Accuracy over speed in the final stretch' },
-          { text:'Review your most common mistake type one more time', diff:'Just review your notes — no new practice' },
-        ]},
-        { label:'Daily English', gc:'var(--gold)', items:[
-          { text:'15 min enjoyable English content', diff:'Keep the brain warm, not stressed' },
-          { text:'Vocab: only your strongest known words today', diff:'Confidence building, not cramming' },
-        ]},
-      ]
-    },
+    1: { title:'Reading — Foundation', subtitle:'Today\'s goal: learn <strong>how to read for IELTS</strong>, not like a book. Skim first, scan for answers second.', sections:[
+      { label:'Core Task', gc:'var(--R)', items:[{ text:'Read 1 article — underline the topic sentence of each paragraph only', diff:'Don\'t read every word. Find the main idea per paragraph.' },{ text:'Practice True / False / Not Given on 10 questions', diff:'The most misunderstood question type — learn it cold' }]},
+      { label:'Daily English', gc:'var(--gold)', items:[{ text:'Watch or listen to something in English for 15+ min', diff:'Habit building' },{ text:'Add 10 new vocab words', diff:'Prioritize academic vocabulary (AWL list)' }]},
+    ]},
+    2: { title:'Reading — Build', subtitle:'Time to go <strong>timed and full</strong>. One passage, 20 minutes strict. Then review every single mistake.', sections:[
+      { label:'Core Task', gc:'var(--R)', items:[{ text:'Do 1 full IELTS reading passage under 20-minute timer', diff:'Cambridge IELTS books are best' },{ text:'After time\'s up — review every wrong answer, understand why', diff:'Error log: write down the question type you missed' },{ text:'Practice matching headings on a separate passage', diff:'Match paragraphs to a heading list' }]},
+      { label:'Daily English', gc:'var(--gold)', items:[{ text:'15 min English media', diff:'News = good reading vocab exposure' },{ text:'15 vocab words + review last week\'s', diff:'' }]},
+    ]},
+    3: { title:'Reading — Intensify', subtitle:'<strong>Full 3-passage test today, 60 minutes strict.</strong> Simulate the real thing. No pausing, no phone.', sections:[
+      { label:'Core Task', gc:'var(--R)', items:[{ text:'Full timed reading test — all 3 passages, 60 min, real conditions', diff:'No stopping. If you run out of time, guess don\'t skip.' },{ text:'Deep review: categorize every mistake by question type', diff:'Pattern recognition — where do you lose the most points?' },{ text:'Speed drill: skim passage 3 in 3 minutes, then answer only confident ones', diff:'Time management training' }]},
+      { label:'Daily English', gc:'var(--gold)', items:[{ text:'20 min English immersion', diff:'' },{ text:'10 new vocab + review 20 old ones', diff:'Quality over quantity now' }]},
+    ]},
+    4: { title:'Reading — Final Sprint', subtitle:'<strong>Light practice only.</strong> One passage, comfortable pace. You\'re not training anymore — you\'re staying sharp.', sections:[
+      { label:'Light Practice', gc:'var(--R)', items:[{ text:'1 reading passage — relaxed pace, no strict timer today', diff:'Accuracy over speed in the final stretch' },{ text:'Review your most common mistake type one more time', diff:'Just review your notes — no new practice' }]},
+      { label:'Daily English', gc:'var(--gold)', items:[{ text:'15 min enjoyable English content', diff:'Keep the brain warm, not stressed' },{ text:'Vocab: only your strongest known words today', diff:'Confidence building, not cramming' }]},
+    ]},
   },
-
   Listening: {
-    1: {
-      title: 'Listening — Foundation',
-      subtitle: 'Get familiar with the <strong>4 sections</strong> and question types. Prediction is the key skill to build right now.',
-      sections: [
-        { label:'Core Task', gc:'var(--L)', items:[
-          { text:'Study Section 1 & 2 question types — form completion, MCQ, note filling', diff:'Cambridge IELTS guide or YouTube IELTS channel' },
-          { text:'Do 1 Section 1 practice — focus on predicting answers before you hear the audio', diff:'Read all questions in the gap time before each section' },
-        ]},
-        { label:'Daily English', gc:'var(--gold)', items:[
-          { text:'Listen to an English podcast for 15+ min', diff:'Anything you enjoy — accent diversity is a bonus' },
-          { text:'Add 10 vocabulary words', diff:'' },
-        ]},
-      ]
-    },
-    2: {
-      title: 'Listening — Build',
-      subtitle: 'Full Sections 3 & 4 today — these are the harder academic ones. <strong>Stay focused, don\'t panic.</strong>',
-      sections: [
-        { label:'Core Task', gc:'var(--L)', items:[
-          { text:'Do Sections 3 & 4 full practice (academic discussion + monologue)', diff:'Section 4 has no pause — train your stamina' },
-          { text:'Review every wrong answer — write down WHY you missed it', diff:'Was it: distraction? spelling? mishearing? Log it.' },
-          { text:'Re-listen to 2 questions you got wrong — transcribe what you hear word for word', diff:'Transcription exercise builds accuracy fast' },
-        ]},
-        { label:'Daily English', gc:'var(--gold)', items:[
-          { text:'15 min English podcast or news audio', diff:'' },
-          { text:'15 vocab words + 2 new sentences', diff:'' },
-        ]},
-      ]
-    },
-    3: {
-      title: 'Listening — Intensify',
-      subtitle: 'Go after your <strong>weakest section</strong> today. Targeted reps beat full tests when you\'re trying to close a gap.',
-      sections: [
-        { label:'Core Task', gc:'var(--L)', items:[
-          { text:'Identify your weakest section (1, 2, 3, or 4) — do it 3 times back to back', diff:'Same section, different audio. Repetition = pattern recognition.' },
-          { text:'Transcription exercise: write exactly what you hear for 2 minutes of audio', diff:'Don\'t look at the script until after — then compare' },
-          { text:'Saturday only: full 4-section mock test under real conditions', diff:'No phone. No pause. Time it properly.' },
-        ]},
-        { label:'Daily English', gc:'var(--gold)', items:[
-          { text:'20 min English audio — vary accents (British, Australian, American)', diff:'IELTS uses multiple accents' },
-          { text:'10 vocab + spaced review', diff:'' },
-        ]},
-      ]
-    },
-    4: {
-      title: 'Listening — Final Sprint',
-      subtitle: '<strong>One light section only.</strong> Stay tuned in, don\'t overthink. Your ear is already trained.',
-      sections: [
-        { label:'Light Practice', gc:'var(--L)', items:[
-          { text:'1 listening section — comfortable pace, double-check spelling on answers', diff:'Spelling errors cost easy marks. Don\'t let them.' },
-          { text:'Quick review of your error log from Phase 3 — just read, don\'t redo', diff:'Remind yourself what to avoid' },
-        ]},
-        { label:'Daily English', gc:'var(--gold)', items:[
-          { text:'15 min of something you enjoy in English', diff:'Keep the engine warm' },
-          { text:'Quick vocab review — your top 20 IELTS words', diff:'' },
-        ]},
-      ]
-    },
+    1: { title:'Listening — Foundation', subtitle:'Get familiar with the <strong>4 sections</strong> and question types. Prediction is the key skill to build right now.', sections:[
+      { label:'Core Task', gc:'var(--L)', items:[{ text:'Study Section 1 & 2 question types — form completion, MCQ, note filling', diff:'Cambridge IELTS guide or YouTube IELTS channel' },{ text:'Do 1 Section 1 practice — focus on predicting answers before you hear the audio', diff:'Read all questions in the gap time before each section' }]},
+      { label:'Daily English', gc:'var(--gold)', items:[{ text:'Listen to an English podcast for 15+ min', diff:'Anything you enjoy — accent diversity is a bonus' },{ text:'Add 10 vocabulary words', diff:'' }]},
+    ]},
+    2: { title:'Listening — Build', subtitle:'Full Sections 3 &amp; 4 today — these are the harder academic ones. <strong>Stay focused, don\'t panic.</strong>', sections:[
+      { label:'Core Task', gc:'var(--L)', items:[{ text:'Do Sections 3 & 4 full practice (academic discussion + monologue)', diff:'Section 4 has no pause — train your stamina' },{ text:'Review every wrong answer — write down WHY you missed it', diff:'Was it: distraction? spelling? mishearing? Log it.' },{ text:'Re-listen to 2 questions you got wrong — transcribe what you hear word for word', diff:'Transcription exercise builds accuracy fast' }]},
+      { label:'Daily English', gc:'var(--gold)', items:[{ text:'15 min English podcast or news audio', diff:'' },{ text:'15 vocab words + 2 new sentences', diff:'' }]},
+    ]},
+    3: { title:'Listening — Intensify', subtitle:'Go after your <strong>weakest section</strong> today. Targeted reps beat full tests when you\'re trying to close a gap.', sections:[
+      { label:'Core Task', gc:'var(--L)', items:[{ text:'Identify your weakest section (1–4) — do it 3 times back to back', diff:'Same section, different audio. Repetition = pattern recognition.' },{ text:'Transcription exercise: write exactly what you hear for 2 minutes of audio', diff:'Don\'t look at the script until after — then compare' },{ text:'Saturday only: full 4-section mock test under real conditions', diff:'No phone. No pause. Time it properly.' }]},
+      { label:'Daily English', gc:'var(--gold)', items:[{ text:'20 min English audio — vary accents (British, Australian, American)', diff:'IELTS uses multiple accents' },{ text:'10 vocab + spaced review', diff:'' }]},
+    ]},
+    4: { title:'Listening — Final Sprint', subtitle:'<strong>One light section only.</strong> Stay tuned in, don\'t overthink. Your ear is already trained.', sections:[
+      { label:'Light Practice', gc:'var(--L)', items:[{ text:'1 listening section — comfortable pace, double-check spelling on answers', diff:'Spelling errors cost easy marks. Don\'t let them.' },{ text:'Quick review of your error log from Phase 3 — just read, don\'t redo', diff:'Remind yourself what to avoid' }]},
+      { label:'Daily English', gc:'var(--gold)', items:[{ text:'15 min of something you enjoy in English', diff:'Keep the engine warm' },{ text:'Quick vocab review — your top 20 IELTS words', diff:'' }]},
+    ]},
   },
-
   Speaking: {
-    1: {
-      title: 'Speaking — Foundation',
-      subtitle: 'Speak out loud today. <strong>Record yourself.</strong> Most people never do this — those who do improve fastest.',
-      sections: [
-        { label:'Core Task', gc:'var(--S)', items:[
-          { text:'Answer 5 Part 1 questions out loud and record yourself', diff:'Topics: home, hobbies, school, daily routine, food' },
-          { text:'Listen back — count how many times you say "um", "like", or repeat yourself', diff:'Awareness is step 1. Don\'t judge, just notice.' },
-        ]},
-        { label:'Daily English', gc:'var(--gold)', items:[
-          { text:'Watch someone speak English confidently for 15 min (TED talk, YouTube)', diff:'Model fluency, not perfection' },
-          { text:'Add 10 vocabulary words — prioritize phrases over single words', diff:'e.g. "to be honest", "what I mean is", "on the other hand"' },
-        ]},
-      ]
-    },
-    2: {
-      title: 'Speaking — Build',
-      subtitle: 'Part 2 cue card day. <strong>Pick a topic, talk for 2 minutes straight.</strong> No stopping, even if you feel awkward.',
-      sections: [
-        { label:'Core Task', gc:'var(--S)', items:[
-          { text:'Choose 2 cue card topics — talk for 2 min each, record both', diff:'Topics: "Describe a person you admire", "A memorable trip", "A skill you want to learn"' },
-          { text:'Listen back — did you fill the 2 minutes? Note where you ran out of ideas', diff:'Prep strategy: Past → Present → Future works for almost any cue card' },
-          { text:'Answer 3 Part 3 abstract questions — give both sides if possible', diff:'"Do you think technology is making people less social?"' },
-        ]},
-        { label:'Daily English', gc:'var(--gold)', items:[
-          { text:'15 min spoken English content', diff:'Podcasts where people have real conversations are best' },
-          { text:'15 vocab words — speaking-specific phrases and connectors', diff:'' },
-        ]},
-      ]
-    },
-    3: {
-      title: 'Speaking — Intensify',
-      subtitle: 'Simulate the <strong>full speaking test</strong> today. Part 1 + Part 2 + Part 3 back to back. Real conditions.',
-      sections: [
-        { label:'Core Task', gc:'var(--S)', items:[
-          { text:'Full speaking test simulation — Parts 1, 2, and 3 in order', diff:'Use a partner, tutor, or AI speaking tool (ELSA, ChatGPT voice)' },
-          { text:'Record it. Review for: filler words, vocabulary range, grammar errors', diff:'You\'ll notice patterns you can\'t hear in real time' },
-          { text:'Part 3 debate practice: pick a topic, argue both sides for 90 seconds each', diff:'Topics: education, environment, social media, technology' },
-        ]},
-        { label:'Daily English', gc:'var(--gold)', items:[
-          { text:'20 min spoken English — debate clips, interviews, discussions', diff:'Political/opinion content = great Part 3 prep' },
-          { text:'10 vocab + 3 speaking connector phrases', diff:'e.g. "Building on that...", "What I find interesting is..."' },
-        ]},
-      ]
-    },
-    4: {
-      title: 'Speaking — Final Sprint',
-      subtitle: '<strong>Confidence mode.</strong> Talk about things you love. Fluency comes from enjoyment, not pressure.',
-      sections: [
-        { label:'Light Practice', gc:'var(--S)', items:[
-          { text:'Speak freely about your favorite topic for 5 minutes — no structure, just flow', diff:'This rewires your brain to associate speaking with ease' },
-          { text:'Do 1 Part 2 cue card on a familiar topic — something you\'ve done before', diff:'Familiar = fluent. Don\'t pick something hard.' },
-        ]},
-        { label:'Daily English', gc:'var(--gold)', items:[
-          { text:'15 min enjoyable English content', diff:'' },
-          { text:'Review your top speaking phrases — just read them, don\'t memorize new ones', diff:'Trust what you already have' },
-        ]},
-      ]
-    },
+    1: { title:'Speaking — Foundation', subtitle:'Today\'s goal: just <strong>open your mouth and speak</strong>. Fluency over perfection. Habit over quality.', sections:[
+      { label:'Core Task', gc:'var(--S)', items:[{ text:'Study Part 1 topics: family, work, hobbies, hometown — prepare 2-sentence answers', diff:'Short, fluent answers beat long, hesitant ones' },{ text:'Record yourself for 5 min on any topic — play it back', diff:'You\'ll hear your own patterns. That\'s the point.' }]},
+      { label:'Daily English', gc:'var(--gold)', items:[{ text:'15 min English listening', diff:'' },{ text:'10 new vocabulary words', diff:'' }]},
+    ]},
+    2: { title:'Speaking — Build', subtitle:'Cue card and Part 3 today. <strong>Record everything.</strong> You can\'t improve what you can\'t hear.', sections:[
+      { label:'Core Task', gc:'var(--S)', items:[{ text:'Draw a cue card topic at random — speak for 2 minutes without stopping', diff:'Use the 1-minute prep time to jot 3 key points only' },{ text:'Do Part 3 style discussion questions on the same topic for 10 min', diff:'Practice elaborating, giving opinions, comparing ideas' },{ text:'Play back the recording — note 2 things to improve', diff:'Fluency? Filler words? Vocabulary range?' }]},
+      { label:'Daily English', gc:'var(--gold)', items:[{ text:'15 min English media', diff:'' },{ text:'10 vocab + practice using them in spoken sentences', diff:'Say them out loud' }]},
+    ]},
+    3: { title:'Speaking — Intensify', subtitle:'Simulate a <strong>full speaking test</strong> today. 11–14 minutes, all 3 parts, timed and recorded.', sections:[
+      { label:'Core Task', gc:'var(--S)', items:[{ text:'Full mock speaking test — Parts 1, 2, and 3 recorded', diff:'Time each part correctly. Part 2 = 2 min exactly.' },{ text:'Transcribe your Part 2 answer — count your filler words', diff:'\"Um\", \"like\", \"you know\" — reduce by half next time' },{ text:'Review your weakest vocabulary area — practice 5 topic-specific phrases', diff:'Environment, technology, education, health, culture' }]},
+      { label:'Daily English', gc:'var(--gold)', items:[{ text:'20 min English listening — varied accents', diff:'' },{ text:'10 vocab + 2 speaking-focused sentences', diff:'' }]},
+    ]},
+    4: { title:'Speaking — Final Sprint', subtitle:'Light and confident today. <strong>No pressure.</strong> You\'re warming the engine, not training it.', sections:[
+      { label:'Light Practice', gc:'var(--S)', items:[{ text:'5 min speaking on any topic you enjoy — no timer pressure', diff:'Just keep the voice warm and the mind in English mode' },{ text:'Review your best cue card answer from Phase 3 — read it aloud', diff:'Remind yourself what great feels like' }]},
+      { label:'Daily English', gc:'var(--gold)', items:[{ text:'15 min enjoyable English content', diff:'Relax. You\'ve done the work.' },{ text:'No new vocab today — just enjoy the language', diff:'' }]},
+    ]},
   },
 };
 
-// Weekly schedule display
-const WEEK_DATA = [
-  { dow:1, label:'MON', skill:'Writing',   tag:'W', task:'Full Task 2 essay (or Task 1 in early phases)', hint:'Timed + self-grade' },
-  { dow:2, label:'TUE', skill:'Reading',   tag:'R', task:'Timed reading passage(s)', hint:'Skim questions first, then the text' },
-  { dow:3, label:'WED', skill:'Listening', tag:'L', task:'Sections practice + error review', hint:'Transcription exercise on hard questions' },
-  { dow:4, label:'THU', skill:'Speaking',  tag:'S', task:'Cue card + Part 3 discussion', hint:'Record yourself — always' },
-  { dow:5, label:'FRI', skill:'Reading',   tag:'R', task:'Speed reading + question type drill', hint:'Focus on your weakest question type' },
-  { dow:6, label:'SAT', skill:'Listening', tag:'L', task:'Full listening test or mock (Phase 3+)', hint:'Simulate real exam conditions' },
-  { dow:0, label:'SUN', skill:'Speaking',  tag:'S', task:'Light speaking warm-up', hint:'Low effort, stay in the habit' },
+const WEEK_SCHEDULE = [
+  { day:'Mon', skill:'Writing',   tag:'W', task:'Full Task 2 essay (or Task 1 in early phases)', hint:'Timed + self-grade', time:'45 min' },
+  { day:'Tue', skill:'Reading',   tag:'R', task:'Timed reading passage(s)', hint:'Skim questions first, then the text', time:'40 min' },
+  { day:'Wed', skill:'Listening', tag:'L', task:'Sections practice + error review', hint:'Transcription exercise on hard questions', time:'35 min' },
+  { day:'Thu', skill:'Speaking',  tag:'S', task:'Cue card + Part 3 discussion', hint:'Record yourself — always', time:'40 min' },
+  { day:'Fri', skill:'Reading',   tag:'R', task:'Speed reading + question type drill', hint:'Focus on your weakest question type', time:'35 min' },
+  { day:'Sat', skill:'Listening', tag:'L', task:'Full listening test or mock (Phase 3+)', hint:'Simulate real exam conditions', time:'60 min' },
+  { day:'Sun', skill:'Speaking',  tag:'S', task:'Light speaking warm-up', hint:'Low effort, stay in the habit', time:'30 min' },
 ];
 
-// ─────────────────────────────────────────────
-// HELPERS
-// ─────────────────────────────────────────────
-
-function todayStr() { return new Date().toISOString().slice(0,10); }
+/* ════════════════════════════════════════
+   HELPERS
+════════════════════════════════════════ */
+function today() { return new Date(); }
+function daysBetween(a, b) { return Math.ceil((b - a) / 86400000); }
+function dateStr(d) { return d.toISOString().slice(0,10); }
 
 function getPhase() {
-  const now = new Date();
+  const now = today();
   for (const p of PHASES) {
-    const s = new Date(p.start), e = new Date(p.end);
-    if (now >= s && now <= e) return p;
+    if (now >= new Date(p.start) && now <= new Date(p.end)) return p;
   }
-  // Before start
   if (now < new Date(PHASES[0].start)) return PHASES[0];
-  // After all phases (exam done)
-  return PHASES[3];
+  return PHASES[PHASES.length - 1];
 }
 
-function getPhaseIndex() {
-  const p = getPhase();
-  return p.id; // 1-4
-}
+function getStorage(key) { try { return JSON.parse(localStorage.getItem(key)); } catch { return null; } }
+function setStorage(key, val) { try { localStorage.setItem(key, JSON.stringify(val)); } catch {} }
 
-function getDOW(offset=0) {
-  return (new Date().getDay() + offset + 7) % 7; // 0=Sun
-}
-
-function getSkillData(dow) { return DAY_SCHEDULE[dow]; }
-
-function getTaskData(skill, phaseId) {
-  return TASKS[skill]?.[phaseId] || TASKS[skill]?.[1];
-}
-
-function getDayName(dow) {
-  return ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][dow];
-}
-
-// ─────────────────────────────────────────────
-// RENDER FUNCTIONS
-// ─────────────────────────────────────────────
-
+/* ════════════════════════════════════════
+   COUNTDOWN
+════════════════════════════════════════ */
 function renderCountdown() {
-  const d = Math.ceil((EXAM_DATE - new Date()) / 864e5);
-  document.getElementById('countdown-num').textContent = Math.max(0, d);
+  const days = Math.max(0, daysBetween(today(), EXAM_DATE));
+  document.getElementById('countdown-num').textContent = days;
 }
 
-function renderPhaseBanner() {
+/* ════════════════════════════════════════
+   PHASE BANNER
+════════════════════════════════════════ */
+function renderPhase() {
   const p = getPhase();
-  const banner = document.getElementById('phase-banner');
-  banner.style.background = p.color + '18';
-  banner.style.border = '1px solid ' + p.color + '33';
-  document.getElementById('pb-icon').textContent = p.icon;
   document.getElementById('pb-name').textContent = p.name;
-  document.getElementById('pb-range').textContent = p.start + ' → ' + p.end;
   document.getElementById('pb-goal').textContent = p.goal;
-  const badge = document.getElementById('pb-badge');
-  badge.textContent = '📍 You are here · ' + p.badge;
-  badge.style.background = p.color + '22';
-  badge.style.color = p.color;
-  badge.style.border = '1px solid ' + p.color + '44';
+  document.getElementById('pb-badge').textContent = '📍 You are here · ' + p.badge;
+  document.getElementById('phase-ghost').textContent = p.ghost;
 }
 
-function renderTodayTomorrow() {
-  const phaseId = getPhaseIndex();
-  const todayDOW = getDOW(0);
-  const tmrDOW   = getDOW(1);
+/* ════════════════════════════════════════
+   STREAK
+════════════════════════════════════════ */
+function renderStreak() {
+  const stored = getStorage('ielts_checked_days') || {};
+  const startDate = new Date('2026-04-19');
+  const endDate = today();
 
-  const todaySched = getSkillData(todayDOW);
-  const tmrSched   = getSkillData(tmrDOW);
+  let streak = 0, checking = true;
+  const d = new Date(endDate);
+  d.setHours(0,0,0,0);
+  while (checking) {
+    const k = dateStr(d);
+    if (stored[k]) { streak++; d.setDate(d.getDate() - 1); }
+    else { checking = false; }
+  }
 
-  const todayMins = todaySched.timeByPhase[phaseId-1];
-  const tmrMins   = tmrSched.timeByPhase[phaseId-1];
+  document.getElementById('streak-num').textContent = streak;
 
-  // Today
-  document.getElementById('today-dayname').textContent = getDayName(todayDOW).toUpperCase();
-  document.getElementById('today-icon').textContent = todaySched.icon;
+  const dotRow = document.getElementById('dot-row');
+  dotRow.innerHTML = '';
+  const cur = new Date(startDate);
+  while (cur <= endDate) {
+    const k = dateStr(cur);
+    const dot = document.createElement('div');
+    dot.className = 'sdot' + (stored[k] ? ' done' : '') + (k === dateStr(endDate) ? ' today' : '');
+    dot.title = k;
+    dotRow.appendChild(dot);
+    cur.setDate(cur.getDate() + 1);
+  }
+}
+
+/* ════════════════════════════════════════
+   TODAY / TOMORROW
+════════════════════════════════════════ */
+function renderDayCards() {
+  const now = today();
+  const dow = now.getDay();
+  const phase = getPhase();
+  const phaseIdx = phase.id - 1;
+  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+  const todaySched = DAY_SCHEDULE[dow];
+  const tmrDow = (dow + 1) % 7;
+  const tmrSched = DAY_SCHEDULE[tmrDow];
+
+  document.getElementById('today-dayname').textContent = days[dow];
   document.getElementById('today-skill').textContent = todaySched.skill;
   document.getElementById('today-skill').style.color = todaySched.cssColor;
   document.getElementById('today-tagline').textContent = todaySched.tagline;
-  document.getElementById('today-time').innerHTML = '<strong>' + todayMins + ' min</strong> today · Phase ' + phaseId;
-  document.getElementById('today-accent').style.background = todaySched.cssColor;
-  document.getElementById('today-card').style.borderColor = todaySched.cssColor + '55';
+  document.getElementById('today-time').innerHTML = `<strong>${todaySched.timeByPhase[phaseIdx]} min</strong> · ${phase.name.split(' — ')[0]}`;
+  document.getElementById('today-card').style.setProperty('--c', todaySched.cssColor);
 
-  // Tomorrow
-  document.getElementById('tmr-dayname').textContent = getDayName(tmrDOW).toUpperCase();
-  document.getElementById('tmr-icon').textContent = tmrSched.icon;
+  document.getElementById('tmr-dayname').textContent = days[tmrDow];
   document.getElementById('tmr-skill').textContent = tmrSched.skill;
   document.getElementById('tmr-skill').style.color = tmrSched.cssColor;
   document.getElementById('tmr-tagline').textContent = tmrSched.tagline;
-  document.getElementById('tmr-time').innerHTML = 'Prep time: <strong>' + tmrMins + ' min</strong>';
+  document.getElementById('tmr-time').innerHTML = `Prep: <strong>${tmrSched.timeByPhase[phaseIdx]} min</strong>`;
+
+  document.getElementById('checklist-skill-label').textContent = todaySched.skill + ' · ' + phase.name.split(' — ')[0];
 }
 
-function renderChecklist() {
-  const phaseId = getPhaseIndex();
-  const todayDOW = getDOW(0);
-  const sched = getSkillData(todayDOW);
-  const taskData = getTaskData(sched.skill, phaseId);
-  if (!taskData) return;
+/* ════════════════════════════════════════
+   CHECKLIST
+════════════════════════════════════════ */
+let allDoneTriggered = false;
 
-  const dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+function renderChecklist() {
+  const now = today();
+  const dow = now.getDay();
+  const phase = getPhase();
+  const skill = DAY_SCHEDULE[dow].skill;
+  const taskData = TASKS[skill][phase.id];
+
   document.getElementById('cl-title').textContent = taskData.title;
-  document.getElementById('day-chip').textContent = dayNames[todayDOW].toUpperCase();
-  document.getElementById('day-chip').style.background = sched.cssColor;
   document.getElementById('cl-subtitle').innerHTML = taskData.subtitle;
-  document.getElementById('checklist-skill-label').textContent = sched.skill + ' · Phase ' + phaseId;
+  const chip = document.getElementById('day-chip');
+  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  chip.textContent = days[dow];
+  chip.style.background = DAY_SCHEDULE[dow].cssColor;
+
+  const stored = getStorage('ielts_checked_days') || {};
+  const todayKey = dateStr(now);
+  const checkedItems = (stored[todayKey + '_items']) || {};
 
   const container = document.getElementById('cl-sections');
   container.innerHTML = '';
-  let totalCount = 0;
+
+  let totalItems = 0, doneItems = 0;
 
   taskData.sections.forEach(sec => {
     const secEl = document.createElement('div');
     secEl.className = 'cl-section';
-    secEl.innerHTML = `<div class="cl-section-title"><div class="cl-dot" style="background:${sec.gc}"></div>${sec.label}</div>`;
+    secEl.innerHTML = `<div class="cl-sec-title"><div class="cl-dot" style="--gc:${sec.gc};background:${sec.gc}"></div>${sec.label}</div>`;
     const itemsEl = document.createElement('div');
+
     sec.items.forEach((item, i) => {
-      totalCount++;
-      const key = todayStr() + '_' + sec.label + '_' + i;
-      const isDone = (checks[key] === true);
+      const key = sec.label + '_' + i;
+      const isDone = !!checkedItems[key];
+      totalItems++;
+      if (isDone) doneItems++;
+
       const ci = document.createElement('div');
       ci.className = 'ci' + (isDone ? ' done' : '');
-      ci.innerHTML = `
-        <div class="cibox">${isDone ? '✓' : ''}</div>
-        <div>
-          <div class="ci-text">${item.text}</div>
-          ${item.diff ? '<div class="ci-diff">' + item.diff + '</div>' : ''}
-        </div>`;
-      ci.onclick = () => {
-        checks[key] = !checks[key];
-        ci.className = 'ci' + (checks[key] ? ' done' : '');
-        ci.querySelector('.cibox').textContent = checks[key] ? '✓' : '';
-        saveChecks();
-        updateProgress(totalCount);
+      ci.innerHTML = `<div class="cibox">${isDone ? '✓' : ''}</div><div><div class="ci-text">${item.text}</div>${item.diff ? `<div class="ci-diff">${item.diff}</div>` : ''}</div>`;
+      ci.onclick = function() {
+        const now2 = today();
+        const todayKey2 = dateStr(now2);
+        const stored2 = getStorage('ielts_checked_days') || {};
+        if (!stored2[todayKey2 + '_items']) stored2[todayKey2 + '_items'] = {};
+        const wasDone = ci.classList.contains('done');
+        stored2[todayKey2 + '_items'][key] = !wasDone;
+        setStorage('ielts_checked_days', stored2);
+
+        if (!wasDone) {
+          burstAt(ci.querySelector('.cibox') || ci);
+          showReward();
+          ci.classList.add('done');
+          ci.querySelector('.cibox').textContent = '✓';
+        } else {
+          ci.classList.remove('done');
+          ci.querySelector('.cibox').textContent = '';
+        }
+        updateProgress();
+        renderStreak();
       };
       itemsEl.appendChild(ci);
     });
+
     secEl.appendChild(itemsEl);
     container.appendChild(secEl);
   });
 
-  window._totalTasks = totalCount;
-  updateProgress(totalCount);
+  function updateProgress() {
+    const allCIs = container.querySelectorAll('.ci');
+    const doneCIs = container.querySelectorAll('.ci.done');
+    const total = allCIs.length;
+    const done = doneCIs.length;
+    const pct = total ? Math.round(done / total * 100) : 0;
+    document.getElementById('prog-fill').style.width = pct + '%';
+    document.getElementById('prog-txt').textContent = done + ' / ' + total + ' complete';
+    document.getElementById('prog-pct').textContent = pct + '%';
+
+    if (done === total && total > 0 && !allDoneTriggered) {
+      allDoneTriggered = true;
+      const stored2 = getStorage('ielts_checked_days') || {};
+      stored2[dateStr(today())] = true;
+      setStorage('ielts_checked_days', stored2);
+      renderStreak();
+      setTimeout(() => {
+        document.getElementById('all-done-overlay').classList.add('visible');
+        for (let i = 0; i < 6; i++) setTimeout(() => burstRandom(), i * 200);
+      }, 500);
+    }
+  }
+
+  updateProgress();
 }
 
-function updateProgress(total) {
-  total = total || window._totalTasks || 1;
-  const done = Object.values(checks).filter(Boolean).length;
-  const pct = Math.round(done / total * 100);
-  document.getElementById('prog-fill').style.width = pct + '%';
-  document.getElementById('prog-txt').textContent = done + ' / ' + total + ' complete';
-  document.getElementById('prog-pct').textContent = pct + '%';
-  if (done >= total && total > 0) markStreakDone();
-}
-
+/* ════════════════════════════════════════
+   WEEK TABLE
+════════════════════════════════════════ */
 function renderWeekTable() {
-  const todayDOW = new Date().getDay();
-  const phaseId = getPhaseIndex();
-  const tbody = document.getElementById('week-table');
-  let html = `<div class="tr thead">
-    <div class="td">Day</div>
-    <div class="td">Skill</div>
-    <div class="td">Focus</div>
-    <div class="td time">Time</div>
-  </div>`;
+  const todayDow = today().getDay(); // 0=Sun
+  const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const container = document.getElementById('week-table');
 
-  WEEK_DATA.forEach(row => {
-    const isToday = row.dow === todayDOW;
-    const sched = getSkillData(row.dow);
-    const mins = sched.timeByPhase[phaseId-1];
-    html += `<div class="tr ${isToday ? 'active-day' : ''}">
-      <div class="td day">
-        <strong>${row.label}</strong>
-        ${isToday ? '<span class="today-label">← TODAY</span>' : ''}
-      </div>
-      <div class="td focus"><span class="tag ${row.tag}">${row.skill}</span></div>
-      <div class="td"><div><div class="task-txt">${row.task}</div><div class="hint-txt">${row.hint}</div></div></div>
-      <div class="td time">${mins} min</div>
+  let html = `<div class="w-row thead"><div class="w-cell">Day</div><div class="w-cell">Skill</div><div class="w-cell">Focus</div><div class="w-cell time">Time</div></div>`;
+
+  WEEK_SCHEDULE.forEach(row => {
+    const dow = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].indexOf(row.day) + 1;
+    const actualDow = dow % 7;
+    const isToday = actualDow === todayDow;
+    html += `<div class="w-row ${isToday ? 'active-day' : ''}">
+      <div class="w-cell day"><strong>${row.day}</strong>${isToday ? '<span class="today-lbl">← today</span>' : ''}</div>
+      <div class="w-cell focus"><span class="tag ${row.tag}">${row.skill}</span></div>
+      <div class="w-cell"><div><div class="w-task">${row.task}</div><div class="w-hint">${row.hint}</div></div></div>
+      <div class="w-cell time">${row.time}</div>
     </div>`;
   });
-  tbody.innerHTML = html;
+
+  container.innerHTML = html;
 }
 
-// ─────────────────────────────────────────────
-// STREAK
-// ─────────────────────────────────────────────
-
-const SK='ielts3_streak', DK='ielts3_date', HK='ielts3_hist';
-
-function yesterday() { return new Date(Date.now()-864e5).toISOString().slice(0,10); }
-
-function getStreak() {
-  let s = +localStorage.getItem(SK)||0;
-  const last = localStorage.getItem(DK)||'';
-  if (last && last !== todayStr() && last !== yesterday()) s = 0;
-  return s;
-}
-function getHist() { try { return JSON.parse(localStorage.getItem(HK)||'[]'); } catch(e){ return []; } }
-
-function markStreakDone() {
-  if (localStorage.getItem(DK) === todayStr()) return;
-  let s = getStreak() + 1;
-  localStorage.setItem(SK, s);
-  localStorage.setItem(DK, todayStr());
-  const h = getHist();
-  if (!h.includes(todayStr())) h.push(todayStr());
-  localStorage.setItem(HK, JSON.stringify(h));
-  renderStreak();
-}
-
-function renderStreak() {
-  document.getElementById('streak-num').textContent = getStreak();
-  const row = document.getElementById('dot-row');
-  row.innerHTML = '';
-  const hist = getHist(), t = todayStr();
-  for (let i = 20; i >= 0; i--) {
-    const d = new Date(Date.now() - i * 864e5).toISOString().slice(0,10);
-    const el = document.createElement('div');
-    el.className = 'sdot' + (hist.includes(d) ? ' done' : '') + (d === t ? ' today' : '');
-    el.title = d;
-    row.appendChild(el);
-  }
-}
-
-// ─────────────────────────────────────────────
-// CHECKS (keyed to today's date so they auto-reset)
-// ─────────────────────────────────────────────
-
-const CK = 'ielts3_checks';
-
-function loadChecks() {
-  try {
-    const s = JSON.parse(localStorage.getItem(CK) || '{}');
-    // Only load if saved today
-    return s.date === todayStr() ? (s.c || {}) : {};
-  } catch(e) { return {}; }
-}
-
-function saveChecks() {
-  localStorage.setItem(CK, JSON.stringify({ date: todayStr(), c: checks }));
-}
-
-let checks = loadChecks();
-
-// ─────────────────────────────────────────────
-// INIT
-// ─────────────────────────────────────────────
-
-// ─────────────────────────────────────────────
-// INIT
-// ─────────────────────────────────────────────
-
-renderCountdown();
-renderPhaseBanner();
-renderStreak();
-renderTodayTomorrow();
-renderChecklist();
-renderWeekTable();
-setInterval(renderCountdown, 60000);
-
-// ─────────────────────────────────────────────
-// iOS EMOJI RENDERING — force Apple emoji font on all emoji
-// ─────────────────────────────────────────────
-function wrapEmojis(el) {
-  if (!el) return;
-  const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
-  const emojiRe = /(\p{Emoji_Presentation}|\p{Extended_Pictographic})/gu;
-  const nodes = [];
-  let node;
-  while (node = walker.nextNode()) nodes.push(node);
-  nodes.forEach(n => {
-    if (!emojiRe.test(n.textContent)) return;
-    emojiRe.lastIndex = 0;
-    const span = document.createElement('span');
-    span.innerHTML = n.textContent.replace(emojiRe, m =>
-      `<span class="emoji-render">${m}</span>`);
-    n.parentNode.replaceChild(span, n);
-  });
-}
-// Run on full body after render
-setTimeout(() => wrapEmojis(document.body), 300);
-
-// ─────────────────────────────────────────────
-// MUSIC PLAYER
-// ─────────────────────────────────────────────
-const audio = new Audio('That_Should_Be_Me.mp3');
-audio.loop = true;
-audio.volume = 0.5;
-let musicPlaying = false;
-let fadeInterval = null;
-
-function toggleMusic() {
-  if (musicPlaying) {
-    pauseMusic();
-  } else {
-    playMusic();
-  }
-}
-
-function playMusic(targetVol) {
-  targetVol = targetVol !== undefined ? targetVol : parseFloat(document.getElementById('mp-vol').value);
-  clearInterval(fadeInterval);
-  audio.play().catch(()=>{});
-  musicPlaying = true;
-  // fade in
-  audio.volume = 0;
-  let v = 0;
-  fadeInterval = setInterval(() => {
-    v = Math.min(targetVol, v + 0.05);
-    audio.volume = v;
-    if (v >= targetVol) clearInterval(fadeInterval);
-  }, 40);
-  document.getElementById('mp-play-icon').textContent = '⏸';
-  document.getElementById('mp-art').classList.add('playing');
-  document.getElementById('mp-wave').classList.remove('paused');
-}
-
-function pauseMusic(cb) {
-  clearInterval(fadeInterval);
-  const startVol = audio.volume;
-  let v = startVol;
-  fadeInterval = setInterval(() => {
-    v = Math.max(0, v - 0.06);
-    audio.volume = v;
-    if (v <= 0) {
-      clearInterval(fadeInterval);
-      audio.pause();
-      musicPlaying = false;
-      document.getElementById('mp-play-icon').textContent = '▶';
-      document.getElementById('mp-art').classList.remove('playing');
-      document.getElementById('mp-wave').classList.add('paused');
-      if (cb) cb();
-    }
-  }, 40);
-}
-
-function resumeAfterReward() {
-  if (!musicPlaying) {
-    // was playing before reward, resume
-    playMusic(parseFloat(document.getElementById('mp-vol').value));
-  }
-}
-
-function setVol(v) {
-  audio.volume = parseFloat(v);
-}
-
-// ─────────────────────────────────────────────
-// REWARD SOUNDS (Web Audio API synthesized)
-// ─────────────────────────────────────────────
-const AudioCtx = window.AudioContext || window.webkitAudioContext;
-let actx = null;
-
-function getACtx() {
-  if (!actx) actx = new AudioCtx();
-  return actx;
-}
-
-function playApplause() {
-  const ctx = getACtx();
-  // Synthesize crowd noise + ascending tones
-  const bufferSize = ctx.sampleRate * 1.2;
-  const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-  const data = buffer.getChannelData(0);
-
-  // white noise burst (applause texture)
-  for (let i = 0; i < bufferSize; i++) {
-    const env = i < bufferSize * 0.1
-      ? i / (bufferSize * 0.1)                    // fade in
-      : i > bufferSize * 0.7
-        ? 1 - (i - bufferSize * 0.7) / (bufferSize * 0.3) // fade out
-        : 1;
-    data[i] = (Math.random() * 2 - 1) * env * 0.35;
-  }
-
-  const src = ctx.createBufferSource();
-  src.buffer = buffer;
-
-  // Bandpass filter to make it sound like clapping
-  const bp = ctx.createBiquadFilter();
-  bp.type = 'bandpass';
-  bp.frequency.value = 1200;
-  bp.Q.value = 0.8;
-
-  // Short reverb-like convolver via gain decay
-  const gain = ctx.createGain();
-  gain.gain.setValueAtTime(0.9, ctx.currentTime);
-  gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 1.2);
-
-  src.connect(bp);
-  bp.connect(gain);
-  gain.connect(ctx.destination);
-  src.start();
-
-  // Ascending success tones on top
-  [0, 0.15, 0.3].forEach((delay, i) => {
-    const osc = ctx.createOscillator();
-    const g2 = ctx.createGain();
-    osc.type = 'sine';
-    osc.frequency.value = [523, 659, 784][i]; // C5-E5-G5
-    g2.gain.setValueAtTime(0, ctx.currentTime + delay);
-    g2.gain.linearRampToValueAtTime(0.22, ctx.currentTime + delay + 0.04);
-    g2.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + 0.35);
-    osc.connect(g2);
-    g2.connect(ctx.destination);
-    osc.start(ctx.currentTime + delay);
-    osc.stop(ctx.currentTime + delay + 0.35);
-  });
-}
-
-function playAllDoneSound() {
-  const ctx = getACtx();
-  // Triumphant fanfare
-  const notes = [
-    {f:523, t:0,    dur:.18},
-    {f:659, t:.18,  dur:.18},
-    {f:784, t:.36,  dur:.18},
-    {f:1047,t:.54,  dur:.4 },
-  ];
-  notes.forEach(n => {
-    const osc = ctx.createOscillator();
-    const g = ctx.createGain();
-    osc.type = 'triangle';
-    osc.frequency.value = n.f;
-    g.gain.setValueAtTime(0, ctx.currentTime + n.t);
-    g.gain.linearRampToValueAtTime(0.3, ctx.currentTime + n.t + 0.04);
-    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + n.t + n.dur);
-    osc.connect(g); g.connect(ctx.destination);
-    osc.start(ctx.currentTime + n.t);
-    osc.stop(ctx.currentTime + n.t + n.dur + 0.05);
-  });
-}
-
-// ─────────────────────────────────────────────
-// REWARD MESSAGES
-// ─────────────────────────────────────────────
-const REWARDS = [
-  { emoji:'⭐', text:'Nailed it!',        sub:'One task down, keep the momentum' },
-  { emoji:'🔥', text:'On fire!',           sub:'That streak loves you right now' },
-  { emoji:'💪', text:'Strong work!',       sub:'School + IELTS — you\'re built different' },
-  { emoji:'✅', text:'Check!',             sub:'Every tick counts' },
-  { emoji:'🚀', text:'Let\'s go!',         sub:'Moving closer to that band score' },
-  { emoji:'🎯', text:'Focused!',           sub:'This is how goals get achieved' },
-  { emoji:'💡', text:'Smart move!',        sub:'Consistent effort beats cramming' },
-  { emoji:'🏅', text:'Well done!',         sub:'Another step toward July 21' },
+/* ════════════════════════════════════════
+   REWARD TOAST
+════════════════════════════════════════ */
+const rewards = [
+  ['🎯','Sharp.','Another one down.'],
+  ['⭐','Solid.','Keep the streak alive.'],
+  ['🔥','On fire.','Don\'t stop now.'],
+  ['💪','Strong.','You\'re building something real.'],
+  ['✅','Done.','Next.'],
 ];
-let lastReward = -1;
-
+let toastTimeout;
 function showReward() {
-  let idx;
-  do { idx = Math.floor(Math.random() * REWARDS.length); } while (idx === lastReward);
-  lastReward = idx;
-  const r = REWARDS[idx];
-  document.getElementById('rt-emoji').textContent = r.emoji;
-  document.getElementById('rt-text').textContent = r.text;
-  document.getElementById('rt-sub').textContent = r.sub;
-
+  const [emoji, text, sub] = rewards[Math.floor(Math.random() * rewards.length)];
+  document.getElementById('rt-emoji').textContent = emoji;
+  document.getElementById('rt-text').textContent = text;
+  document.getElementById('rt-sub').textContent = sub;
   const toast = document.getElementById('reward-toast');
   toast.classList.add('show');
-  setTimeout(() => toast.classList.remove('show'), 1800);
-}
-
-// ─────────────────────────────────────────────
-// FIREWORKS
-// ─────────────────────────────────────────────
-const canvas = document.getElementById('fireworks-canvas');
-const fctx = canvas.getContext('2d');
-let particles = [];
-let fwAnimId = null;
-
-function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
-
-function createFirework(x, y) {
-  const colors = ['#ff5a1f','#f0a340','#3ec98a','#4f8ef7','#e05555','#fff','#ffd700','#ff6eb4'];
-  const count = 80;
-  for (let i = 0; i < count; i++) {
-    const angle = (Math.PI * 2 / count) * i;
-    const speed = 2 + Math.random() * 5;
-    const color = colors[Math.floor(Math.random() * colors.length)];
-    particles.push({
-      x, y,
-      vx: Math.cos(angle) * speed,
-      vy: Math.sin(angle) * speed,
-      alpha: 1,
-      color,
-      size: 2 + Math.random() * 3,
-      decay: 0.012 + Math.random() * 0.01,
-      trail: [],
-    });
-  }
-}
-
-function launchFireworks(count = 4) {
-  for (let i = 0; i < count; i++) {
-    setTimeout(() => {
-      const x = canvas.width * (0.2 + Math.random() * 0.6);
-      const y = canvas.height * (0.1 + Math.random() * 0.5);
-      createFirework(x, y);
-    }, i * 200);
-  }
-  if (!fwAnimId) animateFireworks();
-}
-
-function animateFireworks() {
-  fctx.clearRect(0, 0, canvas.width, canvas.height);
-  particles = particles.filter(p => p.alpha > 0.02);
-
-  particles.forEach(p => {
-    p.trail.push({ x: p.x, y: p.y });
-    if (p.trail.length > 5) p.trail.shift();
-
-    // draw trail
-    p.trail.forEach((t, i) => {
-      fctx.beginPath();
-      fctx.arc(t.x, t.y, p.size * (i / p.trail.length) * 0.5, 0, Math.PI * 2);
-      fctx.fillStyle = p.color;
-      fctx.globalAlpha = p.alpha * (i / p.trail.length) * 0.4;
-      fctx.fill();
-    });
-
-    // draw particle
-    fctx.beginPath();
-    fctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-    fctx.fillStyle = p.color;
-    fctx.globalAlpha = p.alpha;
-    fctx.fill();
-    fctx.globalAlpha = 1;
-
-    p.x += p.vx;
-    p.y += p.vy;
-    p.vy += 0.08; // gravity
-    p.vx *= 0.98;
-    p.alpha -= p.decay;
-    p.size *= 0.995;
-  });
-
-  if (particles.length > 0) {
-    fwAnimId = requestAnimationFrame(animateFireworks);
-  } else {
-    fwAnimId = null;
-    fctx.clearRect(0, 0, canvas.width, canvas.height);
-  }
-}
-
-// ─────────────────────────────────────────────
-// ALL DONE
-// ─────────────────────────────────────────────
-let allDoneTriggered = false;
-
-function triggerAllDone() {
-  if (allDoneTriggered) return;
-  allDoneTriggered = true;
-
-  // pause music with fade, then play fanfare + fireworks
-  const wasPlaying = musicPlaying;
-  if (wasPlaying) {
-    pauseMusic(() => {
-      setTimeout(() => {
-        playAllDoneSound();
-        launchFireworks(8);
-        document.getElementById('all-done-overlay').classList.add('show');
-        // resume music after 3s
-        setTimeout(() => playMusic(), 3000);
-      }, 200);
-    });
-  } else {
-    playAllDoneSound();
-    launchFireworks(8);
-    document.getElementById('all-done-overlay').classList.add('show');
-  }
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => toast.classList.remove('show'), 2200);
 }
 
 function closeAllDone() {
-  document.getElementById('all-done-overlay').classList.remove('show');
+  document.getElementById('all-done-overlay').classList.remove('visible');
 }
 
-// ─────────────────────────────────────────────
-// PATCH renderChecklist to add sound + reward on tick
-// ─────────────────────────────────────────────
-const _origRenderChecklist = renderChecklist;
-// We'll re-wire ci.onclick after render by monkey-patching updateProgress
+/* ════════════════════════════════════════
+   FIREWORKS
+════════════════════════════════════════ */
+const canvas = document.getElementById('fireworks-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+let fwAnimId = null;
 
-const _origUpdateProgress = updateProgress;
-window.updateProgress = function(total) {
-  _origUpdateProgress(total);
-  // check if all done
-  const done = Object.values(checks).filter(Boolean).length;
-  const t = total || window._totalTasks || 1;
-  if (done >= t && t > 0 && !allDoneTriggered) {
-    setTimeout(triggerAllDone, 400);
-  }
-};
+function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
 
-// ── MINI FIREWORK burst on each tick ──
-// Shoots from the position of the checkbox that was just ticked
-function burstAt(el) {
-  // Get bounding rect of the clicked element
-  const rect = el.getBoundingClientRect();
-  const x = rect.left + rect.width / 2;
-  const y = rect.top + rect.height / 2;
-
-  const colors = ['#ff5a1f','#f0a340','#3ec98a','#4f8ef7','#ffd700','#ff6eb4','#fff','#e05555'];
-  const count = 48; // smaller burst per tick (save big burst for all-done)
-
-  for (let i = 0; i < count; i++) {
-    const angle = (Math.PI * 2 / count) * i + (Math.random() - 0.5) * 0.3;
-    const speed = 1.5 + Math.random() * 4.5;
-    particles.push({
-      x, y,
-      vx: Math.cos(angle) * speed,
-      vy: Math.sin(angle) * speed - 1.5, // slight upward bias
-      alpha: 1,
-      color: colors[Math.floor(Math.random() * colors.length)],
-      size: 2 + Math.random() * 2.5,
-      decay: 0.018 + Math.random() * 0.012,
-      trail: [],
-    });
-  }
-
-  // kick off animation loop if not already running
-  if (!fwAnimId) animateFireworks();
-}
-
-// Patch ci click to add fireworks + sound + reward on every tick
-function patchChecklistClicks() {
-  document.querySelectorAll('.ci').forEach(ci => {
-    const orig = ci.onclick;
-    ci.onclick = function(e) {
-      const wasDone = ci.classList.contains('done');
-      if (orig) orig.call(this, e);
-      const nowDone = ci.classList.contains('done');
-
-      if (!wasDone && nowDone) {
-        // ── 1. FIREWORKS from the checkbox ──
-        burstAt(ci.querySelector('.cibox') || ci);
-
-        // ── 2. REWARD TOAST ──
-        showReward();
-
-        // ── 3. SOUND + music duck ──
-        const vol = parseFloat(document.getElementById('mp-vol').value);
-        if (musicPlaying) {
-          clearInterval(fadeInterval);
-          let v = audio.volume;
-          const down = setInterval(() => {
-            v = Math.max(0.05, v - 0.07);
-            audio.volume = v;
-            if (v <= 0.05) clearInterval(down);
-          }, 30);
-          setTimeout(() => playApplause(), 50);
-          setTimeout(() => {
-            clearInterval(down);
-            let vv = audio.volume;
-            const up = setInterval(() => {
-              vv = Math.min(vol, vv + 0.04);
-              audio.volume = vv;
-              if (vv >= vol) clearInterval(up);
-            }, 40);
-          }, 1600);
-        } else {
-          playApplause();
-        }
-      }
-    };
+function animateFireworks() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles = particles.filter(p => p.alpha > 0.02);
+  particles.forEach(p => {
+    p.x += p.vx; p.y += p.vy; p.vy += 0.04;
+    p.vx *= 0.98; p.vy *= 0.98;
+    p.alpha -= p.decay;
+    ctx.globalAlpha = p.alpha;
+    ctx.fillStyle = p.color;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    ctx.fill();
   });
+  ctx.globalAlpha = 1;
+  if (particles.length) { fwAnimId = requestAnimationFrame(animateFireworks); }
+  else { fwAnimId = null; }
 }
 
-// Re-patch after checklist renders
-const _origRC = renderChecklist;
-renderChecklist = function() {
-  _origRC();
-  allDoneTriggered = false;
-  setTimeout(patchChecklistClicks, 100);
-};
-// Initial render already happened above, just patch clicks now
-setTimeout(patchChecklistClicks, 300);
+function burstAt(el) {
+  const rect = el.getBoundingClientRect();
+  const cx = rect.left + rect.width / 2;
+  const cy = rect.top + rect.height / 2 + window.scrollY;
+  const colors = ['#c8612a','#d4824a','#e8a870','#4aaa7d','#68e8a8','#f0ece6'];
+  for (let i = 0; i < 24; i++) {
+    const angle = Math.random() * Math.PI * 2;
+    const speed = 2 + Math.random() * 3.5;
+    particles.push({ x:cx, y:cy, vx: Math.cos(angle)*speed, vy: Math.sin(angle)*speed - 2, alpha:1, color: colors[Math.floor(Math.random()*colors.length)], size: 2 + Math.random()*2.5, decay: 0.018 + Math.random()*0.01 });
+  }
+  if (!fwAnimId) fwAnimId = requestAnimationFrame(animateFireworks);
+}
 
-// Auto-start music on first interaction
+function burstRandom() {
+  const cx = 100 + Math.random() * (window.innerWidth - 200);
+  const cy = 100 + Math.random() * (window.innerHeight * 0.6);
+  const colors = ['#c8612a','#d4824a','#e8a870','#4aaa7d','#f0ece6','#b8922a'];
+  for (let i = 0; i < 32; i++) {
+    const angle = Math.random() * Math.PI * 2;
+    const speed = 3 + Math.random() * 4;
+    particles.push({ x:cx, y:cy, vx: Math.cos(angle)*speed, vy: Math.sin(angle)*speed - 1.5, alpha:1, color: colors[Math.floor(Math.random()*colors.length)], size: 2.5 + Math.random()*3, decay: 0.014 + Math.random()*0.012 });
+  }
+  if (!fwAnimId) fwAnimId = requestAnimationFrame(animateFireworks);
+}
+
+/* ════════════════════════════════════════
+   MUSIC PLAYER
+════════════════════════════════════════ */
+let audio, musicPlaying = false;
+const tracks = [
+  { title: 'Lofi Study Beat', artist: 'Focus Mode', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
+  { title: 'Ambient Flow', artist: 'Deep Work', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3' },
+];
+let trackIdx = 0;
+
+function initAudio() {
+  if (audio) return;
+  audio = new Audio(tracks[trackIdx].url);
+  audio.loop = true;
+  audio.volume = parseFloat(document.getElementById('mp-vol').value);
+}
+
+function toggleMusic() {
+  initAudio();
+  if (musicPlaying) {
+    audio.pause();
+    musicPlaying = false;
+    document.getElementById('mp-play').textContent = '▶';
+    document.getElementById('mp-art').classList.remove('playing');
+  } else {
+    audio.play().catch(() => {});
+    musicPlaying = true;
+    document.getElementById('mp-play').textContent = '⏸';
+    document.getElementById('mp-art').classList.add('playing');
+  }
+}
+
+document.getElementById('mp-vol').addEventListener('input', function() {
+  if (audio) audio.volume = parseFloat(this.value);
+});
+
 document.addEventListener('click', function startOnce() {
-  if (!musicPlaying) playMusic();
+  if (!musicPlaying) toggleMusic();
   document.removeEventListener('click', startOnce);
 }, { once: true });
+
+/* ════════════════════════════════════════
+   SCROLL REVEAL
+════════════════════════════════════════ */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      const el = entry.target;
+      el.style.animationDelay = (i * 0.05) + 's';
+      el.classList.add('in');
+      observer.unobserve(el);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.anim').forEach(el => observer.observe(el));
+
+/* ════════════════════════════════════════
+   INIT
+════════════════════════════════════════ */
+renderCountdown();
+renderPhase();
+renderStreak();
+renderDayCards();
+renderChecklist();
+renderWeekTable();
+
+setInterval(renderCountdown, 60000);
 </script>
 </body>
 </html>
